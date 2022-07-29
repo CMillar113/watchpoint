@@ -1,0 +1,40 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+html,
+:root{
+  --primaryC: rgba(255, 103, 0, 0.925);
+  --secondC: rgba(4, 0, 250, 0.925);
+  }
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1{
+  font-size: 75px;
+}
+
+h2{
+  font-size:35px;
+text-align: center;
+}
+
+  
+
+

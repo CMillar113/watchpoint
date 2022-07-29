@@ -1,0 +1,15 @@
+.primary{
+    size: 10px 10px;
+    color: black;
+    font-size: 30px;
+    background-color: var(--primaryC);
+    border: 10px;
+    border-color: black;
+    border-radius: 50px;
+    width: 75%;
+    height: 25%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+}
+
