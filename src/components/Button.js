@@ -4,9 +4,15 @@ import Link from "next/link";
 const Button = ({ path, label, onClick }) => {
   if (path !== undefined) {
     return (
-      <Link href={path} passHref>
-        <button className={buttonStyles.primary}>{label}</button>
-      </Link>
+      <div className="w-full flex flex-col items-center">
+        <Link href={path} passHref>
+          <button
+            className={`mt-2 text-h2-mobile md:text-h2-medium lg:text-h2-large bg-primary-bg ${buttonStyles.primary}`}
+          >
+            {label}
+          </button>
+        </Link>
+      </div>
     );
   } else {
     return (

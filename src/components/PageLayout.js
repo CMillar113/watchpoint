@@ -1,3 +1,5 @@
+//Reactive continer that keeps everything centred and auto sizes to screen size
+
 export default function PageLayout({ children }) {
   return (
     <div className="w-full flex justify-center">

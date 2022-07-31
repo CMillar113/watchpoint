@@ -2,12 +2,12 @@ import Meta from "../src/components/Meta";
 import Navbar from "../src/components/NavBar";
 import PageLayout from "../src/components/PageLayout";
 
-export default function signIn() {
+export default function resetPassword() {
   return (
     <>
-      <Meta title="Sign In" />
+      <Meta title="Password Reset" />
       <Navbar />
-      <PageLayout>Sign in to your account</PageLayout>
+      <PageLayout>Reset Password</PageLayout>
     </>
   );
 }
