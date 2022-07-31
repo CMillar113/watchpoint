@@ -1,14 +1,12 @@
-@import "tailwindcss/base";
-
-@import "tailwindcss/components";
-
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 html,
-:root{
+:root {
   --primaryC: rgba(255, 103, 0, 0.925);
   --secondC: rgba(4, 0, 250, 0.925);
-  }
+}
 
 body {
   padding: 0;
@@ -26,15 +24,11 @@ a {
   box-sizing: border-box;
 }
 
-h1{
+h1 {
   font-size: 75px;
 }
 
-h2{
-  font-size:35px;
-text-align: center;
+h2 {
+  font-size: 35px;
+  text-align: center;
 }
-
-  
-
-

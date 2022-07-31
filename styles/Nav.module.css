@@ -1,0 +1,25 @@
+.nav {
+  height: 50px;
+
+  width: 100%;
+  margin-bottom: 15px;
+
+  display: flex;
+  justify-content: center;
+  /* width 100% of screen */
+}
+
+.nav ul {
+  display: flex;
+  justify-content: space-between;
+  /* for space between Li put space between in parent */
+  align-items: center;
+  list-style: none;
+}
+
+.nav ul li a {
+  padding: 10px;
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+}
