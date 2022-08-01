@@ -8,7 +8,7 @@ export default function about() {
     <>
       <Meta title="About" />
 
-      <Navbar />
+      <Navbar title="About" />
       <PageLayout>
         <div className="w-full flex flex-col items-center">
           <h2>Welcome</h2>

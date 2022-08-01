@@ -1,10 +1,15 @@
 import Meta from "../src/components/Meta";
 import Button from "../src/components/Button";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
 import PageLayout from "../src/components/PageLayout";
+import { USERNAME } from "../src/constants";
 
 export default function Home() {
+  const isset = (ref) => typeof ref !== "undefined";
+  if (isset(USERNAME)) {
+    console.log("True");
+  }
+
   return (
     <>
       <Meta title="Watchpoint" />
@@ -14,15 +19,13 @@ export default function Home() {
           <h1 className="mt-2 text-h1-mobile md:text-h1-medium lg:text-h1-large ">
             Watchpoint
           </h1>
-
           <Image
-            className={styles.logo}
             src="/images/WatchpointLogo.jpg"
+            alt=""
             height={200}
             width={200}
             alt="Logo"
           ></Image>
-
           <h2 className="mt-2 text-h2-mobile md:text-h2-medium lg:text-h2-large">
             {" "}
             The All - in - One{" "}
@@ -31,17 +34,9 @@ export default function Home() {
             {" "}
             Health & Fitness Lifestyle Tracker{" "}
           </h2>
-
           <Button path="/about" label="About WatchPoint" />
           <Button path="/createAccount" label="Create Account" />
           <Button path="/signIn" label="Sign In" />
-
-          {/* <Button
-          onClick={() => {
-            alert("Hello");
-          }}
-          label="Hello button" */}
-          {/* /> */}
         </div>
       </PageLayout>
     </>

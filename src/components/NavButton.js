@@ -1,13 +1,15 @@
-import { useRouter } from "next/router";
+import Router from "next/router";
 //In works-- if i ever need--  might not use -- might not even work
-export default function NavButton(path) {
-  const router = useRouter();
+export default function NavButton({ path, label }) {
   return (
     <>
-      <button onClick={() => router.push}>Back</button>
-      <nav>
-        <a href={path}>Home</a>
-      </nav>
+      <button
+        className="mt-2 text-h2-mobile md:text-h2-medium lg:text-h2-large bg-primary-bg"
+        onClick={() => {
+          Router.push({ path });
+        }}
+        label={label}
+      />
     </>
   );
 }

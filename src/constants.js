@@ -6,3 +6,5 @@ export const Calories = {
 };
 
 export const API_URL = "";
+
+export const USERNAME = "Chris";

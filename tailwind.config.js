@@ -10,6 +10,7 @@ module.exports = {
         primary: {
           bg: "rgba(255, 103, 0, 0.925)",
           text: "#000",
+          fadedtext: "rgba(104, 112, 137, 0.925)",
         },
       },
       fontSize: {
