@@ -7,8 +7,8 @@ export default function about() {
   return (
     <>
       <Meta title="About" />
-
       <Navbar title="About" />
+
       <PageLayout>
         <div className="w-full flex flex-col items-center">
           <h2>Welcome</h2>
@@ -30,7 +30,7 @@ export default function about() {
           </div>
 
           <h2>How To Use</h2>
-          <div className="mb-20 flex flex-col justify-start items-center text-center px-2">
+          <div className="mb-8 flex flex-col justify-start items-center text-center px-2">
             <p>
               Create an account, select what elements you wish to track and use
               watchpoint on the daily to log all your details that will help you

@@ -1,10 +1,13 @@
 import Meta from "../src/components/Meta";
 import Navbar from "../src/components/NavBar";
-import buttonStyles from "../styles/Button.module.css";
+import Button from "../src/components/Button";
 import Link from "next/link";
 import PageLayout from "../src/components/PageLayout";
+import buttonStyles from "../styles/Button.module.css";
 
 export default function signIn() {
+  const accountType = "/athlete";
+  // const accountType = "/coach";
   return (
     <>
       <Meta title="Sign In" />
@@ -17,7 +20,7 @@ export default function signIn() {
         </div>
 
         <div className="mt-5 text-center items-center content-center">
-          <form action="/accountCreated" method="post" data-validate="parsley">
+          <form action={`${accountType}`} method="post" data-validate="parsley">
             <div className=" mb-2">
               <input
                 className="border-2 border-black w-8/12"
@@ -42,7 +45,7 @@ export default function signIn() {
               />
             </div>
 
-            <p className="mt-5 text-primary-fadedtext text-center text-xs px-9 ">
+            <p className="mt-5 mb-5 text-primary-fadedtext text-center text-xs px-9 ">
               Forgotten Your Password? Reset it{" "}
               <Link href="/resetPassword">Here</Link>
             </p>
@@ -54,6 +57,11 @@ export default function signIn() {
               //TODO - Does not have same reaction as <Button> dosnt feel like its clicked
             />
           </form>
+
+          <p className="mt-8 text-primary-fadedtext text-center text-xs px-9 ">
+            Don't Have an Account?{" "}
+          </p>
+          <Button path="/createAccount" label="Create Account" />
         </div>
       </PageLayout>
     </>

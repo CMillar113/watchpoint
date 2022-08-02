@@ -75,10 +75,15 @@ export default function createAccount() {
               />
             </div>
 
+            <div className="mb-2">
+              Coach/Athlete account selector placeholder
+              {/* //TODO - Add in  selector button */}
+            </div>
+
             <p className=" text-primary-fadedtext text-center text-sm px-9 ">
               {" "}
-              A trainer account is used to track and update client plans. (Not
-              for personal use)
+              A Coach account is used to track and update client plans. (Not for
+              personal use)
             </p>
 
             <p className="mt-5 text-primary-fadedtext text-center text-xs px-9 ">
