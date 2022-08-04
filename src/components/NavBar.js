@@ -2,14 +2,13 @@ import Link from "next/link";
 import navStyles from "../../styles/Nav.module.css";
 
 export default function Navbar({ backPath, nextPath, title }) {
-  if (nextPath == undefined) {
-    backPath = "/";
+  if (backPath !== undefined) {
     return (
-      //Just back button shown (no next defined)
+      //backpath defined - no next button
       <>
-        <nav className={`bg-primary-bg text-primary-text ${navStyles.nav}`}>
+        <nav className={`bg-primary-bg text-primary-text  ${navStyles.nav}`}>
           <ul
-            className={`flex justify-between w-full  sm:w-4/5 md:w-3/5 lg:w-1/2 ${navStyles.ul}`}
+            className={`flex justify-between w-full sm:w-4/5 md:w-3/5 lg:w-1/2 ${navStyles.ul}`}
           >
             <li>
               {" "}
@@ -54,15 +53,13 @@ export default function Navbar({ backPath, nextPath, title }) {
   } else {
     //No buttons shown or defined
     return (
-      <nav className={`bg-primary-bg text-primary-text ${navStyles.nav}`}>
-        <ul
-          className={`flex justify-between w-full  sm:w-4/5 md:w-3/5 lg:w-1/2 ${navStyles.ul}`}
-        >
-          <div className="`flex justify-between w-full text-center sm:w-4/5 md:w-3/5 lg:w-1/2 ">
-            {" "}
-            <h2>{title}</h2>
-          </div>
-        </ul>
+      <nav
+        className={` w-full bg-primary-bg text-primary-text text-center   ${navStyles.nav}`}
+      >
+        <div className="`flex justify-between w-full text-center sm:w-4/5 md:w-3/5 lg:w-1/2 ">
+          {" "}
+          <h2>{title}</h2>
+        </div>
       </nav>
     );
   }

@@ -7,4 +7,4 @@ export const Calories = {
 
 export const API_URL = "";
 
-export const USERNAME = "Chris";
+export const USERNAME = "Jim";

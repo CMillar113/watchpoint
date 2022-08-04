@@ -7,7 +7,7 @@ export default function resetPassword() {
   return (
     <>
       <Meta title="Password Reset" />
-      <Navbar title="Reset Password" />
+      <Navbar title="Reset Password" backPath={"/signIn"} />
       <PageLayout>
         <div className="mt-5 text-center items-center content-center w-full">
           <legend className="mb-2 ">Email Address</legend>

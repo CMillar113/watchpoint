@@ -7,7 +7,7 @@ export default function createAccount() {
   return (
     <>
       <Meta title="Create Account" />
-      <Navbar title={"Create Account"} />
+      <Navbar title={"Create Account"} backPath={"/"} />
       <PageLayout>
         <div className="bg-white border-2 border-black rounded-2xl shadow-xl items-center text-center px-8  ">
           <p className=" text-primary-fadedtext ">

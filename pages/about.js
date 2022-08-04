@@ -7,7 +7,7 @@ export default function about() {
   return (
     <>
       <Meta title="About" />
-      <Navbar title="About" />
+      <Navbar title="About" backPath={"/"} />
 
       <PageLayout>
         <div className="w-full flex flex-col items-center">

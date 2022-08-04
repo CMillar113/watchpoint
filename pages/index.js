@@ -2,14 +2,8 @@ import Meta from "../src/components/Meta";
 import Button from "../src/components/Button";
 import Image from "next/image";
 import PageLayout from "../src/components/PageLayout";
-import { USERNAME } from "../src/constants";
 
 export default function Home() {
-  const isset = (ref) => typeof ref !== "undefined";
-  if (isset(USERNAME)) {
-    console.log("True");
-  }
-
   return (
     <>
       <Meta title="Watchpoint" />
