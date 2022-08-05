@@ -6,7 +6,7 @@ export default function Navbar({ backPath, nextPath, title }) {
     return (
       //backpath defined - no next button
       <>
-        <nav className={`bg-primary-bg text-primary-text  ${navStyles.nav}`}>
+        <nav className={`bg-primary-bg text-primary-text ${navStyles.nav}`}>
           <ul
             className={`flex justify-between w-full sm:w-4/5 md:w-3/5 lg:w-1/2 ${navStyles.ul}`}
           >

@@ -15,5 +15,5 @@ function getMetrics() {
 const trackedMetrics = {
   bodyweight: true,
   steps: true,
-  sleep: false,
+  sleep: true,
 };

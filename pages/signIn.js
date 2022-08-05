@@ -51,7 +51,7 @@ export default function signIn() {
             </p>
 
             <input
-              className={`mt-2 text-h2-mobile md:text-h2-medium lg:text-h2-large bg-primary-bg ${buttonStyles.primary}`}
+              className={`mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg border-black border-2 ${buttonStyles.primary}`}
               type="submit"
               value="Sign In"
               //TODO - Does not have same reaction as <Button> dosnt feel like its clicked

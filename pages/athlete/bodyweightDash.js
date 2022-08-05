@@ -8,8 +8,8 @@ import buttonStyles from "../../styles/Button.module.css";
 export default function bodyweight() {
   return (
     <>
-      <Meta title="Bodyweight Log" />
-      <Navbar title="Bodyweight Log" backPath={"/athlete"} />
+      <Meta title="Bodyweight" />
+      <Navbar title="Bodyweight" backPath={"/athlete"} />
       <PageLayout>
         <div className="bg-white border-2 border-black rounded-2xl shadow-xl items-center text-center px-8  ">
           <p className=" text-primary-fadedtext ">Todays Weight</p>
@@ -37,18 +37,24 @@ export default function bodyweight() {
                 name="date"
                 data-required="true"
                 data-type="date"
-                data-error-message="Select a Date  "
+                data-error-message="Select a Date "
               />
             </div>
 
             <input
-              className={`mt-2 text-h2-mobile md:text-h2-medium lg:text-h2-large bg-primary-bg ${buttonStyles.primary}`}
+              className={`mt-2 text-h2-mobile md:text-h2-medium  bg-primary-bg border-2 border-black ${buttonStyles.primary}`}
               type="submit"
               value="Add Entry"
               //TODO - Does not have same reaction as <Button> dosnt feel like its clicked
             />
           </form>
         </div>
+
+        <div className=" w-full mb-4 mt-4 border-2 border-black ">
+          <h3 className=" mt-1  text-center text-xl">7 Day Average:</h3>
+        </div>
+
+        <Button path="/athlete/bodyweightLog" label="Bodyweight Log" />
       </PageLayout>
     </>
   );

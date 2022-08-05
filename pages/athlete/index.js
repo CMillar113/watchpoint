@@ -8,6 +8,9 @@ import navStyles from "../../styles/Nav.module.css";
 import Router from "next/router";
 import { USERNAME } from "../../src/constants";
 import { useEffect, useState } from "react";
+// import bodyweight from "./bodyweightDash";
+// import steps from "./stepsDash";
+// import sleep from "./sleepDash";
 
 export default function athlete() {
   const [metrics, setMetrics] = useState(undefined);
@@ -37,9 +40,9 @@ export default function athlete() {
         return (
           <button
             key={`${metric}-btn`}
-            className="bg-black text-white items-center"
+            className="bg-black text-white items-center "
             onClick={function () {
-              Router.push(`/athlete/${metric}`);
+              Router.push(`/athlete/${metric}Dash`);
             }}
           >
             {metric}
@@ -60,8 +63,11 @@ export default function athlete() {
           >
             Daily Goals
           </div>
-          <div className=" border-2 flex border-black h-3/5 content-center">
-            <div className="flex flex-col gap-2 w-8/12 mt-1 h-10 ">{body}</div>
+          <div className=" border-2 flex border-black h-3/5 content-center items-center ">
+            <div className="flex flex-col gap-2 w-8/12  h-10">
+              {/* {body === null ? <pre>No Goals</pre> : { body }} */}
+              {body}
+            </div>
           </div>
 
           <div
@@ -88,14 +94,4 @@ function checkUserName() {
   } else {
     let USERNAME = "Undefined";
   }
-}
-
-function steps() {
-  let stepsDisplay;
-  if (elements === 0) {
-    stepsDisplay = "<div> Hello</div>";
-  } else {
-    stepsDisplay = "<h1>not wokring</h1> ";
-  }
-  return stepsDisplay;
 }
