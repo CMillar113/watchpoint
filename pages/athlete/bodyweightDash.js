@@ -20,7 +20,7 @@ export default function bodyweight() {
             <div className=" mb-2 ">
               <input
                 className="border-2 border-black w-8/12 h-10"
-                type="number"
+                type="decimal"
                 placeholder=" Todays Weight"
                 name="weight"
                 data-required="true"

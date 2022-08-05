@@ -59,28 +59,31 @@ export default function athlete() {
       <PageLayout>
         <div className="h-screen ">
           <div
-            className={`bg-primary-bg text-primary-text w-full border-2 border-black flex mb-1  `}
+            className={`bg-primary-bg text-primary-text h-11 place-content-center w-full border-2 border-black flex mb-1  `}
           >
             Daily Goals
           </div>
-          <div className=" border-2 flex border-black h-3/5 content-center items-center ">
+          <div className=" border-2 flex border-black h-3/5 content-center items-center overflow-hidden  ">
             <div className="flex flex-col gap-2 w-8/12  h-10">
-              {/* {body === null ? <pre>No Goals</pre> : { body }} */}
-              {body}
+              {body !== null ? body : <p>No Goals</p>}
+              {/* Brefily shows no goals then disapears */}
+              {/* {body} */}
             </div>
           </div>
 
           <div
-            className={`bg-primary-bg text-primary-text h-11 w-full border-2 border-black flex mb-1 mt-1  `}
+            className={`bg-primary-bg text-primary-text h-11 place-content-center  w-full border-2 border-black flex mb-1 mt-1 overflow-hidden  `}
           >
             Weekly Goals
           </div>
-          <div className="min-h-fit border-2 border-black flex h-3/5">
+          <p className="min-h-fit border-2 border-black flex h-3/5">
             No Weekly Goals Set
-          </div>
+          </p>
 
           {/* {metrics !== undefined && <pre>{JSON.stringify(metrics, null, 2)}</pre>} */}
         </div>
+
+        <Button path="/plan/selectElements" label="Set Plans" />
       </PageLayout>
     </>
   );
