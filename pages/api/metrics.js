@@ -4,6 +4,8 @@ export default function handler(req, res) {
   if (req.method === "GET") {
     const metrics = getMetrics();
     res.status(200).json(metrics);
+  } else {
+    console.log(error);
   }
 }
 
