@@ -16,7 +16,7 @@ export default function Navbar({ backPath, nextPath, title }) {
                 Back
               </Link>{" "}
             </li>
-            <div className="`flex justify-between w-full text-center sm:w-4/5 md:w-3/5 lg:w-1/2 ">
+            <div className="`flex justify-between w-full text-center sm:w-2/5 md:w-3/5 lg:w-1/2  ">
               {" "}
               <h2>{title}</h2>
             </div>
