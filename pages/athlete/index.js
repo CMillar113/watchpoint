@@ -35,21 +35,23 @@ export default function athlete() {
   let body = null;
 
   if (metrics !== undefined) {
-    body = Object.keys(metrics).map(function (metric) {
-      if (metrics[metric] === true) {
+    body = metrics
+      .filter(function (metric) {
+        return metric.element_name === "Bodyweight";
+      })
+      .map(function (metric) {
         return (
           <button
-            key={`${metric}-btn`}
+            key={`${metric.element_id}-btn`}
             className="bg-black text-white items-center "
             onClick={function () {
-              Router.push(`/athlete/${metric}Dash`);
+              Router.push(`/athlete/${metric.element_name}Dash`);
             }}
           >
-            {metric}
+            {metric.element_name}
           </button>
         ); // metrics["bodyweight"]
-      }
-    });
+      });
   }
 
   return (
@@ -63,7 +65,7 @@ export default function athlete() {
           >
             Daily Goals
           </div>
-          <div className=" border-2 flex border-black h-3/5 content-center items-center overflow-hidden  ">
+          <div className=" border-2 flex border-black h-3/5 content-center items-center overflow-hidden justify-center ">
             <div className="flex flex-col gap-2 w-8/12  h-10">
               {body !== null ? body : <p>No Goals</p>}
               {/* Brefily shows no goals then disapears */}

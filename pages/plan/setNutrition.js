@@ -113,6 +113,7 @@ export default function setGoals() {
           // action="submitForms()"
           method="post"
           data-validate="parsley"
+          onSubmit={submitForms}
         >
           <input
             className="h-8 border-2 w-2/3 mb-1 mt-1 flex justify-center text-center"
@@ -132,19 +133,15 @@ export default function setGoals() {
         <Button
           path="/plan/setHealthcare"
           label="Confirm"
-          onClick={submitForms()}
+          onClick={submitForms}
         ></Button>
-
-        {/* If bodyweight selected */}
-        {/* If steps selected */}
-        {/* If sleep selected */}
-        {/* if any workouts selected */}
       </PageLayout>
     </>
   );
 }
 
-function submitForms() {
+function submitForms(e) {
+  e.preventDefault();
   // document.getElementById("macroForm").submit(); //TODO - Fix this so both forms get submitted when db is working
   // document.getElementById("waterForm").submit();
   console.log("Why does this print before clicks");

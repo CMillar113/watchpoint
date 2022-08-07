@@ -17,7 +17,7 @@ export default function selectElements() {
   return (
     <>
       <Meta title="Select Elements" />
-      <Navbar title="Select Elements" backPath={"/athlete"} />
+      <Navbar title="Elements" backPath={"/athlete"} />
       <PageLayout>
         <form
           className="text-left text-xl flex-col px-10 "
