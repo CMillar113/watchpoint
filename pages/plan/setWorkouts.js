@@ -57,11 +57,7 @@ export default function setWorkouts() {
           How many cardio workouts per week would you like to hit?
         </p>
 
-        <Button
-          path="/athlete"
-          label="Confirm"
-          onClick={submitForms()}
-        ></Button>
+        <Button path="/athlete" label="Confirm" onClick={submitForms}></Button>
       </PageLayout>
     </>
   );

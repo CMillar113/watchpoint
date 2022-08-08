@@ -84,7 +84,7 @@ export default function setHealthcare() {
         <Button
           path="/plan/setWorkouts"
           label="Confirm"
-          onClick={submitForms()}
+          onClick={submitForms}
         ></Button>
 
         {/* If sleep selected */}

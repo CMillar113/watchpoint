@@ -145,7 +145,7 @@ export default function calorieCalculator() {
         <Button
           path="/plan/setNutrition"
           label="Use These"
-          onClick={() => submitForms()}
+          onClick={submitForms}
         ></Button>
 
         {/* If sleep selected */}

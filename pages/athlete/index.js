@@ -10,52 +10,11 @@ import Router from "next/router";
 import { useEffect, useState } from "react";
 
 export default function athlete() {
-  const [metrics, setMetrics] = useState(undefined);
-
-  useEffect(() => {
-    (async function () {
-      try {
-        const response = await fetch("/api/metrics");
-        const result = await response.json();
-
-        if (response.ok) {
-          setMetrics(result);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-  }, []);
   let userName = null;
-
   userName = checkUserName();
-  // if (userName === undefined) {
-  //   console.log("fail @ userName defined");
-  // }
 
   let body = null;
-
-  if (metrics !== undefined) {
-    body = metrics
-      // .filter(function (metric) {
-      //   return metric.element_name === "bodyweight";
-      // }) This is how to apply a filter - not needed in this case as my SQL is only bringing back the required data
-      .map(function (metric) {
-        return (
-          <button
-            key={`${metric.element_id}-btn`}
-            className="bg-black text-white items-center "
-            onClick={function () {
-              Router.push(`/athlete/${metric.element_name}Dash`);
-            }}
-          >
-            {metric.element_name}
-          </button>
-        );
-      });
-  } else {
-    body = "No Goals Set";
-  }
+  body = checkHealthcareElements();
 
   return (
     <>
@@ -96,7 +55,7 @@ export default function athlete() {
 }
 
 function checkUserName() {
-  const [userMetrics, setMetrics] = useState(undefined);
+  const [userDetails, setMetrics] = useState(undefined);
 
   useEffect(() => {
     (async function () {
@@ -113,15 +72,55 @@ function checkUserName() {
     })();
   }, []);
 
-  if (userMetrics !== undefined) {
-    console.log("test");
-    console.log(userMetrics);
+  if (userDetails !== undefined) {
+    // console.log("test");
+    // console.log(userDetails);
 
-    let userName = userMetrics.map(function (userMetric) {
-      console.log(userMetric.first_name);
-      return userMetric.first_name; //This is the return of the SQL data to the variable userName
+    let userName = userDetails.map(function (userDetail) {
+      // console.log(userDetail.first_name);
+      return userDetail.first_name; //This is the return of the SQL data to the variable userName
     });
-    console.log(userName);
+    // console.log(userName);
     return userName; //Must return username as this is the return to the function call
+  }
+}
+
+function checkHealthcareElements() {
+  const [metrics, setMetrics] = useState(undefined);
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const response = await fetch("/api/metrics");
+        const result = await response.json();
+
+        if (response.ok) {
+          setMetrics(result);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
+
+  if (metrics !== undefined) {
+    let body = metrics
+      .filter(function (metric) {
+        return metric.element_class_id === 2;
+      }) //This is how to apply a filter - not needed in this case as my SQL is only bringing back the required data
+      .map(function (metric) {
+        return (
+          <button
+            key={`${metric.element_id}-btn`}
+            className="bg-black text-white items-center "
+            onClick={function () {
+              Router.push(`/athlete/${metric.element_name}Dash`);
+            }}
+          >
+            {metric.element_name}
+          </button>
+        );
+      });
+    return body;
   }
 }
