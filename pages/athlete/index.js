@@ -6,11 +6,8 @@ import Button from "../../src/components/Button";
 import navStyles from "../../styles/Nav.module.css";
 
 import Router from "next/router";
-import { USERNAME } from "../../src/constants";
+
 import { useEffect, useState } from "react";
-// import bodyweight from "./bodyweightDash";
-// import steps from "./stepsDash";
-// import sleep from "./sleepDash";
 
 export default function athlete() {
   const [metrics, setMetrics] = useState(undefined);
@@ -29,16 +26,20 @@ export default function athlete() {
       }
     })();
   }, []);
+  let userName = null;
 
-  checkUserName();
+  userName = checkUserName();
+  // if (userName === undefined) {
+  //   console.log("fail @ userName defined");
+  // }
 
   let body = null;
 
   if (metrics !== undefined) {
     body = metrics
-      .filter(function (metric) {
-        return metric.element_name === "Bodyweight";
-      })
+      // .filter(function (metric) {
+      //   return metric.element_name === "bodyweight";
+      // }) This is how to apply a filter - not needed in this case as my SQL is only bringing back the required data
       .map(function (metric) {
         return (
           <button
@@ -50,14 +51,16 @@ export default function athlete() {
           >
             {metric.element_name}
           </button>
-        ); // metrics["bodyweight"]
+        );
       });
+  } else {
+    body = "No Goals Set";
   }
 
   return (
     <>
       <Meta title="Athlete - Home" />
-      <Navbar title={USERNAME} />
+      <Navbar title={userName} />
       <PageLayout>
         <div className="h-screen ">
           <div
@@ -67,7 +70,8 @@ export default function athlete() {
           </div>
           <div className=" border-2 flex border-black h-3/5 content-center items-center overflow-hidden justify-center ">
             <div className="flex flex-col gap-2 w-8/12  h-10">
-              {body !== null ? body : <p>No Goals</p>}
+              {body}
+              {/* {body !== null ? body : <p>No Goals</p>} */}
               {/* Brefily shows no goals then disapears */}
               {/* {body} */}
             </div>
@@ -92,11 +96,32 @@ export default function athlete() {
 }
 
 function checkUserName() {
-  //Currently calls from constant sheet - will call from database by passing in athlete_id
-  const isset = (ref) => typeof ref !== "undefined";
-  if (isset(USERNAME)) {
-    console.log("True");
-  } else {
-    let USERNAME = "Undefined";
+  const [userMetrics, setMetrics] = useState(undefined);
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const response = await fetch("/api/userDetails");
+        const result = await response.json();
+
+        if (response.ok) {
+          setMetrics(result);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
+
+  if (userMetrics !== undefined) {
+    console.log("test");
+    console.log(userMetrics);
+
+    let userName = userMetrics.map(function (userMetric) {
+      console.log(userMetric.first_name);
+      return userMetric.first_name; //This is the return of the SQL data to the variable userName
+    });
+    console.log(userName);
+    return userName; //Must return username as this is the return to the function call
   }
 }

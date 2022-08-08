@@ -22,12 +22,13 @@ const sql = `
   FROM element
   INNER JOIN athlete_element ON element.element_id = athlete_element.element_id
   INNER JOIN athlete ON athlete_element.athlete_id = athlete.athlete_id
-  WHERE athlete.athlete_id = ?;
+  WHERE athlete.athlete_id = ? AND element.element_class_id = ?; 
 `;
+//Brings all healtchare elements for user
 
 // Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
 async function getMetrics() {
-  const metrics = await executeQuery({ query: sql, values: [1] });
+  const metrics = await executeQuery({ query: sql, values: [1, 2] });
   console.log(metrics);
   // talk to database get metrics for a given userID
   return metrics;
