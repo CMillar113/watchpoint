@@ -2,6 +2,7 @@ import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import Button from "../../src/components/Button";
+import { lowerCaseFirstLetter } from "../_app";
 
 import Router from "next/router";
 
@@ -28,13 +29,14 @@ export default function athlete() {
           pathRight={"/workouts/selectWorkout"}
           labelRight={"Workouts"}
         ></NavMenu>
-        <div className="h-screen ">
+
+        <div className="h-screen">
           <div
             className={`bg-primary-bg text-primary-text h-11 place-content-center w-full border-2 border-black flex mb-1  `}
           >
             Daily Goals
           </div>
-          <div className=" border-2 flex border-black h-3/5 content-center items-center overflow-hidden justify-center ">
+          <div className=" border-2 flex border-black h-1/2 content-center items-center overflow-hidden justify-center ">
             <div className="flex flex-col gap-2 w-8/12  h-10">
               {body}
               {/* {body !== null ? body : <p>No Goals</p>} */}
@@ -48,14 +50,15 @@ export default function athlete() {
           >
             Weekly Goals
           </div>
-          <p className="min-h-fit border-2 border-black flex h-3/5">
+          <div className="border-2 flex border-black h-1/2 content-center items-center overflow-hidden justify-center">
             No Weekly Goals Set
-          </p>
-
-          {/* {metrics !== undefined && <pre>{JSON.stringify(metrics, null, 2)}</pre>} */}
+          </div>
         </div>
 
-        <Button path="/plan/selectElements" label="Set Plans" />
+        {/* {metrics !== undefined && <pre>{JSON.stringify(metrics, null, 2)}</pre>} */}
+        <div>
+          <Button path="/plan/selectElements" label="Set Goals" />
+        </div>
       </PageLayout>
     </>
   );
@@ -131,8 +134,4 @@ function checkHealthcareElements() {
       });
     return body;
   }
-}
-
-function lowerCaseFirstLetter(string) {
-  return string.charAt(0).toLowerCase() + string.slice(1);
 }

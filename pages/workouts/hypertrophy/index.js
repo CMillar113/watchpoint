@@ -12,14 +12,21 @@ export default function hypertrophyDash() {
       <Navbar title={workoutTitle} backPath={"/workouts/selectWorkout"} />
       <PageLayout>
         <NavMenu
-          pathLeft={`{/workouts/${workoutPathTitle}/routines}`}
+          pathLeft={`/workouts/${workoutPathTitle}/routineMenu`}
           labelLeft={"Routines"}
           pathCenter={"/athlete"}
           labelCenter={"Home"}
-          pathRight={`{/workouts/${workoutPathTitle}/new}`}
+          pathRight={`/workouts/${workoutPathTitle}/new`}
           labelRight={"New Workout"}
         ></NavMenu>
-        Month and upt to date list of wokrouts last logged being at top
+        <hr className="bg-black" />
+        <p className="text-center">
+          Month and up to date list of wokrouts last logged being at top
+        </p>
+
+        <div className="w-full h-auto flex justify-center border-2 border-black rounded-lg">
+          <h3 className=" text-center">Routine Name</h3>
+        </div>
       </PageLayout>
     </>
   );

@@ -1,11 +1,10 @@
 import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
-import Button from "../../src/components/Button";
-import Link from "next/link";
-import buttonStyles from "../../styles/Button.module.css";
+
 import { useEffect, useState } from "react";
 import Router from "next/router";
+import { lowerCaseFirstLetter } from "../_app";
 
 export default function selectWorkout() {
   let body = null;
@@ -67,6 +66,6 @@ function checkWorkoutElements() {
   }
 }
 
-function lowerCaseFirstLetter(string) {
-  return string.charAt(0).toLowerCase() + string.slice(1);
-}
+// function lowerCaseFirstLetter(string) {
+//   return string.charAt(0).toLowerCase() + string.slice(1);
+// }
