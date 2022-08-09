@@ -1,9 +1,7 @@
 .nav {
   height: 50px;
-
   width: 100%;
   margin-bottom: 15px;
-
   display: flex;
   justify-content: center;
   /* width 100% of screen */

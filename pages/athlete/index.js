@@ -3,11 +3,10 @@ import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import Button from "../../src/components/Button";
 
-import navStyles from "../../styles/Nav.module.css";
-
 import Router from "next/router";
 
 import { useEffect, useState } from "react";
+import NavMenu from "../../src/components/NavMenu";
 
 export default function athlete() {
   let userName = null;
@@ -21,6 +20,14 @@ export default function athlete() {
       <Meta title="Athlete - Home" />
       <Navbar title={userName} />
       <PageLayout>
+        <NavMenu
+          pathLeft={"/plan/setNutrition"}
+          labelLeft={"Edit Goals"}
+          pathCenter={""}
+          labelCenter={"Food Log"}
+          pathRight={"/workouts/selectWorkout"}
+          labelRight={"Workouts"}
+        ></NavMenu>
         <div className="h-screen ">
           <div
             className={`bg-primary-bg text-primary-text h-11 place-content-center w-full border-2 border-black flex mb-1  `}
@@ -114,7 +121,8 @@ function checkHealthcareElements() {
             key={`${metric.element_id}-btn`}
             className="bg-black text-white items-center "
             onClick={function () {
-              Router.push(`/athlete/${metric.element_name}Dash`);
+              let path = lowerCaseFirstLetter(metric.element_name);
+              Router.push(`/athlete/${path}Dash`);
             }}
           >
             {metric.element_name}
@@ -123,4 +131,8 @@ function checkHealthcareElements() {
       });
     return body;
   }
+}
+
+function lowerCaseFirstLetter(string) {
+  return string.charAt(0).toLowerCase() + string.slice(1);
 }

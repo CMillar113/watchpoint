@@ -54,7 +54,8 @@ function checkWorkoutElements() {
             key={`${metric.element_id}-btn`}
             className="h-20 w-full rounded-md border-black border-2 bg-slate-300 mb-2 place-content-center"
             onClick={function () {
-              Router.push(`/workouts/${metric.element_name}Dash`);
+              let path = lowerCaseFirstLetter(metric.element_name);
+              Router.push(`/workouts/${path}`);
             }}
           >
             {" "}
@@ -64,4 +65,8 @@ function checkWorkoutElements() {
       });
     return body;
   }
+}
+
+function lowerCaseFirstLetter(string) {
+  return string.charAt(0).toLowerCase() + string.slice(1);
 }

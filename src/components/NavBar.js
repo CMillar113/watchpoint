@@ -1,5 +1,5 @@
 import Link from "next/link";
-import navStyles from "../../styles/Nav.module.css";
+import navStyles from "../../styles/NavBar.module.css";
 
 export default function Navbar({ backPath, nextPath, title }) {
   if (backPath !== undefined) {
