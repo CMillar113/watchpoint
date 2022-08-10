@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
+//Calls element data - nutrition, healthcare, workout
 import executeQuery from "../../lib/db";
 
 // Controller function which is separated from the database logic and just returns data to frontend

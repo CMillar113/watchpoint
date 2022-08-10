@@ -2,12 +2,12 @@ import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import Button from "../../src/components/Button";
-import { lowerCaseFirstLetter } from "../_app";
+import NavMenu from "../../src/components/NavMenu";
 
 import Router from "next/router";
-
 import { useEffect, useState } from "react";
-import NavMenu from "../../src/components/NavMenu";
+
+import { lowerCaseFirstLetter } from "../_app";
 
 export default function athlete() {
   let userName = null;
