@@ -18,6 +18,7 @@ export default function createAccount() {
 
         <div className="mt-5 text-center items-center content-center w-full">
           <legend className="mb-2 ">Account Information</legend>
+
           <form action="/accountCreated" method="post" data-validate="parsley">
             <div className=" mb-2 ">
               <input
