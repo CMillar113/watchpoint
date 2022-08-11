@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function settings() {
   //TODO - Not hardcoded - check with database athlete_coach table
-  let passedAthlete_id = 1;
+  let passedAthlete_id = 2;
   let coachConnected = checkCoachConnected(passedAthlete_id);
 
   //Check for an empty array of zero values - which is "no coach connected"

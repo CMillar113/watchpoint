@@ -7,48 +7,89 @@ import buttonStyles from "../../styles/Button.module.css";
 
 import { useEffect, useState } from "react";
 import { lowerCaseFirstLetter } from "../_app";
+import Button from "../../src/components/Button";
 
-//Post all coach accounts unless search function is used then only post some
-export default function coachProfile() {
-  let coachCard = null;
+export default function myCoach() {
+  let passedAthlete_id = 1;
+  let elements = null;
+  elements = checkAthletesElements(passedAthlete_id); //TODO - SQL req hardcoded with athlete_id = 1
 
   let passedCoach_id = 2; //TODO Not hardcoded- Passed from connectToCoach screen
+  let coachCard = null;
   coachCard = checkCoach(passedCoach_id); //Same function as connectToCoach - return coach card but with filter depending on the coach_id selected
+
   return (
     <>
-      <Meta title="Coach Profile" />
-      <Navbar title="Coach" backPath={"/settings/connectToCoach"} />
+      <Meta title="my Coach" />
+      <Navbar title="Coach" backPath={"/settings"} />
       <PageLayout>
         {coachCard}
+        <h3 className="flex justify-center mb-2">Allow Coach Access to:</h3>
+        <form className="text-left text-xl flex-col px-10 " action="/settings">
+          {elements}
 
-        <div className="w-full  border-black border-2 rounded-md flex justify-center">
-          <form
-            className="h-full w-full flex justify-center"
-            action="/settings/coachConnected"
-            method="post"
-            data-validate="parsley"
+          <button
+            id="submit"
+            className={`border-2 border-black mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg ${buttonStyles.primary}`}
+            type="submit"
           >
-            <input
-              className="mt-2 mb-2 border-2 border-black w-8/12 text-center"
-              type="text"
-              placeholder="Connection Code"
-              name="code"
-              data-required="true"
-              data-type="text"
-              data-error-message="Connection Code Incorrect"
-            />
+            Update
+          </button>
+        </form>
 
-            <input
-              className={` h-auto w-1/5 ml-2 mt-2 mb-2 text-h2-mobile  bg-primary-bg border-black border-2 rounded-lg `}
-              type="submit"
-              value="Connect"
-              //TODO - Does not have same reaction as <Button> dosnt feel like its clicked
-            />
-          </form>
-        </div>
+        <Button
+          path="/settings/coachDisconnected"
+          label="Disconnect from coach"
+        ></Button>
       </PageLayout>
     </>
   );
+}
+
+function checkAthletesElements(passedAthlete_id) {
+  const [metrics, setMetrics] = useState(undefined);
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const response = await fetch("/api/metrics");
+        const result = await response.json();
+
+        if (response.ok) {
+          setMetrics(result);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
+
+  if (metrics !== undefined) {
+    let body = metrics
+      .filter(function (metric) {
+        return metric.athlete_id === passedAthlete_id; // TODO - HArdcoded into SQL as athlete_id = 1
+      }) //This is how to apply a filter - not needed in this case as my SQL is only bringing back the required data
+      .map(function (metric) {
+        return (
+          <div key={`${metric.element_id}-div`} className="radio border-2 ">
+            <label
+              key={`${metric.element_id}-label`}
+              className="flex items-center  "
+            >
+              <input
+                key={`${metric.element_id}-input`}
+                type="checkbox"
+                className="checked:bg-blue-500 w-10 h-10 mr-5 "
+                value={metric.element_name}
+                // checked={true}
+              />
+              {metric.element_name}
+            </label>
+          </div>
+        );
+      });
+    return body;
+  }
 }
 
 function checkCoach(passedCoach_id) {

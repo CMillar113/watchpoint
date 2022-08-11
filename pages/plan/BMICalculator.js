@@ -62,7 +62,7 @@ export default function BMICalculator() {
 
         {/* Want to reload page with populated caloreis and water intake */}
         <Button
-          path="/plan/calorieCalculator"
+          path="/plan/BMICalculator"
           label="Calculate"
           onClick={submitForms()}
         ></Button>
@@ -85,8 +85,8 @@ export default function BMICalculator() {
 
         {/* Pass calculated macros to nutrition page */}
         <Button
-          path="/plan/setNutrition"
-          label="Use These"
+          path="/plan/setHealthcare"
+          label="Back"
           onClick={submitForms()}
         ></Button>
 

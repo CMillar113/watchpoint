@@ -58,6 +58,7 @@ export default function athlete() {
         {/* {metrics !== undefined && <pre>{JSON.stringify(metrics, null, 2)}</pre>} */}
         <div>
           <Button path="/plan/selectElements" label="Set Goals" />
+          <Button path="/settings" label="Settings" />
         </div>
       </PageLayout>
     </>
