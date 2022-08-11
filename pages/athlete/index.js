@@ -59,6 +59,7 @@ export default function athlete() {
         <div>
           <Button path="/plan/selectElements" label="Set Goals" />
           <Button path="/settings" label="Settings" />
+          <Button path="/athlete/reviewWeek" label="Week in Review" />
         </div>
       </PageLayout>
     </>
@@ -102,7 +103,7 @@ function checkHealthcareElements() {
   useEffect(() => {
     (async function () {
       try {
-        const response = await fetch("/api/metrics");
+        const response = await fetch("/api/athlete_elements");
         const result = await response.json();
 
         if (response.ok) {
@@ -118,7 +119,7 @@ function checkHealthcareElements() {
     let body = metrics
       .filter(function (metric) {
         return metric.element_class_id === 2;
-      }) //This is how to apply a filter - not needed in this case as my SQL is only bringing back the required data
+      })
       .map(function (metric) {
         return (
           <button

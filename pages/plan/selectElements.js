@@ -4,6 +4,7 @@ import PageLayout from "../../src/components/PageLayout";
 import Button from "../../src/components/Button";
 import Link from "next/link";
 import buttonStyles from "../../styles/Button.module.css";
+import { useEffect, useState } from "react";
 
 export default function selectElements() {
   let calories = 0;
@@ -13,6 +14,13 @@ export default function selectElements() {
   let sleep = 0;
   let hypertrophyWorkout = 0;
   let cardioWorkout = 0;
+
+  let nutritionElements = null;
+  let healthcareElements = null;
+  let workoutElements = null;
+  nutritionElements = checkNutrtionElements();
+  healthcareElements = checkHealthcareElements();
+  workoutElements = checkWorkoutElements();
 
   return (
     <>
@@ -29,88 +37,21 @@ export default function selectElements() {
           >
             Nutrition
           </div>
-          <div className="radio border-2 ">
-            <label className="flex items-center  ">
-              <input
-                type="checkbox"
-                className="checked:bg-blue-500 w-10 h-10 mr-5 "
-                value="Calories & Macros"
-              />
-              Calories & Macros
-            </label>
-          </div>
-          <div className="radio border-2 ">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                className="checked:bg-blue-500 w-10 h-10 mr-5"
-                value="Water Intake"
-              />
-              Water Intake
-            </label>
-          </div>
+          {nutritionElements}
           <div
             id="elementClass"
             className=" w-full h-1/6 border-2 border-black bg-slate-200 text-center"
           >
             Healthcare
           </div>
-          <div className="radio border-2 ">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                className="checked:bg-blue-500 w-10 h-10 mr-5"
-                value="Bodyweight"
-              />
-              Bodyweight
-            </label>
-          </div>
-          <div className="radio border-2 ">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                className="checked:bg-blue-500 w-10 h-10 mr-5"
-                value="Steps"
-              />
-              Steps
-            </label>
-          </div>
-          <div className="radio border-2 ">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                className="checked:bg-blue-500 w-10 h-10 mr-5"
-                value="Sleep"
-              />
-              Sleep
-            </label>
-          </div>
+          {healthcareElements}
           <div
             id="elementClass"
             className=" w-full h-1/6 border-2 border-black bg-slate-200 text-center"
           >
             Workouts
           </div>
-          <div className="radio border-2 ">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                className="checked:bg-blue-500 w-10 h-10 mr-5"
-                value="Hypertrophy Workout"
-              />
-              Hypertrophy Workout
-            </label>
-          </div>
-          <div className="radio border-2 ">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                className="checked:bg-blue-500 w-10 h-10 mr-5"
-                value="Cardio Workout"
-              />
-              Cardio Workout
-            </label>
-          </div>
+          {workoutElements}
           <button
             id="submitButton"
             className={`border-2 border-black mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg ${buttonStyles.primary}`}
@@ -122,4 +63,127 @@ export default function selectElements() {
       </PageLayout>
     </>
   );
+}
+
+function checkNutrtionElements() {
+  const [metrics, setMetrics] = useState(undefined);
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const response = await fetch("/api/elements");
+        const result = await response.json();
+
+        if (response.ok) {
+          setMetrics(result);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
+
+  if (metrics !== undefined) {
+    let nutritionElements = metrics
+      .filter(function (metric) {
+        return metric.element_class_id === 1;
+      })
+      .map(function (metric) {
+        return (
+          <div key={`${metric.element_id}-div`} className="radio border-2 ">
+            <label className="flex items-center  ">
+              <input
+                type="checkbox"
+                className="checked:bg-blue-500 w-10 h-10 mr-5 "
+                value={metric.element_name}
+              />
+              {metric.element_name}
+            </label>
+          </div>
+        );
+      });
+    return nutritionElements;
+  }
+}
+
+function checkHealthcareElements() {
+  const [metrics, setMetrics] = useState(undefined);
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const response = await fetch("/api/elements");
+        const result = await response.json();
+
+        if (response.ok) {
+          setMetrics(result);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
+
+  if (metrics !== undefined) {
+    let healthcareElements = metrics
+      .filter(function (metric) {
+        return metric.element_class_id === 2;
+      })
+      .map(function (metric) {
+        return (
+          <div key={`${metric.element_id}-div`} className="radio border-2 ">
+            <label className="flex items-center  ">
+              <input
+                type="checkbox"
+                className="checked:bg-blue-500 w-10 h-10 mr-5 "
+                value={metric.element_name}
+              />
+              {metric.element_name}
+            </label>
+          </div>
+        );
+      });
+    return healthcareElements;
+  }
+}
+
+function checkWorkoutElements() {
+  const [metrics, setMetrics] = useState(undefined);
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const response = await fetch("/api/elements");
+        const result = await response.json();
+
+        if (response.ok) {
+          setMetrics(result);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
+
+  if (metrics !== undefined) {
+    let workoutElements = metrics
+      .filter(function (metric) {
+        return metric.element_class_id === 3;
+      })
+      .map(function (metric) {
+        return (
+          <div key={`${metric.element_id}-div`} className="radio border-2 ">
+            <label className="flex items-center  ">
+              <input
+                type="checkbox"
+                className="checked:bg-blue-500 w-10 h-10 mr-5 "
+                value={metric.element_name}
+              />
+              {metric.element_name}
+            </label>
+          </div>
+        );
+      });
+    return workoutElements;
+  }
 }

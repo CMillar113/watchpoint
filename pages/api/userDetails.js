@@ -1,4 +1,6 @@
-//Want to use to call username
+/**
+ * Calls athlete information like username
+ */
 
 import executeQuery from "../../lib/db";
 

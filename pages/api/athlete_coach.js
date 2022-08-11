@@ -1,3 +1,8 @@
+/**
+ * calls for information between coach and athlete - if they are connected  or not
+ *
+ */
+
 import executeQuery from "../../lib/db";
 
 // Controller function which is separated from the database logic and just returns data to frontend
@@ -22,4 +27,3 @@ async function getAthleteToCoach() {
   console.log(relationship);
   return relationship;
 }
-// , values: [1] WHERE athlete_id = ?;
