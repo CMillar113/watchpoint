@@ -30,7 +30,7 @@ function checkWorkoutElements() {
   useEffect(() => {
     (async function () {
       try {
-        const response = await fetch("/api/metrics");
+        const response = await fetch("/api/athlete_elements");
         const result = await response.json();
 
         if (response.ok) {
