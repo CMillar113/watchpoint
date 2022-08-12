@@ -71,10 +71,8 @@ function checkForRoutines(passedAthlete, passedElement) {
             key={metric.athlete_element_routine_id}
             className=" w-full h-10  border-black border-2 flex "
             onClick={function () {
-              let path = lowerCaseFirstLetter(metric.routine_name);
-              Router.push(
-                `/${workoutPathTitle}/routine-${metric.routine_name}`
-              );
+              Router.push(`/workouts/${workoutPathTitle}/routineDisplay`);
+              // -${metric.routine_id}
             }}
           >
             {metric.routine_name}
