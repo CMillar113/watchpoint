@@ -18,7 +18,6 @@ export default async function handler(req, res) {
 const sql = `
 SELECT coach_athlete.athlete_id, coach_athlete.coach_id, coach_athlete.checked_in,coach_athlete.coach_notes 
 FROM coach_athlete
-  
 `;
 
 // Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]

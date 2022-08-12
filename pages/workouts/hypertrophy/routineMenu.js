@@ -2,10 +2,22 @@ import Meta from "../../../src/components/Meta";
 import Navbar from "../../../src/components/NavBar";
 import NavMenu from "../../../src/components/NavMenu";
 import PageLayout from "../../../src/components/PageLayout";
+import Button from "../../../src/components/Button";
+import { useEffect, useState } from "react";
+import Router from "next/router";
+
+import { lowerCaseFirstLetter } from "../../_app";
+
+//Constants for testing data pull
+const workoutTitle = "Hypertrophy";
+const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
+let passedAthlete = 1;
+let passedElement = 3;
+//Constants for testing data pull
 
 export default function routineMenu() {
-  const workoutTitle = "Hypertrophy";
-  const workoutPathTitle = "hypertrophy";
+  let routines = null;
+  routines = checkForRoutines(passedAthlete, passedElement);
 
   return (
     <>
@@ -17,15 +29,17 @@ export default function routineMenu() {
             Searchbar placeholder
           </div>
         </div>
-        <div className=" w-full h-10  border-black border-2 flex ">
-          Routine Name
-        </div>
+        {routines}
+        <Button
+          path={`/workouts/${workoutPathTitle}NewRoutine`}
+          label={"Create New Routine +"}
+        />
       </PageLayout>
     </>
   );
 }
 
-function checkForRoutines(passedElement, passedAthlete) {
+function checkForRoutines(passedAthlete, passedElement) {
   const [metrics, setMetrics] = useState(undefined);
 
   useEffect(() => {
@@ -53,9 +67,18 @@ function checkForRoutines(passedElement, passedAthlete) {
       })
       .map(function (metric) {
         return (
-          <div className=" w-full h-10  border-black border-2 flex ">
+          <button
+            key={metric.athlete_element_routine_id}
+            className=" w-full h-10  border-black border-2 flex "
+            onClick={function () {
+              let path = lowerCaseFirstLetter(metric.routine_name);
+              Router.push(
+                `/${workoutPathTitle}/routine-${metric.routine_name}`
+              );
+            }}
+          >
             {metric.routine_name}
-          </div>
+          </button>
         );
       });
     return routines;
