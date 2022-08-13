@@ -1,5 +1,5 @@
 /**
- * Get the exercises associated with a routine in a specific element
+ * Get the exercises associated with a routine and their sets
  *
  */
 
@@ -15,13 +15,16 @@ export default async function handler(req, res) {
   }
 }
 
-const sql = `SELECT routine_exercise.routine_exercise_id, routine_exercise.routine_id,routine_exercise.exercise_id, exercise.exercise_name, routine.routine_name FROM routine_exercise 
+const sql = `SELECT routine_exercise.routine_exercise_id, routine_exercise.routine_id, routine_exercise.exercise_id, exercise.exercise_name, routine.routine_name, routine.routine_note, athlete_routine_exercise.sets
+FROM routine_exercise 
 INNER JOIN exercise on routine_exercise.exercise_id = exercise.exercise_id
-INNEr JOIN routine on routine_exercise.routine_id = routine.routine_id`;
+INNER JOIN routine on routine_exercise.routine_id = routine.routine_id
+INNER JOIN athlete_routine_exercise on athlete_routine_exercise.routine_id = routine.routine_id `;
 
 // Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
 async function getRoutinesExercises() {
   const exercises = await executeQuery({ query: sql });
+  console.log("hello");
   console.log(exercises);
   return exercises;
 }
