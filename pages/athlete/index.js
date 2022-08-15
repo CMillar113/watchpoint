@@ -6,12 +6,15 @@ import NavMenu from "../../src/components/NavMenu";
 
 import Router from "next/router";
 import { useEffect, useState } from "react";
+import { useUser } from "@auth0/nextjs-auth0";
 
 import { lowerCaseFirstLetter } from "../_app";
 
 export default function athlete() {
+  const { user, error, isLoading } = useUser();
   let userName = null;
-  userName = checkUserName();
+  // userName = checkUserName();
+  userName = user.nickname;
 
   let body = null;
   body = checkHealthcareElements();
@@ -60,6 +63,7 @@ export default function athlete() {
           <Button path="/plan/selectElements" label="Set Goals" />
           <Button path="/settings" label="Settings" />
           <Button path="/athlete/reviewWeek" label="Week in Review" />
+          <Button path="/api/auth/logout" label="Sign out" />
         </div>
       </PageLayout>
     </>

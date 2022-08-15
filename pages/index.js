@@ -2,8 +2,14 @@ import Meta from "../src/components/Meta";
 import Button from "../src/components/Button";
 import Image from "next/image";
 import PageLayout from "../src/components/PageLayout";
+import { useUser } from "@auth0/nextjs-auth0";
+import router from "next/router";
 
 export default function Home() {
+  const { user, error, isLoading } = useUser();
+  if (user !== undefined) {
+    router.push("/accountCheck");
+  }
   return (
     <>
       <Meta title="Watchpoint" />
@@ -29,8 +35,8 @@ export default function Home() {
             Health & Fitness Lifestyle Tracker{" "}
           </h2>
           <Button path="/about" label="About WatchPoint" />
-          <Button path="/createAccount" label="Create Account" />
-          <Button path="/signIn" label="Sign In" />
+          <Button path="/api/auth/login" label="Create Account" />
+          <Button path="/api/auth/login" label="Sign In" />
         </div>
       </PageLayout>
     </>

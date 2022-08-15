@@ -13,7 +13,8 @@ export default function myCoach() {
   let passedAthlete_id = 1;
   let elements = null;
   elements = checkAthletesElements(passedAthlete_id); //TODO - SQL req hardcoded with athlete_id = 1
-
+  console.log("yooooooooo");
+  console.log(elements);
   let passedCoach_id = 2; //TODO Not hardcoded- Passed from connectToCoach screen
   let coachCard = null;
   coachCard = checkCoach(passedCoach_id); //Same function as connectToCoach - return coach card but with filter depending on the coach_id selected
@@ -25,12 +26,12 @@ export default function myCoach() {
       <PageLayout>
         {coachCard}
         <h3 className="flex justify-center mb-2">Allow Coach Access to:</h3>
-        <form className="text-left text-xl flex-col px-10 " action="/settings">
+        <form className="text-left text-xl flex-col px-10  " action="/settings">
           {elements}
 
           <button
             id="submit"
-            className={`border-2 border-black mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg ${buttonStyles.primary}`}
+            className={`border-2 border-black mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg  ${buttonStyles.primary}`}
             type="submit"
           >
             Update
@@ -52,7 +53,7 @@ function checkAthletesElements(passedAthlete_id) {
   useEffect(() => {
     (async function () {
       try {
-        const response = await fetch("/api/metrics");
+        const response = await fetch("/api/athlete_elements");
         const result = await response.json();
 
         if (response.ok) {
