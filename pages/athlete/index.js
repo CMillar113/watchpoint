@@ -9,20 +9,60 @@ import { useEffect, useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
 
 import { lowerCaseFirstLetter } from "../_app";
+import FullScreenSpinner from "../../src/components/FullScreenSpinner";
 
 export default function athlete() {
-  const { user, error, isLoading } = useUser();
-  let userName = null;
-  // userName = checkUserName();
-  userName = user.nickname;
+  const [metrics, setMetrics] = useState(undefined);
+  const { user, isLoading } = useUser();
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const response = await fetch("/api/athlete_elements");
+        const result = await response.json();
+
+        if (response.ok) {
+          setMetrics(result);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
 
   let body = null;
-  body = checkHealthcareElements();
+
+  if (metrics !== undefined && user !== undefined) {
+    body = metrics
+      .filter(function (metric) {
+        return (
+          metric.element_class_id === 2 && metric.unique_identifier === user.sub
+        );
+      })
+      .map(function (metric) {
+        return (
+          <button
+            key={`${metric.element_id}-btn`}
+            className="bg-black text-white items-center "
+            onClick={function () {
+              const path = lowerCaseFirstLetter(metric.element_name);
+              Router.push(`/athlete/${path}Dash`);
+            }}
+          >
+            {metric.element_name}
+          </button>
+        );
+      });
+  }
+
+  if (isLoading) {
+    return <FullScreenSpinner />;
+  }
 
   return (
     <>
       <Meta title="Athlete - Home" />
-      <Navbar title={userName} />
+      <Navbar title={user.nickname || ""} />
       <PageLayout>
         <NavMenu
           pathLeft={"/plan/setNutrition"}
@@ -68,76 +108,4 @@ export default function athlete() {
       </PageLayout>
     </>
   );
-}
-
-function checkUserName() {
-  const [userDetails, setMetrics] = useState(undefined);
-
-  useEffect(() => {
-    (async function () {
-      try {
-        const response = await fetch("/api/userDetails");
-        const result = await response.json();
-
-        if (response.ok) {
-          setMetrics(result);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-  }, []);
-
-  if (userDetails !== undefined) {
-    // console.log("test");
-    // console.log(userDetails);
-
-    let userName = userDetails.map(function (userDetail) {
-      // console.log(userDetail.first_name);
-      return userDetail.first_name; //This is the return of the SQL data to the variable userName
-    });
-    // console.log(userName);
-    return userName; //Must return username as this is the return to the function call
-  }
-}
-
-function checkHealthcareElements() {
-  const [metrics, setMetrics] = useState(undefined);
-
-  useEffect(() => {
-    (async function () {
-      try {
-        const response = await fetch("/api/athlete_elements");
-        const result = await response.json();
-
-        if (response.ok) {
-          setMetrics(result);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-  }, []);
-
-  if (metrics !== undefined) {
-    let body = metrics
-      .filter(function (metric) {
-        return metric.element_class_id === 2;
-      })
-      .map(function (metric) {
-        return (
-          <button
-            key={`${metric.element_id}-btn`}
-            className="bg-black text-white items-center "
-            onClick={function () {
-              let path = lowerCaseFirstLetter(metric.element_name);
-              Router.push(`/athlete/${path}Dash`);
-            }}
-          >
-            {metric.element_name}
-          </button>
-        );
-      });
-    return body;
-  }
 }

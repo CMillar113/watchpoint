@@ -5,13 +5,14 @@ import PageLayout from "../../../src/components/PageLayout";
 import Button from "../../../src/components/Button";
 import { useEffect, useState } from "react";
 import Router from "next/router";
+import { useUser } from "@auth0/nextjs-auth0";
 
 import { lowerCaseFirstLetter } from "../../_app";
 
 //Constants for testing data pull
 const workoutTitle = "Hypertrophy";
 const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
-let passedAthlete = 1;
+let passedAthlete = 1; //user.sub
 let passedElement = 3;
 //Constants for testing data pull
 

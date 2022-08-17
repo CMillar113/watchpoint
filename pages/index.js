@@ -1,15 +1,33 @@
-import Meta from "../src/components/Meta";
-import Button from "../src/components/Button";
+import { useEffect } from "react";
 import Image from "next/image";
-import PageLayout from "../src/components/PageLayout";
-import { useUser } from "@auth0/nextjs-auth0";
 import router from "next/router";
 
+import { useUser } from "@auth0/nextjs-auth0";
+
+import Meta from "../src/components/Meta";
+import Button from "../src/components/Button";
+import PageLayout from "../src/components/PageLayout";
+import Logo from "../src/assets/watchpointLogo.jpg";
+import FullScreenSpinner from "../src/components/FullScreenSpinner";
+
 export default function Home() {
-  const { user, error, isLoading } = useUser();
-  if (user !== undefined) {
-    router.push("/accountCheck");
+  const { user, isLoading } = useUser();
+
+  useEffect(() => {
+    if (user) {
+      router.push("/accountCheck");
+    }
+  }, [user]);
+
+  if (isLoading) {
+    return <FullScreenSpinner />;
   }
+
+  if (user) {
+    // Don't show login form flash to logged in users before redirecting
+    return null;
+  }
+
   return (
     <>
       <Meta title="Watchpoint" />
@@ -19,13 +37,7 @@ export default function Home() {
           <h1 className="mt-2 text-h1-mobile md:text-h1-medium lg:text-h1-large ">
             Watchpoint
           </h1>
-          <Image
-            src="/images/WatchpointLogo.jpg"
-            alt=""
-            height={200}
-            width={200}
-            alt="Logo"
-          ></Image>
+          <Image src={Logo} height={64} width={64} alt="Logo"></Image>
           <h2 className="mt-2 text-h2-mobile md:text-h2-medium lg:text-h2-large">
             {" "}
             The All - in - One{" "}

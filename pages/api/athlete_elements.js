@@ -20,7 +20,7 @@ export default async function handler(req, res) {
  */
 
 const sql = `
-  SELECT athlete.athlete_id, element.element_name, element.element_id, element.element_class_id
+  SELECT athlete.athlete_id, athlete.unique_identifier, element.element_name, element.element_id, element.element_class_id
   FROM element
   INNER JOIN athlete_element ON element.element_id = athlete_element.element_id
   INNER JOIN athlete ON athlete_element.athlete_id = athlete.athlete_id; 

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Router from "next/router";
 
 import { lowerCaseFirstLetter } from "../../_app";
+import { useUser } from "@auth0/nextjs-auth0";
 
 //Constants for testing data pull
 const workoutTitle = "Hypertrophy";
