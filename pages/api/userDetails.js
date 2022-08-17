@@ -25,8 +25,8 @@ export default async function handler(req, res) {
 }
 
 const sql = `
-SELECT * FROM athlete WHERE athlete.unique_identifier = ?
-`;
+ SELECT * FROM athlete WHERE athlete.unique_identifier = ?
+ `;
 //Brings athlete firstname
 
 // Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]

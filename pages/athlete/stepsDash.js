@@ -2,10 +2,44 @@ import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import Button from "../../src/components/Button";
-import Link from "next/link";
 import buttonStyles from "../../styles/Button.module.css";
+import { useUser } from "@auth0/nextjs-auth0";
+import { useEffect, useState } from "react";
 
 export default function steps() {
+  const [metrics, setMetrics] = useState(undefined);
+  const { user, isLoading } = useUser(); //Get current users 7 day average of steps
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const response = await fetch("/api/userHealthcare");
+        const result = await response.json();
+
+        if (response.ok) {
+          setMetrics(result);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
+
+  let body = null;
+
+  if (metrics !== undefined && user !== undefined) {
+    body = metrics
+      .filter(function (metric) {
+        return metric.element_id === 8 && metric.unique_identifier === user.sub;
+      })
+      .map(function (metric) {
+        return metric.log_value;
+      });
+  }
+
+  console.log();
+  // last = body[body.length - 1];
+
   return (
     <>
       <Meta title="Steps" />
@@ -16,7 +50,12 @@ export default function steps() {
         </div>
 
         <div className="mt-5 text-center items-center content-center">
-          <form action={`/athlete`} method="post" data-validate="parsley">
+          <form
+            action={`/athlete`}
+            method="post"
+            data-validate="parsley"
+            // onClick={}
+          >
             <div className=" mb-2 ">
               <input
                 className="border-2 border-black w-8/12 h-10"
@@ -37,7 +76,7 @@ export default function steps() {
                 name="date"
                 data-required="true"
                 data-type="date"
-                data-error-message="Select a Date "
+                data-error-message="Select a Date"
               />
             </div>
 
@@ -45,16 +84,35 @@ export default function steps() {
               className={`mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg border-2 border-black  ${buttonStyles.primary}`}
               type="submit"
               value="Add Entry"
-              //TODO - Does not have same reaction as <Button> dosnt feel like its clicked
             />
           </form>
         </div>
         <Button path="/athlete/stepsLog" label="Steps Log" />
 
         <div className=" w-full mb-4 mt-4 border-2 border-black ">
-          <h3 className=" mt-1  text-center text-xl">7 Day Average:</h3>
+          <h3 className=" mt-1  text-center text-xl">Last Entery: {body}</h3>
         </div>
       </PageLayout>
     </>
   );
+}
+
+async function logSteps(value) {
+  console.log("create", { value });
+  // try {
+  //   const response = await fetch("/api/healthcare/createSteps", {
+  //     method: "POST",
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //     }),
+  //   });
+  //   const result = await response.json();
+
+  //   console.log({ result });
+  // } catch (e) {
+  //   console.error(e);
+  // }
 }
