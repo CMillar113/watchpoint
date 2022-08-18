@@ -30,7 +30,7 @@ const sql = `
 //Brings athlete firstname
 
 // Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
-async function getUserDetails(id) {
+export async function getUserDetails(id) {
   const userDetails = await executeQuery({ query: sql, values: [id] });
   // talk to database get metrics for a given userID
   return userDetails;

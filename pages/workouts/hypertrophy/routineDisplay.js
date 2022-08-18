@@ -37,10 +37,10 @@ export default function routineDisplay() {
       const response = await fetch(`/api/routine_exercise?routine_id=${id}`);
       const result = await response.json();
       console.log({ result });
-      if ("routine" in result) {
-        setRoutine(result.routine);
-      } else {
+      if ("message" in result) {
         console.error(result.message);
+      } else {
+        setRoutine(result);
       }
       setLoading(false);
     }

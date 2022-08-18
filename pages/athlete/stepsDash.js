@@ -6,39 +6,54 @@ import buttonStyles from "../../styles/Button.module.css";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useEffect, useState } from "react";
 
+const today = new Date().toISOString().substring(0, 10);
+
 export default function steps() {
-  const [metrics, setMetrics] = useState(undefined);
-  const { user, isLoading } = useUser(); //Get current users 7 day average of steps
+  const [loggedSteps, setLoggedSteps] = useState([]);
+  const { user } = useUser(); //Get current users 7 day average of steps
+  const [steps, setSteps] = useState(0);
+  const [date, setDate] = useState(today);
 
   useEffect(() => {
+    if (!user) return;
     (async function () {
       try {
-        const response = await fetch("/api/userHealthcare");
+        const auth0PrimaryKey = user.sub;
+        const response = await fetch(
+          `/api/userHealthcare?auth0=${auth0PrimaryKey}`
+        );
         const result = await response.json();
 
+        console.log({ result });
+
         if (response.ok) {
-          setMetrics(result);
+          setLoggedSteps(result.steps);
         }
       } catch (e) {
         console.error(e);
       }
     })();
-  }, []);
+  }, [user]);
 
-  let body = null;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (metrics !== undefined && user !== undefined) {
-    body = metrics
-      .filter(function (metric) {
-        return metric.element_id === 8 && metric.unique_identifier === user.sub;
-      })
-      .map(function (metric) {
-        return metric.log_value;
-      });
-  }
-
-  console.log();
-  // last = body[body.length - 1];
+    const data = { steps, date };
+    console.log({ data });
+    try {
+      const response = await fetch(
+        `/api/healthcare/createSteps?id=${user.sub}&steps=${steps}&date=${date}`,
+        {
+          method: "POST",
+          data: JSON.stringify(data),
+        }
+      );
+      const result = await response.json();
+      console.log({ result });
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <>
@@ -54,7 +69,7 @@ export default function steps() {
             action={`/athlete`}
             method="post"
             data-validate="parsley"
-            // onClick={}
+            onSubmit={handleSubmit}
           >
             <div className=" mb-2 ">
               <input
@@ -65,6 +80,10 @@ export default function steps() {
                 data-required="true"
                 data-type="steps"
                 data-error-message="Enter a value for Daily Steps "
+                value={steps}
+                onChange={(e) => {
+                  setSteps(e.target.value);
+                }}
               />
             </div>
             {/* will need to autopoulate with todays date but allow choice - scroll selector */}
@@ -72,11 +91,14 @@ export default function steps() {
               <input
                 className="border-2 border-black w-8/12 h-10"
                 type="date"
-                placeholder=""
                 name="date"
                 data-required="true"
                 data-type="date"
                 data-error-message="Select a Date"
+                value={date}
+                onChange={(e) => {
+                  setDate(e.target.value);
+                }}
               />
             </div>
 
@@ -85,34 +107,22 @@ export default function steps() {
               type="submit"
               value="Add Entry"
             />
+            <Button type="submit" path="/athlete/stepsLog" label="Steps Log" />
           </form>
         </div>
-        <Button path="/athlete/stepsLog" label="Steps Log" />
 
         <div className=" w-full mb-4 mt-4 border-2 border-black ">
-          <h3 className=" mt-1  text-center text-xl">Last Entery: {body}</h3>
+          <h3 className=" mt-1  text-center text-xl">
+            {loggedSteps.length === 0 ? (
+              <>
+                Looking a bit bare <br /> Try logging some steps
+              </>
+            ) : (
+              <>Last Entry: {loggedSteps[0].log_value} steps</>
+            )}
+          </h3>
         </div>
       </PageLayout>
     </>
   );
-}
-
-async function logSteps(value) {
-  console.log("create", { value });
-  // try {
-  //   const response = await fetch("/api/healthcare/createSteps", {
-  //     method: "POST",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //     }),
-  //   });
-  //   const result = await response.json();
-
-  //   console.log({ result });
-  // } catch (e) {
-  //   console.error(e);
-  // }
 }

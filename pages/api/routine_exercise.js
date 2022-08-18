@@ -16,11 +16,9 @@ export default async function handler(req, res) {
       const notes = exercises[0].routine_note;
 
       res.status(200).json({
-        routine: {
-          exercises,
-          name,
-          notes,
-        },
+        exercises,
+        name,
+        notes,
       });
     } else {
       console.log(error);
@@ -44,7 +42,6 @@ WHERE routine.routine_id = ?;
 // Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
 async function getRoutinesExercises(routineId) {
   const exercises = await executeQuery({ query: sql, values: [routineId] });
-  console.log("hello");
   console.log(exercises);
   return exercises;
 }
