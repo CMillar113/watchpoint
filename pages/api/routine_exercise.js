@@ -7,11 +7,29 @@ import executeQuery from "../../lib/db";
 
 // Controller function which is separated from the database logic and just returns data to frontend
 export default async function handler(req, res) {
-  if (req.method === "GET") {
-    const metrics = await getRoutinesExercises();
-    res.status(200).json(metrics);
-  } else {
-    console.log(error);
+  try {
+    if (req.method === "GET") {
+      const routineId = req.query.routine_id;
+      const exercises = await getRoutinesExercises(routineId);
+
+      const name = exercises[0].routine_name;
+      const notes = exercises[0].routine_note;
+
+      res.status(200).json({
+        routine: {
+          exercises,
+          name,
+          notes,
+        },
+      });
+    } else {
+      console.log(error);
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(400).json({
+      message: "Couldn't find routine",
+    });
   }
 }
 
@@ -19,11 +37,13 @@ const sql = `SELECT routine_exercise.routine_exercise_id, routine_exercise.routi
 FROM routine_exercise 
 INNER JOIN exercise on routine_exercise.exercise_id = exercise.exercise_id
 INNER JOIN routine on routine_exercise.routine_id = routine.routine_id
-INNER JOIN athlete_routine_exercise on athlete_routine_exercise.routine_id = routine.routine_id `;
+INNER JOIN athlete_routine_exercise on athlete_routine_exercise.routine_id = routine.routine_id 
+WHERE routine.routine_id = ?;
+`;
 
 // Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
-async function getRoutinesExercises() {
-  const exercises = await executeQuery({ query: sql });
+async function getRoutinesExercises(routineId) {
+  const exercises = await executeQuery({ query: sql, values: [routineId] });
   console.log("hello");
   console.log(exercises);
   return exercises;

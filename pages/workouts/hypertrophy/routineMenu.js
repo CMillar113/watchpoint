@@ -6,13 +6,14 @@ import Button from "../../../src/components/Button";
 import { useEffect, useState } from "react";
 import Router from "next/router";
 import { useUser } from "@auth0/nextjs-auth0";
+import Link from "next/link";
 
 import { lowerCaseFirstLetter } from "../../_app";
 
 //Constants for testing data pull
 const workoutTitle = "Hypertrophy";
 const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
-let passedElement = 3;
+let passedElement = 3; // TODO -Could look up name and element ID then would work for all elements - single page?
 //Constants for testing data pull
 
 export default function routineMenu() {
@@ -42,17 +43,22 @@ export default function routineMenu() {
         return (
           metric.unique_identifier === user.sub &&
           metric.element_id === passedElement
+          //Filters for all routines in hypertrophy for current user
         );
       })
       .map(function (metric) {
         return (
           <button
             key={metric.athlete_element_routine_id}
-            className=" w-full h-10 border-black border-2 flex "
+            className=" w-full h-10 border-black border-2 flex px-3 mb-1"
             onClick={function () {
-              Router.push(`/workouts/${workoutPathTitle}/routineDisplay`);
-              // -${metric.routine_id}
+              Router.push(
+                `/workouts/${workoutPathTitle}/routineDisplay?id=${metric.routine_id}`
+              );
             }}
+            // onClick={function () {
+            //   Router.push(`/workouts/${workoutPathTitle}/routineDisplay`);
+            // }}
           >
             {metric.routine_name}
           </button>
@@ -79,49 +85,5 @@ export default function routineMenu() {
         </PageLayout>
       </>
     );
-  }
-}
-
-function checkForRoutines(passedAthlete, passedElement) {
-  const [metrics, setMetrics] = useState(undefined);
-
-  useEffect(() => {
-    (async function () {
-      try {
-        const response = await fetch("/api/athlete_routine");
-        const result = await response.json();
-
-        if (response.ok) {
-          setMetrics(result);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-  }, []);
-
-  if (metrics !== undefined) {
-    let routines = metrics
-      .filter(function (metric) {
-        return metric.athlete_id === passedAthlete;
-      })
-      .filter(function (metric) {
-        return metric.element_id === passedElement;
-      })
-      .map(function (metric) {
-        return (
-          <button
-            key={metric.athlete_element_routine_id}
-            className=" w-full h-10  border-black border-2 flex "
-            onClick={function () {
-              Router.push(`/workouts/${workoutPathTitle}/routineDisplay`);
-              // -${metric.routine_id}
-            }}
-          >
-            {metric.routine_name}
-          </button>
-        );
-      });
-    return routines;
   }
 }
