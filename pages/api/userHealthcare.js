@@ -19,6 +19,7 @@ export default async function handler(req, res) {
     res.status(200).json({
       steps: getSteps(metrics),
       bodyweight: getBodyWeight(metrics),
+      sleep: getSleep(metrics),
     });
   } else {
     console.log(error);
@@ -49,4 +50,7 @@ function getSteps(metrics) {
 }
 function getBodyWeight(metrics) {
   return metrics.filter((log) => log.element_name === "Bodyweight");
+}
+function getSleep(metrics) {
+  return metrics.filter((log) => log.element_name === "Sleep");
 }

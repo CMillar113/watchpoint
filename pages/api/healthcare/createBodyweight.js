@@ -1,5 +1,5 @@
 /**
- * check, create or update log for steps
+ * check, create or update log for bodyweight
  */
 
 import executeQuery from "../../../lib/db";
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   console.log({ req });
 
   const queryParams = req.query;
-  const { id, steps, date } = queryParams;
+  const { id, bodyweight, date } = queryParams;
 
   const athlete = await getUserDetails(id); //retrieve sql base ID from auth0 base ID
 
@@ -25,13 +25,13 @@ export default async function handler(req, res) {
   const athleteId = athlete[0].athlete_id; // athleteId is now sql based
 
   //    Get log by date and log_group
-  if (await checkIfLogAlreadyExist(athleteId, date, steps)) {
+  if (await checkIfLogAlreadyExist(athleteId, 7, date)) {
     // if log for the log group (ie steps) already exists for the given date, update
-    const log = await updateLog(athleteId, date, steps, 8);
+    const log = await updateLog(athleteId, date, bodyweight, 7);
     res.status(202).json(log);
   } else {
     // insert
-    const log = await createLog(athleteId, 8, date, steps);
+    const log = await createLog(athleteId, 7, date, bodyweight);
     res.status(201).json(log);
   }
 }
@@ -39,9 +39,9 @@ export default async function handler(req, res) {
 // Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
 async function createLog(athleteId, elementId, date, log) {
   const sql = `
-  INSERT INTO healthcare_log (healtchcare_log_id, athlete_id, element_id, date, log_value) 
-  VALUES (NULL, ?, '?', ?, ?);
-  `;
+   INSERT INTO healthcare_log (healtchcare_log_id, athlete_id, element_id, date, log_value) 
+   VALUES (NULL, ?, '?', ?, ?);
+   `;
 
   const result = await executeQuery({
     query: sql,
@@ -53,8 +53,8 @@ async function createLog(athleteId, elementId, date, log) {
 
 async function updateLog(athleteId, date, log, elementId) {
   const sql = `
-  UPDATE healthcare_log SET log_value = ? WHERE athlete_id = ?  AND date =? AND element_id = ?
-  `;
+   UPDATE healthcare_log SET log_value = ? WHERE athlete_id = ?  AND date =? AND element_id = ?
+   `;
 
   const result = await executeQuery({
     query: sql,
@@ -66,11 +66,11 @@ async function updateLog(athleteId, date, log, elementId) {
 
 async function checkIfLogAlreadyExist(athleteId, elementId, date) {
   const sql = `
-     SELECT COUNT(*) FROM healthcare_log
-     WHERE healthcare_log.athlete_ID = ?
-     AND healthcare_log.element_id = ?
-     AND healthcare_log.date = ?
-  `;
+  SELECT COUNT(*) FROM healthcare_log
+  WHERE healthcare_log.athlete_ID = ?
+  AND healthcare_log.element_id = ?
+  AND healthcare_log.date = ?
+`;
 
   ///// TODO - fix query
 
@@ -79,12 +79,15 @@ async function checkIfLogAlreadyExist(athleteId, elementId, date) {
     values: [athleteId, elementId, date],
     ///// TODO - fill in these values depending on hte structure of the query
   });
+  console.log({ result });
+  console.log({ count: result[0]["COUNT(*)"] });
 
-  if (result === 0) {
+  if (result[0]["COUNT(*)"] === 0) {
     return false;
   } else {
     return true;
   }
+
   // talk to database get metrics for a given userID
   // look at the result object to see if the count is greater than 0
   // if it's greater than zero, isAlreadyThere should be true

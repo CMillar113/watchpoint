@@ -5,6 +5,7 @@ import Button from "../../src/components/Button";
 import buttonStyles from "../../styles/Button.module.css";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const today = new Date().toISOString().substring(0, 10);
 
@@ -13,6 +14,7 @@ export default function steps() {
   const { user } = useUser(); //Get current users 7 day average of steps
   const [steps, setSteps] = useState(0);
   const [date, setDate] = useState(today);
+  const router = useRouter();
 
   useEffect(() => {
     if (!user) return;
@@ -35,6 +37,7 @@ export default function steps() {
     })();
   }, [user]);
 
+  //FORM SUBMIT
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -50,11 +53,16 @@ export default function steps() {
       );
       const result = await response.json();
       console.log({ result });
+
+      if (response.ok) {
+        router.push("/athlete");
+      }
     } catch (e) {
       console.error(e);
     }
   };
 
+  //PAGE RETURN
   return (
     <>
       <Meta title="Steps" />
@@ -86,7 +94,7 @@ export default function steps() {
                 }}
               />
             </div>
-            {/* will need to autopoulate with todays date but allow choice - scroll selector */}
+
             <div className=" mb-2">
               <input
                 className="border-2 border-black w-8/12 h-10"
