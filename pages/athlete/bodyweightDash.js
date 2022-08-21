@@ -55,7 +55,7 @@ export default function bodyweight() {
       console.log({ result });
 
       if (response.ok) {
-        router.push("/athlete");
+        router.push("/athlete/bodyweightLog");
       }
     } catch (e) {
       console.error(e);

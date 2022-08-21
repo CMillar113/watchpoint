@@ -55,7 +55,7 @@ export default function steps() {
       console.log({ result });
 
       if (response.ok) {
-        router.push("/athlete");
+        router.push("/athlete/stepsLog");
       }
     } catch (e) {
       console.error(e);

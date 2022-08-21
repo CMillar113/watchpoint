@@ -7,20 +7,17 @@ import buttonStyles from "../../styles/Button.module.css";
 import { useEffect, useState } from "react";
 
 export default function selectElements() {
-  let calories = 0;
-  let waterIntake = 0;
-  let bodyweight = 0;
-  let steps = 0;
-  let sleep = 0;
-  let hypertrophyWorkout = 0;
-  let cardioWorkout = 0;
+  //POPULATE CHECK BOXES INDEPENDANDT OF UER DATA
+  const nutritionElements = checkNutrtionElements();
+  const healthcareElements = checkHealthcareElements();
+  const workoutElements = checkWorkoutElements();
 
-  let nutritionElements = null;
-  let healthcareElements = null;
-  let workoutElements = null;
-  nutritionElements = checkNutrtionElements();
-  healthcareElements = checkHealthcareElements();
-  workoutElements = checkWorkoutElements();
+  //On submit must create link between that user and that element
+  // Must also be able to delete that link is user un-selects the element
+  //run check to see what elements the user is linked to and check those boxes
+  //on submit create and/or delete links
+
+  const handleSubmit = async (e) => {};
 
   return (
     <>
@@ -30,6 +27,7 @@ export default function selectElements() {
         <form
           className="text-left text-xl flex-col px-10 "
           action="/plan/setNutrition" // TODO Needs changed to link to the 'setPlan' for whatever first elemenet thats suitable is
+          onSubmit={handleSubmit()}
         >
           <div
             id="elementClass"
@@ -65,6 +63,7 @@ export default function selectElements() {
   );
 }
 
+//BUILDS FORM - Will update if new elements are added (SCALABLE)
 function checkNutrtionElements() {
   const [metrics, setMetrics] = useState(undefined);
 

@@ -1,4 +1,3 @@
-export const CALORIES_PER_FAT = 9;
 export const Calories = {
   carb: 4,
   fat: 9,

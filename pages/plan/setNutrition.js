@@ -1,12 +1,82 @@
 import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
+import { Calories } from "../../src/constants";
 import Button from "../../src/components/Button";
 import Link from "next/link";
 import buttonStyles from "../../styles/Button.module.css";
 import Router from "next/router";
+import { useUser } from "@auth0/nextjs-auth0";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export default function setGoals() {
+  const { user } = useUser();
+  const router = useRouter();
+  const [loggedMacros, setLoggedMacros] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+  const [protein, setProtein] = useState(0);
+  const [carbs, setCarbs] = useState(0);
+  const [fats, setFats] = useState(0);
+  const [water, setWater] = useState(0);
+
+  //get previous logged info to populate
+  //create handle submit for new daat
+  useEffect(() => {
+    if (!user) return;
+    (async function () {
+      setLoading(true);
+      try {
+        const auth0PrimaryKey = user.sub;
+        const response = await fetch(
+          `/api/userNutrition?auth0=${auth0PrimaryKey}`
+        );
+        const result = await response.json();
+
+        console.log({ result });
+
+        if (response.ok) {
+          setLoggedMacros(result.metrics[0]);
+        }
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [user]);
+
+  //CALORIE CALCS USING IMPORTED CONSTANTS
+  const num =
+    loggedMacros.protein * Calories.protein +
+    loggedMacros.fats * Calories.fat +
+    loggedMacros.carbs * Calories.carb;
+  const calories = num.toString();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = { protein, carbs, fats, water };
+    console.log({ data });
+    try {
+      const response = await fetch(
+        `/api/healthcare/createNutrtion?id=${user.sub}&protein=${protein}&carbs=${carbs}&fats=${fats}&water=${water}`,
+        {
+          method: "POST",
+          data: JSON.stringify(data),
+        }
+      );
+      const result = await response.json();
+      console.log({ result });
+
+      if (response.ok) {
+        router.push("/plan/setHealthcare");
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <>
       <Meta title="Nutrition Plan" />
@@ -28,30 +98,31 @@ export default function setGoals() {
             id="row"
             className="h-8 w-full bg-gray-300 flex items-center justify-center mb-1"
           >
-            <h3>Previous Calories PH</h3>
+            <h3>{calories} Kcal</h3>
           </div>
           <h3>Previous Macros:</h3>
           <div
             id="row"
             className="h-8 w-full bg-gray-300 flex items-center justify-center mb-1"
           >
-            <h3>Protein PH</h3>
+            <h3>{loggedMacros.protein} g</h3>
           </div>
           <div
             id="row"
             className="h-8 w-full bg-gray-300 flex items-center justify-center mb-1"
           >
-            <h3>Carbs PH</h3>
+            <h3>{loggedMacros.carbs} g</h3>
             <br />
           </div>
           <div
             id="row"
             className="h-8 w-full bg-gray-300 flex items-center justify-center "
           >
-            <h3>Fats PH</h3>
+            <h3>{loggedMacros.fats} g</h3>
             <br />
           </div>
         </div>
+
         {/* RightSide Form*/}
         <div
           id="right side"
@@ -67,7 +138,7 @@ export default function setGoals() {
           <h3>New Macros:</h3>
           <form
             id="macroForm"
-            // action="submitForms()"
+            onSubmit={handleSubmit}
             method="post"
             data-validate="parsley"
           >
@@ -79,6 +150,10 @@ export default function setGoals() {
               id="protein"
               data-required="true"
               data-error-message="Enter Protein value"
+              value={protein}
+              onChange={(e) => {
+                setProtein(e.target.value);
+              }}
             />
             <input
               className="h-8 border-2 w-full mb-1 text-center"
@@ -88,6 +163,10 @@ export default function setGoals() {
               id="carbs"
               data-required="true"
               data-error-message="Enter Carbohydrate value"
+              value={carbs}
+              onChange={(e) => {
+                setCarbs(e.target.value);
+              }}
             />
             <input
               className="h-8 border-2 w-full text-center"
@@ -97,6 +176,10 @@ export default function setGoals() {
               id="fat"
               data-required="true"
               data-error-message="Enter Fat value"
+              value={fats}
+              onChange={(e) => {
+                setFats(e.target.value);
+              }}
             />
           </form>
         </div>
@@ -113,7 +196,7 @@ export default function setGoals() {
           // action="submitForms()"
           method="post"
           data-validate="parsley"
-          onSubmit={submitForms}
+          // onSubmit={submitForms}
         >
           <input
             className="h-8 border-2 w-2/3 mb-1 mt-1 flex justify-center text-center"
@@ -123,6 +206,10 @@ export default function setGoals() {
             id="water"
             data-required="true"
             data-error-message="Enter Daily Water Intake value"
+            value={water}
+            onChange={(e) => {
+              setWater(e.target.value);
+            }}
           />
         </form>
         <p className="text-primary-fadedtext text-sm text-center px-2">

@@ -41,8 +41,6 @@ export default function stepsLog() {
     console.log("useEffect", { loggedSteps });
   }, [loggedSteps]); //Spy on state variable if changes
 
-  console.log("DAVY JONES");
-
   return (
     <>
       <Meta title="Steps Log" />

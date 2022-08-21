@@ -25,7 +25,7 @@ export default async function handler(req, res) {
   const athleteId = athlete[0].athlete_id; // athleteId is now sql based
 
   //    Get log by date and log_group
-  if (await checkIfLogAlreadyExist(athleteId, date, steps)) {
+  if (await checkIfLogAlreadyExist(athleteId, 8, date)) {
     // if log for the log group (ie steps) already exists for the given date, update
     const log = await updateLog(athleteId, date, steps, 8);
     res.status(202).json(log);
@@ -80,7 +80,7 @@ async function checkIfLogAlreadyExist(athleteId, elementId, date) {
     ///// TODO - fill in these values depending on hte structure of the query
   });
 
-  if (result === 0) {
+  if (result[0]["COUNT(*)"] === 0) {
     return false;
   } else {
     return true;
