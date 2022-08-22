@@ -91,156 +91,123 @@ export default function setGoals() {
           label="Go To - Calorie/Water Calculator "
         ></Button>
         <div
-          id="left side"
-          className="w-1/2 inline-block border-2 text-xs text-center mt-3"
+          id="previous"
+          className="w-full inline-block border-2 text-xs text-center mt-1"
         >
-          <h3>Previous Calories:</h3>
+          <h3>Current Set Calories:</h3>
           <div
             id="row"
             className="h-8 w-full bg-gray-300 flex items-center justify-center mb-1"
           >
             <h3>{calories} Kcal</h3>
           </div>
-          <h3>Previous Macros:</h3>
+          <h3>Current Set Macros:</h3>
           <div
             id="row"
             className="h-8 w-full bg-gray-300 flex items-center justify-center mb-1"
           >
-            <h3>{loggedMacros.protein} g</h3>
+            <h3>Protein: {loggedMacros.protein} g</h3>
           </div>
           <div
             id="row"
             className="h-8 w-full bg-gray-300 flex items-center justify-center mb-1"
           >
-            <h3>{loggedMacros.carbs} g</h3>
+            <h3>Carbohydrates: {loggedMacros.carbs} g</h3>
             <br />
           </div>
           <div
             id="row"
             className="h-8 w-full bg-gray-300 flex items-center justify-center "
           >
-            <h3>{loggedMacros.fats} g</h3>
+            <h3>Fats: {loggedMacros.fats} g</h3>
             <br />
           </div>
         </div>
 
-        {/* RightSide Form*/}
-        <div
-          id="right side"
-          className=" w-1/2 inline-block border-2 text-xs text-center"
-        >
-          <h3>New Calories:</h3>
-          <div
-            id="row"
-            className="h-8 w-full bg-gray-300 flex items-center justify-center mb-1"
-          >
-            <h3>New Calories PH</h3>
-          </div>
-          <h3>New Macros:</h3>
-          <form
-            id="macroForm"
-            onSubmit={handleSubmit}
-            method="post"
-            data-validate="parsley"
-          >
-            <input
-              className="h-8 border-2 w-full mb-1 text-center"
-              type="number"
-              placeholder="New Protein (g)"
-              name="protein"
-              id="protein"
-              data-required="true"
-              data-error-message="Enter Protein value"
-              value={protein}
-              onChange={(e) => {
-                setProtein(e.target.value);
-              }}
-            />
-            <input
-              className="h-8 border-2 w-full mb-1 text-center"
-              type="number"
-              placeholder="New Carbs (g)"
-              name="carbs"
-              id="carbs"
-              data-required="true"
-              data-error-message="Enter Carbohydrate value"
-              value={carbs}
-              onChange={(e) => {
-                setCarbs(e.target.value);
-              }}
-            />
-            <input
-              className="h-8 border-2 w-full text-center"
-              type="number"
-              placeholder="New Fat (g)"
-              name="fat"
-              id="fat"
-              data-required="true"
-              data-error-message="Enter Fat value"
-              value={fats}
-              onChange={(e) => {
-                setFats(e.target.value);
-              }}
-            />
-            <input
-              className="h-8 border-2 w-full text-center"
-              type="number"
-              placeholder="water"
-              name="water"
-              id="water"
-              data-required="true"
-              data-error-message="Enter water value"
-              value={water}
-              onChange={(e) => {
-                setWater(e.target.value);
-              }}
-            />
-            <input
-              className={`mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg border-2 border-black  ${buttonStyles.primary}`}
-              type="submit"
-              value="Add Entry"
-            />
-          </form>
-        </div>
-        <p className="text-primary-fadedtext text-center text-sm mt-2">
-          {" "}
-          Enter goal macros for the week and your new calories will be
-          calculated{" "}
-        </p>
-        {/* If water Intake Selected
-        <h3 className="mt-5 px-2">Water Intake</h3>
+        {/* Form*/}
         <form
-          className="flex justify-center"
-          id="waterForm"
-          // action="submitForms()"
+          id="macroForm"
+          onSubmit={handleSubmit}
           method="post"
           data-validate="parsley"
-          // onSubmit={submitForms}
         >
+          <h3 className="text-center">New Macros:</h3>
+
           <input
-            className="h-8 border-2 w-2/3 mb-1 mt-1 flex justify-center text-center"
+            className="h-8 border-2 w-full mb-1 text-center"
             type="number"
-            placeholder="Water Intake (Litres)"
+            placeholder="New Protein (g)"
+            name="protein"
+            id="protein"
+            data-required="true"
+            data-error-message="Enter Protein value"
+            value={protein}
+            onChange={(e) => {
+              setProtein(e.target.value);
+            }}
+          />
+          <input
+            className="h-8 border-2 w-full mb-1 text-center"
+            type="number"
+            placeholder="New Carbs (g)"
+            name="carbs"
+            id="carbs"
+            data-required="true"
+            data-error-message="Enter Carbohydrate value"
+            value={carbs}
+            onChange={(e) => {
+              setCarbs(e.target.value);
+            }}
+          />
+          <input
+            className="h-8 border-2 w-full text-center"
+            type="number"
+            placeholder="New Fat (g)"
+            name="fat"
+            id="fat"
+            data-required="true"
+            data-error-message="Enter Fat value"
+            value={fats}
+            onChange={(e) => {
+              setFats(e.target.value);
+            }}
+          />
+          <div
+            id="previous"
+            className="w-full inline-block border-2 text-xs text-center mt-1"
+          >
+            {" "}
+            <h3>Water Goals (L):</h3>
+          </div>
+
+          <input
+            className="h-8 border-2 w-full text-center"
+            type="number"
+            placeholder="water"
             name="water"
             id="water"
             data-required="true"
-            data-error-message="Enter Daily Water Intake value"
+            data-error-message="Enter water value"
             value={water}
             onChange={(e) => {
               setWater(e.target.value);
             }}
           />
+          <div className=" w-full flex justify-center">
+            <input
+              className={`mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg border-2 border-black text-center ${buttonStyles.primary}`}
+              type="submit"
+              value="Update"
+            />
+          </div>
         </form>
-        <p className="text-primary-fadedtext text-sm text-center px-2">
+        <p className="text-primary-fadedtext text-center text-sm mt-1">
           {" "}
-          The daily recommended amount for a healthy adult is 2 litres
-        </p> */}
-        {/* 
-        <Button
-          path="/plan/setHealthcare"
-          label="Confirm"
-          onClick={submitForms}
-        ></Button> */}
+          Enter goal macros for the week and your new calories will be
+          calculated{" "}
+        </p>
+
+        <Button path="/plan/setHealthcare" label="Confirm"></Button>
       </PageLayout>
     </>
   );
