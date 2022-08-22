@@ -76,6 +76,8 @@ export default function setGoals() {
     } catch (e) {
       console.error(e);
     }
+
+    router.reload("/plans/setNutrition");
   };
 
   return (
@@ -207,7 +209,7 @@ export default function setGoals() {
           calculated{" "}
         </p>
 
-        <Button path="/plan/setHealthcare" label="Confirm"></Button>
+        <Button path="/plan/setHealthcare" label="Next"></Button>
       </PageLayout>
     </>
   );

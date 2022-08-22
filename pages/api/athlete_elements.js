@@ -32,7 +32,7 @@ const sql = `
 async function getMetrics() {
   const metrics = await executeQuery({ query: sql });
   console.log(metrics);
-  // talk to database get metrics for a given userID
+
   return metrics;
 }
 

@@ -5,98 +5,202 @@ import Button from "../../src/components/Button";
 import Link from "next/link";
 import buttonStyles from "../../styles/Button.module.css";
 import Router from "next/router";
+import { useUser } from "@auth0/nextjs-auth0";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export default function setHealthcare() {
+  const { user } = useUser();
+  const router = useRouter();
+  const [isLoading, setLoading] = useState(true);
+  const [steps, setSteps] = useState(0);
+  const [bodyweight, setBodyweight] = useState(0);
+  const [metrics, setMetrics] = useState(undefined);
+  const bodyweightElementId = 7;
+  const stepsElementId = 8;
+
+  // useEffect(() => {
+  //   if (!user) return;
+  //   (async function () {
+  //     setLoading(true);
+  //     try {
+  //       const auth0PrimaryKey = user.sub;
+  //       const response = await fetch(
+  //         `/api/athlete_elements?auth0=${auth0PrimaryKey}`
+  //       );
+  //       const result = await response.json();
+
+  //       console.log({ result });
+
+  //       if (response.ok) {
+  //         setElements(result.metrics[0]);
+  //       }
+  //     } catch (e) {
+  //       console.error(e);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   })();
+  // }, [user]);
+
+  // useEffect(() => {
+  //   (async function () {
+  //     try {
+  //       const response = await fetch("/api/athlete_elements");
+  //       const result = await response.json();
+
+  //       if (response.ok) {
+  //         setMetrics(result);
+  //       }
+  //     } catch (e) {
+  //       console.error(e);
+  //     }
+  //   })();
+  // }, []);
+
+  // let body = null;
+
+  // if (metrics !== undefined && user !== undefined) {
+  //   body = metrics
+  //     .filter(function (metric) {
+  //       // TODO - put filter in backend?
+  //       return (
+  //         metric.element_class_id === 2 && metric.unique_identifier === user.sub
+  //       );
+  //     })
+  //     .map(function (metric) {
+  //       return (
+  //         <>
+
+  //         </>
+  //       );
+  //     });
+  // }
+
+  //FORM HANDLE SUBMIT
+  const handleSubmitBw = async (e) => {
+    e.preventDefault();
+
+    const data = { bodyweight };
+    let id = user.sub;
+    console.log({ "submitted data": bodyweight, id });
+    try {
+      const response = await fetch(
+        `/api/healthcare/createHealthcareGoals?id=${user.sub}&elementID=${bodyweightElementId}&goalValue=${bodyweight}`,
+        {
+          method: "POST",
+          data: JSON.stringify(data),
+        }
+      );
+      const result = await response.json();
+      console.log({ result });
+
+      if (response.ok) {
+        console.log("all good");
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  const handleSubmitSteps = async (e) => {
+    e.preventDefault();
+
+    const data = { steps };
+    let id = user.sub;
+    console.log({ "submitted data": steps, id });
+    try {
+      const response = await fetch(
+        `/api/healthcare/createHealthcareGoals?id=${user.sub}&elementID=${stepsElementId}&goalValue=${steps}`,
+        {
+          method: "POST",
+          data: JSON.stringify(data),
+        }
+      );
+      const result = await response.json();
+      console.log({ result });
+
+      if (response.ok) {
+        router.push("/plan/setHealthcare");
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <>
       <Meta title="Healthcare Plan" />
       <Navbar title="Healthcare" backPath={"/plan/setNutrition"} />
       <PageLayout>
         {/* If bodyweight selected */}
-        <h3 className="px-2">Bodyweight Goals</h3>
+        <h3 className="px-2 text-center">Bodyweight Goals:</h3>
         <Button path="BMICalculator" label="Go To - BMI Calculator "></Button>
 
         <form
-          className="justify-center flex"
+          className="w-full content-center"
+          onSubmit={handleSubmitBw}
           id="bodyweightForm"
-          // action="submitForms()"
           method="post"
           data-validate="parsley"
         >
           <input
-            className="h-8 border-2 w-2/3 mb-1 mt-1 flex justify-center text-center"
-            type="number"
-            placeholder="Current Bodyweight (Kg)"
-            name="bodyweight"
-            id="bodyweight"
-            data-required="true"
-            data-error-message="Enter Current Bodyweight in Kg"
-          />
-          <input
-            className="h-8 border-2 w-2/3 mb-1 mt-1 flex justify-center text-center"
+            className="h-8 border-2 w-full mb-1 mt-1  text-center"
             type="number"
             placeholder="Goal Bodyweight (Kg)"
             name="bodyweightGoal"
             id="bodyweightGoal"
             data-required="true"
             data-error-message="Enter Goal Bodyweight in Kg"
+            value={bodyweight}
+            onChange={(e) => {
+              setBodyweight(e.target.value);
+            }}
+          />
+
+          <input
+            className={` w-1/2 h-full text-h2-mobile bg-primary-bg border-2 border-black text-center ${buttonStyles.primary}`}
+            type="submit"
+            value="Update"
           />
         </form>
+        <hr className="mb-7"></hr>
 
         {/* If steps selected */}
-        <h3 className="px-2 mt-4">Daily Steps Goal</h3>
+        <h3 className="px-2 mt-4 text-center">Daily Steps Goal:</h3>
         <form
-          className="flex justify-center"
+          className="w-full"
+          onSubmit={handleSubmitSteps}
           id="stepsForm"
           method="post"
           data-validate="parsley"
         >
           <input
-            className="h-8 border-2 w-2/3 mb-1 mt-1 flex justify-center text-center"
+            className="h-8 border-2 w-full mb-1 mt-1  text-center"
             type="number"
             placeholder="Number of Steps"
             name="steps"
             id="steps"
             data-required="true"
             data-error-message="Enter Daily Steps Goal"
+            value={steps}
+            onChange={(e) => {
+              setSteps(e.target.value);
+            }}
           />
-        </form>
 
-        {/* If sleep is selected */}
-        <h3 className="px-2 mt-4">Hours of Sleep Goal</h3>
-        <form
-          className="flex justify-center"
-          id="sleepForm"
-          method="post"
-          data-validate="parsley"
-        >
           <input
-            className="h-8 border-2 w-2/3 mb-1 mt-1 flex justify-center text-center"
-            type="number"
-            placeholder="Hours of Sleep"
-            name="sleep"
-            id="sleep"
-            data-required="true"
-            data-error-message="Enter Sleep Goal"
+            className={` w-1/2 h-full text-h2-mobile bg-primary-bg border-2 border-black text-center ${buttonStyles.primary}`}
+            type="submit"
+            value="Update"
           />
         </form>
+        <hr className="mb-3"></hr>
 
-        <Button
-          path="/plan/setWorkouts"
-          label="Confirm"
-          onClick={submitForms}
-        ></Button>
+        <Button path="/plan/setWorkouts" label="Next"></Button>
 
         {/* If sleep selected */}
         {/* if any workouts selected */}
       </PageLayout>
     </>
   );
-}
-
-function submitForms() {
-  // document.getElementById("bodyweightForm").submit(); //TODO - Fix this so both forms get submitted when db is working
-  // document.getElementById("stepsForm").submit();
-  // document.getElementById("sleepForm").submit();
-  console.log("Why does this print before clicks");
 }

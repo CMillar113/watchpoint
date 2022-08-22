@@ -71,9 +71,6 @@ async function checkIfLogAlreadyExist(athleteId, elementId, date) {
      AND healthcare_log.element_id = ?
      AND healthcare_log.date = ?
   `;
-
-  ///// TODO - fix query
-
   const result = await executeQuery({
     query: sql,
     values: [athleteId, elementId, date],
