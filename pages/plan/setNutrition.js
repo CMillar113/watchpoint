@@ -53,14 +53,15 @@ export default function setGoals() {
     loggedMacros.carbs * Calories.carb;
   const calories = num.toString();
 
+  //FORM HANDLE SUBMIT
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const data = { protein, carbs, fats, water };
-    console.log({ data });
+    console.log({ "submitted data": user.sub, data });
     try {
       const response = await fetch(
-        `/api/healthcare/createNutrtion?id=${user.sub}&protein=${protein}&carbs=${carbs}&fats=${fats}&water=${water}`,
+        `/api/nutrition/createNutrition?id=${user.sub}&protein=${protein}&carbs=${carbs}&fats=${fats}&water=${water}`,
         {
           method: "POST",
           data: JSON.stringify(data),
@@ -70,7 +71,7 @@ export default function setGoals() {
       console.log({ result });
 
       if (response.ok) {
-        router.push("/plan/setHealthcare");
+        router.push("/plan/setNutrition");
       }
     } catch (e) {
       console.error(e);
@@ -181,6 +182,24 @@ export default function setGoals() {
                 setFats(e.target.value);
               }}
             />
+            <input
+              className="h-8 border-2 w-full text-center"
+              type="number"
+              placeholder="water"
+              name="water"
+              id="water"
+              data-required="true"
+              data-error-message="Enter water value"
+              value={water}
+              onChange={(e) => {
+                setWater(e.target.value);
+              }}
+            />
+            <input
+              className={`mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg border-2 border-black  ${buttonStyles.primary}`}
+              type="submit"
+              value="Add Entry"
+            />
           </form>
         </div>
         <p className="text-primary-fadedtext text-center text-sm mt-2">
@@ -188,7 +207,7 @@ export default function setGoals() {
           Enter goal macros for the week and your new calories will be
           calculated{" "}
         </p>
-        {/* If water Intake Selected */}
+        {/* If water Intake Selected
         <h3 className="mt-5 px-2">Water Intake</h3>
         <form
           className="flex justify-center"
@@ -215,21 +234,14 @@ export default function setGoals() {
         <p className="text-primary-fadedtext text-sm text-center px-2">
           {" "}
           The daily recommended amount for a healthy adult is 2 litres
-        </p>
-
+        </p> */}
+        {/* 
         <Button
           path="/plan/setHealthcare"
           label="Confirm"
           onClick={submitForms}
-        ></Button>
+        ></Button> */}
       </PageLayout>
     </>
   );
-}
-
-function submitForms(e) {
-  e.preventDefault();
-  // document.getElementById("macroForm").submit(); //TODO - Fix this so both forms get submitted when db is working
-  // document.getElementById("waterForm").submit();
-  console.log("Why does this print before clicks");
 }
