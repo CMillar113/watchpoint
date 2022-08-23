@@ -96,7 +96,7 @@ export default function setHealthcare() {
       console.log({ result });
 
       if (response.ok) {
-        console.log("all good");
+        console.log("complete");
       }
     } catch (e) {
       console.error(e);
