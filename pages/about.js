@@ -38,8 +38,7 @@ export default function about() {
           </div>
         </div>
 
-        <Button path="/createAccount" label="Create Account" />
-        <Button path="/signIn" label="Sign In" />
+        <Button path="/api/auth/login" label="Sign In / Register" />
       </PageLayout>
     </>
   );

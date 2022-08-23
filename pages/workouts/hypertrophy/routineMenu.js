@@ -1,19 +1,19 @@
 import Meta from "../../../src/components/Meta";
 import Navbar from "../../../src/components/NavBar";
-import NavMenu from "../../../src/components/NavMenu";
+
 import PageLayout from "../../../src/components/PageLayout";
 import Button from "../../../src/components/Button";
 import { useEffect, useState } from "react";
 import Router from "next/router";
 import { useUser } from "@auth0/nextjs-auth0";
-
 import { lowerCaseFirstLetter } from "../../_app";
 
-//Constants for testing data pull
+//Constants
 const workoutTitle = "Hypertrophy";
 const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
+const workoutElementId = 3;
 // TODO -Could look up name and element ID then would work for all elements - single page?
-//Constants for testing data pull
+//Constants
 
 export default function routineMenu() {
   const { user, isLoading } = useUser();
@@ -23,7 +23,9 @@ export default function routineMenu() {
     if (!user) return;
     (async function () {
       try {
-        const response = await fetch(`/api/athlete_routine?auth0=${user.sub}`);
+        const response = await fetch(
+          `/api/athlete_routine?auth0=${user.sub}&elementid=${workoutElementId}`
+        );
         const result = await response.json();
 
         if (response.ok) {
@@ -66,7 +68,7 @@ export default function routineMenu() {
           </div>
           {routines}
           <Button
-            path={`/workouts/${workoutPathTitle}NewRoutine`}
+            path={`/workouts/${workoutPathTitle}/createRoutine`}
             label={"Create New Routine +"}
           />
         </PageLayout>

@@ -90,5 +90,6 @@ export default function routineDisplay() {
         <Button path="" label="Start This Workout"></Button>
       </PageLayout>
     </>
+    //TODO - if sets dont exist why is it showing th value of the one that does exist for both
   );
 }

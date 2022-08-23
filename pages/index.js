@@ -47,8 +47,7 @@ export default function Home() {
             Health & Fitness Lifestyle Tracker{" "}
           </h2>
           <Button path="/about" label="About WatchPoint" />
-          <Button path="/api/auth/login" label="Create Account" />
-          <Button path="/api/auth/login" label="Sign In" />
+          <Button path="/api/auth/login" label="Sign In / Register" />
         </div>
       </PageLayout>
     </>
