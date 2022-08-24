@@ -83,7 +83,10 @@ export default function routineDisplay() {
             );
           })}
         <div className=" w-full h-auto mb-3 mt-2">
-          <Button path="" label="+ Add Exercise"></Button>
+          <Button
+            path={`/workouts/${workoutPathTitle}/exerciseCategories`}
+            label="+ Add Exercise"
+          ></Button>
         </div>
         <Button path="" label="Start This Workout"></Button>
       </PageLayout>

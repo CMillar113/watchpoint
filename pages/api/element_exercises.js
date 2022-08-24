@@ -10,9 +10,10 @@ export default async function handler(req, res) {
   try {
     if (req.method === "GET") {
       const classId = req.query.classid;
-      const categories = await getCategories(classId);
+      const categoryNames = await getCategories(classId);
+      console.log(categoryNames);
 
-      res.status(200).json({ categories });
+      res.status(200).json({ categoryNames });
     } else {
       console.log(error);
     }

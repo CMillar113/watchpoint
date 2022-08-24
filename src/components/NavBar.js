@@ -6,7 +6,9 @@ export default function Navbar({ backPath, nextPath, title }) {
     return (
       //backpath defined - no next button
       <>
-        <nav className={`bg-primary-bg text-primary-text ${navStyles.nav}`}>
+        <nav
+          className={`h-auto bg-primary-bg text-primary-text ${navStyles.nav}`}
+        >
           <ul
             className={`flex justify-between w-full sm:w-4/5 md:w-3/5 lg:w-1/2 ${navStyles.ul}`}
           >
@@ -16,7 +18,7 @@ export default function Navbar({ backPath, nextPath, title }) {
                 Back
               </Link>{" "}
             </li>
-            <div className="`flex justify-between w-full text-center sm:w-2/5 md:w-3/5 lg:w-1/2  ">
+            <div className="` h-auto text-sm flex justify-between w-full text-center sm:w-2/5 md:w-3/5 lg:w-1/2 mb-1 ">
               {" "}
               <h2>{title}</h2>
             </div>

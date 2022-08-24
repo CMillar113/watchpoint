@@ -17,7 +17,9 @@ const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
 //constants
 
 export default function exercises() {
-  const [categories, setCategories] = useState(undefined);
+  const [categories, setCategories] = useState({
+    categoryNames: [],
+  });
   const { user, isLoading } = useUser();
 
   useEffect(() => {
@@ -35,7 +37,7 @@ export default function exercises() {
         console.error(e);
       }
     })();
-  }, []);
+  }, [user]);
 
   console.log(categories);
 
@@ -44,21 +46,18 @@ export default function exercises() {
       <Meta title="Exercise Categories" />
       <Navbar title="Categories:" backPath={`/workouts/${workoutPathTitle}`} />
       <PageLayout>
-        <p className="text-center">Please Select Exercise Category </p>
+        <p className="text-center mb-3">Please Select Exercise Category </p>
         <div>
-          {categories &&
-            Array.isArray(categories) &&
-            categories.map(function (metric) {
+          {categories.categoryNames &&
+            Array.isArray(categories.categoryNames) &&
+            categories.categoryNames.map(function (metric) {
               return (
                 <button
                   key={`${metric.exercise_category_id}-btn`}
-                  className="h-20 w-full rounded-md border-black border-2 bg-slate-300 mb-2 place-content-center"
+                  className="h-10 w-full rounded-md border-black border-2 bg-slate-300 mb-2 place-content-center"
                   onClick={function () {
-                    let path = lowerCaseFirstLetter(
-                      metric.exercise_category_id
-                    );
                     Router.push(
-                      `/workouts/${workoutPathTitle}/exercises${path}`
+                      `/workouts/${workoutPathTitle}/exercise?id=${metric.exercise_category_id}`
                     );
                   }}
                 >
@@ -67,7 +66,6 @@ export default function exercises() {
                 </button>
               );
             })}
-          ;
         </div>
       </PageLayout>
     </>

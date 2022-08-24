@@ -15,7 +15,7 @@ export default function setHealthcare() {
   const [isLoading, setLoading] = useState(true);
   const [steps, setSteps] = useState(0);
   const [bodyweight, setBodyweight] = useState(0);
-  const [metrics, setMetrics] = useState(undefined);
+
   const bodyweightElementId = 7;
   const stepsElementId = 8;
 

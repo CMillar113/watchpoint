@@ -1,6 +1,6 @@
 import Meta from "../../../src/components/Meta";
 import Navbar from "../../../src/components/NavBar";
-import NavMenu from "../../../src/components/NavMenu";
+import NavMenu from "../../../src/components/NavButtonOne";
 import PageLayout from "../../../src/components/PageLayout";
 
 export default function hypertrophyDash() {
@@ -12,10 +12,8 @@ export default function hypertrophyDash() {
       <Navbar title={workoutTitle} backPath={"/workouts/selectWorkout"} />
       <PageLayout>
         <NavMenu
-          pathLeft={`/workouts/${workoutPathTitle}/routineMenu`}
-          labelLeft={"Routines"}
-          pathRight={`/workouts/${workoutPathTitle}/exerciseCategories`}
-          labelRight={"Exercises"}
+          path={`/workouts/${workoutPathTitle}/routineMenu`}
+          label={"Routines"}
         ></NavMenu>
         <hr className="bg-black" />
         <p className="text-center">

@@ -3,7 +3,7 @@ import navStyles from "../../styles/NavMenu.module.css";
 import Link from "next/link";
 
 // Nav menu - for homepage must give the routes to plan editing, workouts and food log
-export default function NavMenu({
+export default function NavButtonTwo({
   pathLeft,
   pathRight,
   labelLeft,
