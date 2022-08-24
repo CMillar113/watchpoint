@@ -27,12 +27,18 @@ export default async function handler(req, res) {
   const athleteId = athlete[0].athlete_id; // athleteId is now sql based
 
   console.log(athleteId);
-  const log = await createRoutine(routineName, routineNote);
-  const logID = await getLastEntery();
-  const log2 = await createRoutineRelationship(athleteId, elementid, logID);
+  const log = await createRoutine(routineName, routineNote); //populate routine table
+  const logID = await getLastEntery(); // get routine_id
+  const log2 = await createRoutineAthleteElementConnection(
+    athleteId,
+    elementid,
+    logID
+  ); // populate athlete_element_routine tbale
+  const log3 = await createRoutineExerciseConnection(logID); // populate
   res.status(202).json(log);
   res.status(202).json(logID);
   res.status(202).json(log2);
+  res.status(202).json(log3);
 }
 
 async function createRoutine(routineName, routineNote) {
@@ -61,7 +67,11 @@ async function getLastEntery() {
   return logID;
 }
 
-async function createRoutineRelationship(athleteId, elementid, logID) {
+async function createRoutineAthleteElementConnection(
+  athleteId,
+  elementid,
+  logID
+) {
   const sql = `
   INSERT INTO athlete_element_routine (athlete_element_routine_id, athlete_id, element_id, routine_id) 
   VALUES (NULL, ?, ?, ?);
@@ -71,6 +81,18 @@ async function createRoutineRelationship(athleteId, elementid, logID) {
     query: sql,
     values: [athleteId, elementid, logID],
   });
+  return result;
+}
 
+async function createRoutineExerciseConnection(logID) {
+  const sql = `
+  INSERT INTO routine_exercise (routine_exercise_id, routine_id, exercise_id, planned_sets, planned_reps) 
+  VALUES (NULL, ?, NULL, '0', '0');
+        `;
+
+  const result = await executeQuery({
+    query: sql,
+    values: [logID],
+  });
   return result;
 }
