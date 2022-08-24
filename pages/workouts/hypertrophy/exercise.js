@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import buttonStyles from "../../../styles/Button.module.css";
 import { lowerCaseFirstLetter } from "../../_app";
 import { useUser } from "@auth0/nextjs-auth0";
+import Router from "next/router";
 
 //Constants
 const workoutTitle = "Hypertrophy";
@@ -18,7 +19,7 @@ const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
 export default function exercise() {
   const { query, isReady } = useRouter();
   const [isLoading, setLoading] = useState();
-  const [newExercise, setNewExercise] = useState();
+  const [newExercise, setNewExercise] = useState(0);
   const [exercise, setExercise] = useState({
     exercises: [],
   });
@@ -29,7 +30,6 @@ export default function exercise() {
     async function effect() {
       setLoading(true);
       const { id } = query;
-
       const response = await fetch(
         `/api/exercise_category?exerciseCategoryId=${id}`
       );
@@ -55,6 +55,7 @@ export default function exercise() {
       const response = await fetch(
         `/api/routines/createExercise?exerciseCategoryid=${id}&exerciseName=${newExercise}`,
         {
+          //create exercie in exercise table  id is exercsie category id
           method: "POST",
           data: JSON.stringify(data),
         }
@@ -63,7 +64,8 @@ export default function exercise() {
       console.log({ result }); //TODO - return routine_id of new created routine and pass to add exercise pages
 
       if (response.ok) {
-        Router.push("/workouts/hypertrophy/routineMenu");
+        // Router.push("/workouts/hypertrophy/routineMenu");
+        Router.push(`/workouts/hypertrophy/exercise?id=${id}`);
       }
     } catch (e) {
       console.error(e);
@@ -74,7 +76,7 @@ export default function exercise() {
     <>
       <Meta title="Exercise List" />
       <Navbar
-        title="Select Exercise:"
+        title="Exercise:"
         backPath={`/workouts/${workoutPathTitle}/exerciseCategories`}
       />
       <PageLayout>
@@ -91,7 +93,7 @@ export default function exercise() {
                   className="h-10 w-full rounded-md border-black border-2 bg-slate-300 mb-2 place-content-center"
                   onClick={function () {
                     Router.push(
-                      `/workouts/${workoutPathTitle}/exercise?id=${metric.exercise_name}`
+                      `/workouts/${workoutPathTitle}/exerciseAdd?id=${metric.exercise_name}` //TODO - onclick adds exercise to routine and relaods to routine
                     );
                   }}
                 >
@@ -103,7 +105,7 @@ export default function exercise() {
         </div>
         <form
           className="w-full text-center"
-          action={``}
+          //   action={``}
           method="post"
           data-validate="parsley"
           onSubmit={handleSubmit}
@@ -111,7 +113,7 @@ export default function exercise() {
           <div className=" w-full mb-2 text-center">
             <input
               className="border-2 border-black w-8/12 h-10"
-              type="number"
+              type="text"
               placeholder=" New exercise Name"
               name="newExercise"
               data-required="true"

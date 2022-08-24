@@ -44,7 +44,10 @@ export default function exercises() {
   return (
     <>
       <Meta title="Exercise Categories" />
-      <Navbar title="Categories:" backPath={`/workouts/${workoutPathTitle}`} />
+      <Navbar
+        title="Categories:"
+        backPath={`/workouts/${workoutPathTitle}/routineDisplay`}
+      />
       <PageLayout>
         <p className="text-center mb-3">Please Select Exercise Category </p>
         <div>
