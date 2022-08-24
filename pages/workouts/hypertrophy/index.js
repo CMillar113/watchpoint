@@ -14,7 +14,7 @@ export default function hypertrophyDash() {
         <NavMenu
           pathLeft={`/workouts/${workoutPathTitle}/routineMenu`}
           labelLeft={"Routines"}
-          pathRight={`/workouts/${workoutPathTitle}/exercises`}
+          pathRight={`/workouts/${workoutPathTitle}/exerciseCategories`}
           labelRight={"Exercises"}
         ></NavMenu>
         <hr className="bg-black" />

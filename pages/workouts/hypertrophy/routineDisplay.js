@@ -10,13 +10,10 @@ import { useRouter } from "next/router";
 import { lowerCaseFirstLetter } from "../../_app";
 import { useUser } from "@auth0/nextjs-auth0";
 
-//Constants for testing data pull
+//Constants
 const workoutTitle = "Hypertrophy";
 const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
-
-// let routineName = null;
-// routineName = checkRoutineName(passedRoutineID);
-//Constants for testing data pull
+//constants
 
 export default function routineDisplay() {
   const { query, isReady } = useRouter();
@@ -63,7 +60,6 @@ export default function routineDisplay() {
           <h3 className="w-full h-auto  border-2">{routine.notes}</h3>
         </div>
 
-        {/* <pre>{JSON.stringify(routine, null, 2)}</pre> */}
         {routine &&
           routine.exercises &&
           Array.isArray(routine.exercises) &&

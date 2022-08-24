@@ -19,64 +19,6 @@ export default function setHealthcare() {
   const bodyweightElementId = 7;
   const stepsElementId = 8;
 
-  // useEffect(() => {
-  //   if (!user) return;
-  //   (async function () {
-  //     setLoading(true);
-  //     try {
-  //       const auth0PrimaryKey = user.sub;
-  //       const response = await fetch(
-  //         `/api/athlete_elements?auth0=${auth0PrimaryKey}`
-  //       );
-  //       const result = await response.json();
-
-  //       console.log({ result });
-
-  //       if (response.ok) {
-  //         setElements(result.metrics[0]);
-  //       }
-  //     } catch (e) {
-  //       console.error(e);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   })();
-  // }, [user]);
-
-  // useEffect(() => {
-  //   (async function () {
-  //     try {
-  //       const response = await fetch("/api/athlete_elements");
-  //       const result = await response.json();
-
-  //       if (response.ok) {
-  //         setMetrics(result);
-  //       }
-  //     } catch (e) {
-  //       console.error(e);
-  //     }
-  //   })();
-  // }, []);
-
-  // let body = null;
-
-  // if (metrics !== undefined && user !== undefined) {
-  //   body = metrics
-  //     .filter(function (metric) {
-  //       // TODO - put filter in backend?
-  //       return (
-  //         metric.element_class_id === 2 && metric.unique_identifier === user.sub
-  //       );
-  //     })
-  //     .map(function (metric) {
-  //       return (
-  //         <>
-
-  //         </>
-  //       );
-  //     });
-  // }
-
   //FORM HANDLE SUBMIT
   const handleSubmitBw = async (e) => {
     e.preventDefault();
