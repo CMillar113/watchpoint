@@ -5,10 +5,10 @@ export default function Meta({ title, keywords, description }) {
     <>
       <Head>
         <title>{title}</title>
-        <link rel="icon" href="/src/assets/WatchpointLogo.jpg" />
+        <link rel="icon" href="/images/watchpointLogo.jpg" />
 
-        <meta name="keywords" content="{keywords}" />
-        <meta name="description" content="{description}" />
+        <meta name="keywords" content={keywords} />
+        <meta name="description" content={description} />
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>

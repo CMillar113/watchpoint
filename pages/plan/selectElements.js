@@ -7,6 +7,11 @@ import buttonStyles from "../../styles/Button.module.css";
 import { useEffect, useState } from "react";
 
 export default function selectElements() {
+  const [nutritionActive, setNutrition] = useState();
+  const [bodyweightActive, setBodyweight] = useState();
+  const [stepsActive, setSteps] = useState();
+  const [sleepActive, setSleep] = useState();
+
   //POPULATE CHECK BOXES INDEPENDANDT OF UER DATA
   const nutritionElements = checkNutrtionElements();
   const healthcareElements = checkHealthcareElements();
@@ -27,7 +32,7 @@ export default function selectElements() {
         <form
           className="text-left text-xl flex-col px-10 "
           action="/plan/setNutrition" // TODO Needs changed to link to the 'setPlan' for whatever first elemenet thats suitable is
-          onSubmit={handleSubmit()}
+          onSubmit={handleSubmit}
         >
           <div
             id="elementClass"

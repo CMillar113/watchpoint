@@ -2,10 +2,11 @@ import Meta from "../../../src/components/Meta";
 import Navbar from "../../../src/components/NavBar";
 import NavMenu from "../../../src/components/NavButtonOne";
 import PageLayout from "../../../src/components/PageLayout";
+import { lowerCaseFirstLetter } from "../../_app";
 
 export default function hypertrophyDash() {
   const workoutTitle = "Hypertrophy";
-  const workoutPathTitle = "hypertrophy";
+  const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
   return (
     <>
       <Meta title={workoutTitle} />

@@ -6,17 +6,14 @@ import Link from "next/link";
 import buttonStyles from "../../styles/Button.module.css";
 import Router from "next/router";
 import { useState } from "react";
+import { calculateBMI } from "../../src/backend";
+import { compareBMI } from "../../src/backend";
 
 export default function BMICalculator() {
   const [BMIValue, setBMIValue] = useState();
   const [BMIStatus, setBMIStatus] = useState(0);
-
-  const [gender, setGender] = useState(0);
   const [height, setHeight] = useState("");
   const [bodyweight, setBodyweight] = useState("");
-
-  let value = null;
-  let status = null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,7 +22,7 @@ export default function BMICalculator() {
     console.log(value, status);
     setBMIStatus(status);
     setBMIValue(value);
-    return value, status;
+    return value, status; //DO I NEED THIS RETURN PT.2 ??
   };
 
   return (
@@ -42,31 +39,6 @@ export default function BMICalculator() {
             method="post"
             data-validate="parsley"
           >
-            {/* Choose Gender */}
-            {/* <label className="flex items-center mb-2 ml-28">
-              <input
-                type="radio"
-                className="checked:bg-blue-500 w-10 h-10 mr-5 "
-                name="gender"
-                value={gender}
-                onChange={(e) => {
-                  setGender("male");
-                }}
-              />
-              Male
-            </label>
-            <label className="flex items-center ml-28 mb-5">
-              <input
-                type="radio"
-                className="checked:bg-blue-500 w-10 h-10 mr-5 "
-                name="gender"
-                value={gender}
-                onChange={(e) => {
-                  setGender("female");
-                }}
-              />
-              Female
-            </label> */}
             {/* Input personal details */}
             <h3 className="w-full text-center">Height (Cm) :</h3>
             <input
@@ -132,31 +104,4 @@ export default function BMICalculator() {
       </PageLayout>
     </>
   );
-}
-function calculateBMI(height, bodyweight) {
-  //Calculation according to 'WorldCancerResearchFund'
-  //TODO - move to backend
-  const result = bodyweight / ((height / 100) * (height / 100));
-  console.log(result);
-  return result;
-}
-
-function compareBMI(BMIValue) {
-  let BMIStatus = null;
-  if (BMIValue < 18.5) {
-    BMIStatus = "Underweight";
-    return BMIStatus;
-  } else if (BMIValue < 24.9) {
-    BMIStatus = "Healthy";
-    return BMIStatus;
-  } else if (BMIValue < 29.9) {
-    BMIStatus = "Overweight";
-    return BMIStatus;
-  } else if (BMIValue < 39.9) {
-    BMIStatus = "Obese";
-    return BMIStatus;
-  } else {
-    BMIStatus = "High Obesity";
-    return BMIStatus;
-  }
 }

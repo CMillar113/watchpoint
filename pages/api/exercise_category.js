@@ -28,7 +28,7 @@ export default async function handler(req, res) {
 
 // Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
 async function getCategoryExercises(categoryId) {
-  const sql = `SELECT exercise_name FROM exercise WHERE exercise_category_id = ?
+  const sql = `SELECT exercise_name, exercise_id FROM exercise WHERE exercise_category_id = ?
  `;
   const exercises = await executeQuery({ query: sql, values: categoryId });
   console.log(exercises);

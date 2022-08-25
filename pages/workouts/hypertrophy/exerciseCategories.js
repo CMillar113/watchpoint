@@ -6,7 +6,7 @@ import Navbar from "../../../src/components/NavBar";
 import PageLayout from "../../../src/components/PageLayout";
 
 import { useEffect, useState } from "react";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { lowerCaseFirstLetter } from "../../_app";
 import { useUser } from "@auth0/nextjs-auth0";
 
@@ -21,6 +21,8 @@ export default function exercises() {
     categoryNames: [],
   });
   const { user, isLoading } = useUser();
+  const { query } = useRouter();
+  const { routineId } = query;
 
   useEffect(() => {
     (async function () {
@@ -46,7 +48,7 @@ export default function exercises() {
       <Meta title="Exercise Categories" />
       <Navbar
         title="Categories:"
-        backPath={`/workouts/${workoutPathTitle}/routineDisplay`}
+        backPath={`/workouts/${workoutPathTitle}/routineMenu`}
       />
       <PageLayout>
         <p className="text-center mb-3">Please Select Exercise Category </p>
@@ -60,7 +62,7 @@ export default function exercises() {
                   className="h-10 w-full rounded-md border-black border-2 bg-slate-300 mb-2 place-content-center"
                   onClick={function () {
                     Router.push(
-                      `/workouts/${workoutPathTitle}/exercise?id=${metric.exercise_category_id}`
+                      `/workouts/${workoutPathTitle}/exercise?id=${metric.exercise_category_id}&routineId=${routineId}`
                     );
                   }}
                 >

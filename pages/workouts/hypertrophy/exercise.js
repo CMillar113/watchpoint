@@ -19,7 +19,7 @@ const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
 export default function exercise() {
   const { query, isReady } = useRouter();
   const [isLoading, setLoading] = useState();
-  const [newExercise, setNewExercise] = useState(0);
+  const [newExercise, setNewExercise] = useState("");
   const [exercise, setExercise] = useState({
     exercises: [],
   });
@@ -65,7 +65,36 @@ export default function exercise() {
 
       if (response.ok) {
         // Router.push("/workouts/hypertrophy/routineMenu");
-        Router.push(`/workouts/hypertrophy/exercise?id=${id}`);
+        if (query.routineId) {
+          Router.push(
+            `/workouts/hypertrophy/exercise?id=${id}&routineId=${query.routineId}`
+          );
+        } else {
+          Router.push(`/workouts/hypertrophy/exercise?id=${id}`);
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleAdd = async (e, exerciseId) => {
+    try {
+      const routineId = query.routineId;
+      const data = { routineId, exerciseId };
+      const response = await fetch(
+        `/api/routines/addExercise?routineId=${routineId}&exerciseId=${exerciseId}`,
+        {
+          method: "POST",
+          data: JSON.stringify(data),
+        }
+      );
+      const result = await response.json();
+      console.log("Add exercise to routien:", { result });
+
+      if (response.ok) {
+        Router.push(`/workouts/hypertrophy/routineDisplay?id=${routineId}`);
+        //TODO - Push to new page to add sets and reps?????
       }
     } catch (e) {
       console.error(e);
@@ -91,11 +120,7 @@ export default function exercise() {
                 <button
                   key={`${metric.exercise_name}-btn`}
                   className="h-10 w-full rounded-md border-black border-2 bg-slate-300 mb-2 place-content-center"
-                  onClick={function () {
-                    Router.push(
-                      `/workouts/${workoutPathTitle}/exerciseAdd?id=${metric.exercise_name}` //TODO - onclick adds exercise to routine and relaods to routine
-                    );
-                  }}
+                  onClick={(e) => handleAdd(e, metric.exercise_id)}
                 >
                   {" "}
                   {metric.exercise_name}

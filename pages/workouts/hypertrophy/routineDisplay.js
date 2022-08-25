@@ -38,7 +38,10 @@ export default function routineDisplay() {
       if ("message" in result) {
         console.error(result.message);
       } else {
-        setRoutine(result);
+        setRoutine({
+          exercises: [],
+          ...result,
+        });
       }
       setLoading(false);
     }
@@ -85,7 +88,7 @@ export default function routineDisplay() {
           })}
         <div className=" w-full h-auto mb-3 mt-2">
           <Button
-            path={`/workouts/${workoutPathTitle}/exerciseCategories`}
+            path={`/workouts/${workoutPathTitle}/exerciseCategories?routineId=${query.id}`}
             label="+ Add Exercise"
           ></Button>
         </div>
