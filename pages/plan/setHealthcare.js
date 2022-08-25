@@ -13,8 +13,8 @@ export default function setHealthcare() {
   const { user } = useUser();
   const router = useRouter();
   const [isLoading, setLoading] = useState(true);
-  const [steps, setSteps] = useState(0);
-  const [bodyweight, setBodyweight] = useState(0);
+  const [steps, setSteps] = useState("");
+  const [bodyweight, setBodyweight] = useState("");
 
   const bodyweightElementId = 7;
   const stepsElementId = 8;
@@ -75,9 +75,10 @@ export default function setHealthcare() {
       <Navbar title="Healthcare" backPath={"/plan/setNutrition"} />
       <PageLayout>
         {/* If bodyweight selected */}
-        <h3 className="px-2 text-center">Bodyweight Goals:</h3>
-        <Button path="BMICalculator" label="Go To - BMI Calculator "></Button>
 
+        <Button path="BMICalculator" label="Use BMI Calculator"></Button>
+        <hr className="mt-2 mb-7"></hr>
+        <h3 className="mt-1 px-2 text-center">Bodyweight Goals:</h3>
         <form
           className="w-full content-center"
           onSubmit={handleSubmitBw}
@@ -98,16 +99,18 @@ export default function setHealthcare() {
               setBodyweight(e.target.value);
             }}
           />
-
-          <input
-            className={` w-1/2 h-full text-h2-mobile bg-primary-bg border-2 border-black text-center ${buttonStyles.primary}`}
-            type="submit"
-            value="Update"
-          />
+          <div className=" w-full flex justify-center">
+            <input
+              className={`mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg border-2 border-black text-center ${buttonStyles.primary}`}
+              type="submit"
+              value="Update"
+            />
+          </div>
         </form>
         <hr className="mb-7"></hr>
 
         {/* If steps selected */}
+
         <h3 className="px-2 mt-4 text-center">Daily Steps Goal:</h3>
         <form
           className="w-full"
@@ -130,13 +133,15 @@ export default function setHealthcare() {
             }}
           />
 
-          <input
-            className={` w-1/2 h-full text-h2-mobile bg-primary-bg border-2 border-black text-center ${buttonStyles.primary}`}
-            type="submit"
-            value="Update"
-          />
+          <div className=" w-full flex justify-center">
+            <input
+              className={`mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg border-2 border-black text-center ${buttonStyles.primary}`}
+              type="submit"
+              value="Update"
+            />
+          </div>
         </form>
-        <hr className="mb-3"></hr>
+        <hr className="mb-14"></hr>
 
         <Button path="/plan/setWorkouts" label="Next"></Button>
 

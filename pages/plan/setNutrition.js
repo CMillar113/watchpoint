@@ -15,10 +15,10 @@ export default function setGoals() {
   const router = useRouter();
   const [loggedMacros, setLoggedMacros] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [protein, setProtein] = useState(0);
-  const [carbs, setCarbs] = useState(0);
-  const [fats, setFats] = useState(0);
-  const [water, setWater] = useState(0);
+  const [protein, setProtein] = useState("");
+  const [carbs, setCarbs] = useState("");
+  const [fats, setFats] = useState("");
+  const [water, setWater] = useState("");
 
   //get previous logged info to populate
   //create handle submit for new daat

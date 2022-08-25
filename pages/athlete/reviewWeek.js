@@ -1,8 +1,6 @@
 import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
-import Button from "../../src/components/Button";
-import NavMenu from "../../src/components/NavMenu";
 
 import Router from "next/router";
 import { useEffect, useState } from "react";

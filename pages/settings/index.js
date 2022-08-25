@@ -17,12 +17,6 @@ export default function settings() {
         <Navbar title="Settings" backPath={"/athlete"} />
         <PageLayout>
           <Button path="/settings/myCoach" label="My Coach"></Button>
-
-          <div className=" mt-6 w-full h-auto flex justify-center ">
-            <div className=" border-2 border-black rounded-sm w-5/6 h-32 flex justify-center content-center ">
-              Theme Selector
-            </div>
-          </div>
         </PageLayout>
       </>
     );
@@ -36,11 +30,6 @@ export default function settings() {
             path="/settings/connectToCoach"
             label="Connect With Coach"
           ></Button>
-          <div className=" mt-6 w-full h-auto flex justify-center ">
-            <div className=" border-2 border-black rounded-sm w-5/6 h-32 flex justify-center content-center ">
-              Theme Selector
-            </div>
-          </div>
         </PageLayout>
       </>
     );
