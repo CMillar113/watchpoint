@@ -101,7 +101,7 @@ export default function exercise() {
         console.log(result2);
         const routineExerciseId = result2[0].routine_exercise_id;
         Router.push(
-          `/workouts/hypertrophy/setsAndReps?routineExerciseId=${routineExerciseId}`
+          `/workouts/hypertrophy/setsAndReps?routineExerciseId=${routineExerciseId}&routineId=${routineId}`
         );
         //TODO - Push to new page to add sets and reps?????
       }

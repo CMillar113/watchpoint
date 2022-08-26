@@ -20,12 +20,14 @@ export default function createRoutine() {
   const [exerciseSets, setSets] = useState("");
   const [exerciseReps, setReps] = useState("");
   const [routineExerciseId, setRoutineExerciseId] = useState(0);
+  const [routineId, setRoutineId] = useState(0);
 
   useEffect(() => {
     if (!isReady) return;
     async function effect() {
-      const { routineExerciseId } = query;
+      const { routineExerciseId, routineId } = query;
       setRoutineExerciseId(routineExerciseId);
+      setRoutineId(routineId);
     }
     effect();
   }, [query, isReady]);
@@ -46,7 +48,7 @@ export default function createRoutine() {
       console.log({ result });
 
       if (response.ok) {
-        Router.push(`/workouts/hypertrophy`);
+        Router.push(`/workouts/hypertrophy/routineDisplay?id=${routineId}`);
       }
     } catch (e) {
       console.error(e);
