@@ -61,7 +61,7 @@ export default function exercise() {
       if (response.ok) {
         if (query.routineId) {
           Router.push(
-            `/workouts/hypertrophy/exercise?id=${id}&routineId=${query.routineId}`
+            `/workouts/element/exercise?id=${id}&routineId=${query.routineId}`
           );
         } else {
           Router.push(`/workouts/hypertrophy/exercise?id=${id}`);
@@ -95,7 +95,7 @@ export default function exercise() {
         console.log(result2);
         const routineExerciseId = result2[0].routine_exercise_id;
         Router.push(
-          `/workouts/hypertrophy/setsAndReps?workout=${workoutTitle}&workoutId=${workoutId}&routineExerciseId=${routineExerciseId}&routineId=${routineId}`
+          `/workouts/element/setsAndReps?workout=${workoutTitle}&workoutId=${workoutId}&routineExerciseId=${routineExerciseId}&routineId=${routineId}`
         );
       }
     } catch (e) {
@@ -108,7 +108,7 @@ export default function exercise() {
       <Meta title="Exercise List" />
       <Navbar
         title="Exercise:"
-        backPath={`/workouts/${workoutTitle}/routineMenu?workout=${workoutTitle}&workoutId=${workoutId}`}
+        backPath={`/workouts/element/routineMenu?workout=${workoutTitle}&workoutId=${workoutId}`}
       />
       <PageLayout>
         <p className="text-center mb-3">

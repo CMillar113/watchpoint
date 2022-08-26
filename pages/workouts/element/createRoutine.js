@@ -1,29 +1,28 @@
 import Meta from "../../../src/components/Meta";
 import Navbar from "../../../src/components/NavBar";
 import PageLayout from "../../../src/components/PageLayout";
+import Button from "../../../src/components/Button";
 import { useEffect, useState } from "react";
 import Router from "next/router";
+import { useUser } from "@auth0/nextjs-auth0";
+import { lowerCaseFirstLetter } from "../../_app";
 import buttonStyles from "../../../styles/Button.module.css";
 import { useRouter } from "next/router";
 
 export default function createRoutine() {
-  const { query, isReady } = useRouter();
   const [workout, setWorkoutTitle] = useState(" ");
   const [workoutId, setWorkoutId] = useState(" ");
-  const [exerciseSets, setSets] = useState("");
-  const [exerciseReps, setReps] = useState("");
-  const [routineExerciseId, setRoutineExerciseId] = useState(0);
-  const [routineId, setRoutineId] = useState("");
+  const [routineName, setroutineName] = useState("");
+  const [routineNote, setroutineNote] = useState("");
+  const { query, isReady } = useRouter();
+  const { user } = useUser();
 
   useEffect(() => {
     if (!isReady) return;
-
     async function effect() {
-      const { routineExerciseId, routineId, workout, workoutId } = query;
+      const { workout, workoutId } = query;
       setWorkoutTitle(workout);
       setWorkoutId(workoutId);
-      setRoutineExerciseId(routineExerciseId);
-      setRoutineId(routineId);
     }
     effect();
   }, [query, isReady]);
@@ -32,22 +31,25 @@ export default function createRoutine() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = { exerciseSets, exerciseReps };
-    console.log({ "submitted data": exerciseSets, exerciseReps });
+
+    const data = { routineName, routineNote };
+
+    let id = user.sub;
+    console.log({ "submitted data": routineName, routineNote });
     try {
       const response = await fetch(
-        `/api/routines/createSetsAndReps?routineExerciseId=${routineExerciseId}&sets=${exerciseSets}&reps=${exerciseReps}`,
+        `/api/routines/createRoutine?id=${id}&routineName=${routineName}&routineNote=${routineNote}&elementid=${workoutId}`,
         {
           method: "POST",
           data: JSON.stringify(data),
         }
       );
       const result = await response.json();
-      console.log({ result });
+      console.log({ result }); //TODO - return routine_id of new created routine and pass to add exercise pages
 
       if (response.ok) {
         Router.push(
-          `/workouts/hypertrophy/routineDisplay?workout=${workoutTitle}&workoutId=${workoutId}&routineId=${routineId}`
+          `/workouts/element/routineMenu?workout=${workoutTitle}&workoutId=${workoutId}`
         );
       }
     } catch (e) {
@@ -57,10 +59,10 @@ export default function createRoutine() {
 
   return (
     <>
-      <Meta title="Sets & Reps" />
+      <Meta title="New Routine" />
       <Navbar
-        title="Sets"
-        backPath={`/workouts/${workoutTitle}/routineMenu?=${workoutTitle}&workoutId=${workoutId}`}
+        title="New"
+        backPath={`/workouts/element/routineMenu?workout=${workoutTitle}&workoutId=${workoutId}`}
       />
       <PageLayout>
         <form
@@ -70,33 +72,33 @@ export default function createRoutine() {
           method="post"
           data-validate="parsley"
         >
-          <h3 className="text-center">Sets:</h3>
+          <h3 className="text-center">Name New Routine</h3>
 
           <input
             className="h-8 border-2 w-full mb-1 text-center"
             type="text"
-            placeholder="Sets"
-            name="Sets"
-            id="Sets"
+            placeholder="Routine Name:"
+            name="Routine Name"
+            id="Routine Name"
             data-required="true"
-            data-error-message="Add Sets"
-            value={exerciseSets}
+            data-error-message="Name Routine"
+            value={routineName}
             onChange={(e) => {
-              setSets(e.target.value);
+              setroutineName(e.target.value);
             }}
           />
-          <h3 className="text-center">Reps:</h3>
+          <h3 className="text-center">Routine Notes</h3>
           <input
             className="h-8 border-2 w-full mb-1 text-center"
             type="text"
-            placeholder="Reps:"
-            name="Reps"
-            id="Reps:"
+            placeholder="Routine Notes:"
+            name="Routine Notes"
+            id="Routine Notes"
             data-required="true"
-            data-error-message="Add Reps"
-            value={exerciseReps}
+            data-error-message="Enter Routine Notes"
+            value={routineNote}
             onChange={(e) => {
-              setReps(e.target.value);
+              setroutineNote(e.target.value);
             }}
           />
 
@@ -104,7 +106,7 @@ export default function createRoutine() {
             <input
               className={`mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg border-2 border-black text-center ${buttonStyles.primary}`}
               type="submit"
-              value="Add to Routine"
+              value="Create Routine"
             />
           </div>
         </form>

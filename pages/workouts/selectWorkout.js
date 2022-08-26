@@ -42,8 +42,8 @@ export default function selectWorkout() {
             onClick={function () {
               let path = lowerCaseFirstLetter(metric.element_name);
               Router.push(
-                // `/workouts/element?workout=${path}&workoutId=${metric.element_id}`
-                `/workouts/${path}?workout=${path}&workoutId=${metric.element_id}`
+                `/workouts/element?workout=${path}&workoutId=${metric.element_id}`
+                // `/workouts/${path}?workout=${path}&workoutId=${metric.element_id}`
               );
             }}
           >

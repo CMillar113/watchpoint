@@ -48,7 +48,7 @@ export default function exercises() {
       <Meta title="Exercise Categories" />
       <Navbar
         title="Categories:"
-        backPath={`/workouts/${workoutTitle}/routineMenu?workout=${workoutTitle}&workoutId=${workoutId}`}
+        backPath={`/workouts/element/routineMenu?workout=${workoutTitle}&workoutId=${workoutId}`}
       />
       <PageLayout>
         <p className="text-center mb-3">Please Select Exercise Category </p>
@@ -62,7 +62,7 @@ export default function exercises() {
                   className="h-10 w-full rounded-md border-black border-2 bg-slate-300 mb-2 place-content-center"
                   onClick={function () {
                     Router.push(
-                      `/workouts/${workoutTitle}/exercise?id=${metric.exercise_category_id}&workout=${workoutTitle}&workoutId=${workoutId}&routineId=${routineId}`
+                      `/workouts/element/exercise?id=${metric.exercise_category_id}&workout=${workoutTitle}&workoutId=${workoutId}&routineId=${routineId}`
                     );
                   }}
                 >

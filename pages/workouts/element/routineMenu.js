@@ -53,7 +53,7 @@ export default function routineMenu() {
           className=" w-full h-10 border-black border-2 flex px-3 mb-1"
           onClick={function () {
             Router.push(
-              `/workouts/${workoutTitle}/routineDisplay?workout=${workoutTitle}&workoutId=${workoutId}&routineId=${metric.routine_id}`
+              `/workouts/element/routineDisplay?workout=${workoutTitle}&workoutId=${workoutId}&routineId=${metric.routine_id}`
             );
           }}
         >
@@ -66,7 +66,7 @@ export default function routineMenu() {
         <Meta title={workoutTitle} />
         <Navbar
           title={workoutTitle}
-          backPath={`/workouts/${workoutTitle}?workout=${workoutTitle}&workoutId=${workoutId}`}
+          backPath={`/workouts/element?workout=${workoutTitle}&workoutId=${workoutId}`}
         />
         <PageLayout>
           <div className="w-full flex justify-center">
@@ -76,7 +76,7 @@ export default function routineMenu() {
           </div>
           {routines}
           <Button
-            path={`/workouts/${workoutTitle}/createRoutine?workout=${workoutTitle}&workoutId=${workoutId}`}
+            path={`/workouts/element/createRoutine?workout=${workoutTitle}&workoutId=${workoutId}`}
             label={"Create New Routine +"}
           />
         </PageLayout>

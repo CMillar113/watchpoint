@@ -4,7 +4,6 @@ import Meta from "../../../src/components/Meta";
 import Navbar from "../../../src/components/NavBar";
 import NavMenu from "../../../src/components/NavButtonOne";
 import PageLayout from "../../../src/components/PageLayout";
-import { lowerCaseFirstLetter } from "../../_app";
 
 export default function hypertrophyDash() {
   const { query, isReady } = useRouter();
@@ -29,7 +28,7 @@ export default function hypertrophyDash() {
       <Navbar title={workoutTitle} backPath={"/workouts/selectWorkout"} />
       <PageLayout>
         <NavMenu
-          path={`/workouts/${workoutTitle}/routineMenu?workout=${workoutTitle}&workoutId=${workoutElementId}`}
+          path={`/workouts/element/routineMenu?workout=${workoutTitle}&workoutId=${workoutElementId}`}
           label={"Routines"}
         ></NavMenu>
         <hr className="bg-black" />
