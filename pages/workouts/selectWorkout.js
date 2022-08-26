@@ -41,7 +41,10 @@ export default function selectWorkout() {
             className="h-20 w-full rounded-md border-black border-2 bg-slate-300 mb-2 place-content-center"
             onClick={function () {
               let path = lowerCaseFirstLetter(metric.element_name);
-              Router.push(`/workouts/${path}`);
+              Router.push(
+                // `/workouts/element?workout=${path}&workoutId=${metric.element_id}`
+                `/workouts/${path}?workout=${path}&workoutId=${metric.element_id}`
+              );
             }}
           >
             {" "}

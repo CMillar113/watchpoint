@@ -1,22 +1,14 @@
 import Meta from "../../../src/components/Meta";
 import Navbar from "../../../src/components/NavBar";
-
 import PageLayout from "../../../src/components/PageLayout";
-import Button from "../../../src/components/Button";
-import FullScreenSpinner from "../../../src/components/FullScreenSpinner";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import buttonStyles from "../../../styles/Button.module.css";
-import { lowerCaseFirstLetter } from "../../_app";
-import { useUser } from "@auth0/nextjs-auth0";
 import Router from "next/router";
 
-//Constants
-const workoutTitle = "Hypertrophy";
-const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
-//constants
-
 export default function exercise() {
+  const [workout, setWorkoutTitle] = useState(" ");
+  const [workoutId, setWorkoutId] = useState(" ");
   const { query, isReady } = useRouter();
   const [isLoading, setLoading] = useState();
   const [newExercise, setNewExercise] = useState("");
@@ -26,10 +18,11 @@ export default function exercise() {
 
   useEffect(() => {
     if (!isReady) return;
-
     async function effect() {
       setLoading(true);
-      const { id } = query;
+      const { id, workout, workoutId } = query;
+      setWorkoutTitle(workout);
+      setWorkoutId(workoutId);
       const response = await fetch(
         `/api/exercise_category?exerciseCategoryId=${id}`
       );
@@ -46,6 +39,8 @@ export default function exercise() {
     effect();
   }, [query, isReady]);
 
+  const workoutTitle = workout;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { id } = query;
@@ -61,10 +56,9 @@ export default function exercise() {
         }
       );
       const result = await response.json();
-      console.log({ result }); //TODO - return routine_id of new created routine and pass to add exercise pages
+      console.log({ result });
 
       if (response.ok) {
-        // Router.push("/workouts/hypertrophy/routineMenu");
         if (query.routineId) {
           Router.push(
             `/workouts/hypertrophy/exercise?id=${id}&routineId=${query.routineId}`
@@ -101,9 +95,8 @@ export default function exercise() {
         console.log(result2);
         const routineExerciseId = result2[0].routine_exercise_id;
         Router.push(
-          `/workouts/hypertrophy/setsAndReps?routineExerciseId=${routineExerciseId}&routineId=${routineId}`
+          `/workouts/hypertrophy/setsAndReps?workout=${workoutTitle}&workoutId=${workoutId}&routineExerciseId=${routineExerciseId}&routineId=${routineId}`
         );
-        //TODO - Push to new page to add sets and reps?????
       }
     } catch (e) {
       console.error(e);
@@ -115,7 +108,7 @@ export default function exercise() {
       <Meta title="Exercise List" />
       <Navbar
         title="Exercise:"
-        backPath={`/workouts/${workoutPathTitle}/exerciseCategories`}
+        backPath={`/workouts/${workoutTitle}/routineMenu?workout=${workoutTitle}&workoutId=${workoutId}`}
       />
       <PageLayout>
         <p className="text-center mb-3">
@@ -139,7 +132,6 @@ export default function exercise() {
         </div>
         <form
           className="w-full text-center"
-          //   action={``}
           method="post"
           data-validate="parsley"
           onSubmit={handleSubmit}
@@ -161,7 +153,7 @@ export default function exercise() {
           </div>
 
           <input
-            className={`mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg border-2 border-black  ${buttonStyles.primary}`}
+            className={`mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg border-2 border-black ${buttonStyles.primary}`}
             type="submit"
             value="Create Exercise"
           />

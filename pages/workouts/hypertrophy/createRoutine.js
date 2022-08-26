@@ -9,26 +9,42 @@ import { lowerCaseFirstLetter } from "../../_app";
 import buttonStyles from "../../../styles/Button.module.css";
 import { useRouter } from "next/router";
 
-//Constants
-const workoutTitle = "Hypertrophy";
-const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
-const elementID = 3;
+//Constantsf
+// const workoutTitle = "Hypertrophy";
+// const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
+// const elementID = 3;
 //constants
 
 export default function createRoutine() {
+  const [workout, setWorkoutTitle] = useState(" ");
+  const [workoutId, setWorkoutId] = useState(" ");
   const [routineName, setroutineName] = useState("");
   const [routineNote, setroutineNote] = useState("");
+  const { query, isReady } = useRouter();
   const { user } = useUser();
+
+  useEffect(() => {
+    if (!isReady) return;
+    async function effect() {
+      const { workout, workoutId } = query;
+      setWorkoutTitle(workout);
+      setWorkoutId(workoutId);
+    }
+    effect();
+  }, [query, isReady]);
+
+  const workoutTitle = workout;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const data = { routineName, routineNote };
+
     let id = user.sub;
     console.log({ "submitted data": routineName, routineNote });
     try {
       const response = await fetch(
-        `/api/routines/createRoutine?id=${id}&routineName=${routineName}&routineNote=${routineNote}&elementid=${elementID}`,
+        `/api/routines/createRoutine?id=${id}&routineName=${routineName}&routineNote=${routineNote}&elementid=${workoutId}`,
         {
           method: "POST",
           data: JSON.stringify(data),
@@ -38,7 +54,9 @@ export default function createRoutine() {
       console.log({ result }); //TODO - return routine_id of new created routine and pass to add exercise pages
 
       if (response.ok) {
-        Router.push("/workouts/hypertrophy/routineMenu");
+        Router.push(
+          `/workouts/hypertrophy/routineMenu?workout=${workoutTitle}&workoutId=${workoutId}`
+        );
       }
     } catch (e) {
       console.error(e);
@@ -50,7 +68,7 @@ export default function createRoutine() {
       <Meta title="New Routine" />
       <Navbar
         title="New"
-        backPath={`/workouts/${workoutPathTitle}/routineMenu`}
+        backPath={`/workouts/${workoutTitle}/routineMenu?workout=${workoutTitle}&workoutId=${workoutId}`}
       />
       <PageLayout>
         <form

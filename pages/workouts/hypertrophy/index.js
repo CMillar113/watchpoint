@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import Meta from "../../../src/components/Meta";
 import Navbar from "../../../src/components/NavBar";
 import NavMenu from "../../../src/components/NavButtonOne";
@@ -5,15 +7,29 @@ import PageLayout from "../../../src/components/PageLayout";
 import { lowerCaseFirstLetter } from "../../_app";
 
 export default function hypertrophyDash() {
-  const workoutTitle = "Hypertrophy";
-  const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
+  const { query, isReady } = useRouter();
+  const [workout, setWorkoutTitle] = useState(" ");
+  const [workoutId, setWorkoutId] = useState(" ");
+  useEffect(() => {
+    if (!isReady) return;
+    async function effect() {
+      const { workout, workoutId } = query;
+      setWorkoutTitle(workout);
+      setWorkoutId(workoutId);
+    }
+    effect();
+  }, [query, isReady]);
+
+  const workoutTitle = workout;
+  const workoutElementId = workoutId;
+
   return (
     <>
       <Meta title={workoutTitle} />
       <Navbar title={workoutTitle} backPath={"/workouts/selectWorkout"} />
       <PageLayout>
         <NavMenu
-          path={`/workouts/${workoutPathTitle}/routineMenu`}
+          path={`/workouts/${workoutTitle}/routineMenu?workout=${workoutTitle}&workoutId=${workoutElementId}`}
           label={"Routines"}
         ></NavMenu>
         <hr className="bg-black" />

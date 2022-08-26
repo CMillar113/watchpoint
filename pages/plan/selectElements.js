@@ -7,11 +7,9 @@ import buttonStyles from "../../styles/Button.module.css";
 import { useEffect, useState } from "react";
 
 export default function selectElements() {
-  const [nutritionActive, setNutrition] = useState();
-  const [bodyweightActive, setBodyweight] = useState();
-  const [stepsActive, setSteps] = useState();
-  const [sleepActive, setSleep] = useState();
+  const [elements, setNutrition] = useState();
 
+  f;
   //POPULATE CHECK BOXES INDEPENDANDT OF UER DATA
   const nutritionElements = checkNutrtionElements();
   const healthcareElements = checkHealthcareElements();

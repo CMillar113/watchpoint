@@ -4,28 +4,28 @@
 import Meta from "../../../src/components/Meta";
 import Navbar from "../../../src/components/NavBar";
 import PageLayout from "../../../src/components/PageLayout";
-
 import { useEffect, useState } from "react";
 import Router, { useRouter } from "next/router";
-import { lowerCaseFirstLetter } from "../../_app";
 import { useUser } from "@auth0/nextjs-auth0";
 
-//constants
 const classId = 1;
-const workoutTitle = "Hypertrophy";
-const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
-//constants
 
 export default function exercises() {
+  const [workout, setWorkoutTitle] = useState(" ");
+  const [workoutId, setWorkoutId] = useState(" ");
   const [categories, setCategories] = useState({
     categoryNames: [],
   });
   const { user, isLoading } = useUser();
-  const { query } = useRouter();
+  const { query, isReady } = useRouter();
   const { routineId } = query;
 
   useEffect(() => {
+    if (!isReady) return;
     (async function () {
+      const { workout, workoutId } = query;
+      setWorkoutTitle(workout);
+      setWorkoutId(workoutId);
       try {
         const response = await fetch(
           `/api/element_exercises?classid=${classId}`
@@ -40,15 +40,15 @@ export default function exercises() {
       }
     })();
   }, [user]);
-
-  console.log(categories);
+  console.log(workoutId);
+  const workoutTitle = workout;
 
   return (
     <>
       <Meta title="Exercise Categories" />
       <Navbar
         title="Categories:"
-        backPath={`/workouts/${workoutPathTitle}/routineMenu`}
+        backPath={`/workouts/${workoutTitle}/routineMenu?workout=${workoutTitle}&workoutId=${workoutId}`}
       />
       <PageLayout>
         <p className="text-center mb-3">Please Select Exercise Category </p>
@@ -62,7 +62,7 @@ export default function exercises() {
                   className="h-10 w-full rounded-md border-black border-2 bg-slate-300 mb-2 place-content-center"
                   onClick={function () {
                     Router.push(
-                      `/workouts/${workoutPathTitle}/exercise?id=${metric.exercise_category_id}&routineId=${routineId}`
+                      `/workouts/${workoutTitle}/exercise?id=${metric.exercise_category_id}&workout=${workoutTitle}&workoutId=${workoutId}&routineId=${routineId}`
                     );
                   }}
                 >

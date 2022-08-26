@@ -1,36 +1,34 @@
 import Meta from "../../../src/components/Meta";
 import Navbar from "../../../src/components/NavBar";
 import PageLayout from "../../../src/components/PageLayout";
-import Button from "../../../src/components/Button";
 import { useEffect, useState } from "react";
 import Router from "next/router";
-import { useUser } from "@auth0/nextjs-auth0";
-import { lowerCaseFirstLetter } from "../../_app";
 import buttonStyles from "../../../styles/Button.module.css";
 import { useRouter } from "next/router";
 
-//Constants
-const workoutTitle = "Hypertrophy";
-const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
-const elementID = 3;
-//constants
-
 export default function createRoutine() {
   const { query, isReady } = useRouter();
+  const [workout, setWorkoutTitle] = useState(" ");
+  const [workoutId, setWorkoutId] = useState(" ");
   const [exerciseSets, setSets] = useState("");
   const [exerciseReps, setReps] = useState("");
   const [routineExerciseId, setRoutineExerciseId] = useState(0);
-  const [routineId, setRoutineId] = useState(0);
+  const [routineId, setRoutineId] = useState("");
 
   useEffect(() => {
     if (!isReady) return;
+
     async function effect() {
-      const { routineExerciseId, routineId } = query;
+      const { routineExerciseId, routineId, workout, workoutId } = query;
+      setWorkoutTitle(workout);
+      setWorkoutId(workoutId);
       setRoutineExerciseId(routineExerciseId);
       setRoutineId(routineId);
     }
     effect();
   }, [query, isReady]);
+
+  const workoutTitle = workout;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,7 +46,9 @@ export default function createRoutine() {
       console.log({ result });
 
       if (response.ok) {
-        Router.push(`/workouts/hypertrophy/routineDisplay?id=${routineId}`);
+        Router.push(
+          `/workouts/hypertrophy/routineDisplay?workout=${workoutTitle}&workoutId=${workoutId}&routineId=${routineId}`
+        );
       }
     } catch (e) {
       console.error(e);
@@ -60,7 +60,7 @@ export default function createRoutine() {
       <Meta title="Sets & Reps" />
       <Navbar
         title="Sets"
-        backPath={`/workouts/${workoutPathTitle}/routineMenu`}
+        backPath={`/workouts/${workoutTitle}/routineMenu?=${workoutTitle}&workoutId=${workoutId}`}
       />
       <PageLayout>
         <form
