@@ -90,10 +90,19 @@ export default function exercise() {
         }
       );
       const result = await response.json();
-      console.log("Add exercise to routien:", { result });
+      console.log("Add exercise to routine:", { result });
 
       if (response.ok) {
-        Router.push(`/workouts/hypertrophy/routineDisplay?id=${routineId}`);
+        //Get last added routine_exercise_id  for that routine and pass onto SetsAndReps page
+        const response2 = await fetch(
+          `/api/routines/getRoutineExerciseId?routineId=${routineId}`
+        );
+        const result2 = await response2.json();
+        console.log(result2);
+        const routineExerciseId = result2[0].routine_exercise_id;
+        Router.push(
+          `/workouts/hypertrophy/setsAndReps?routineExerciseId=${routineExerciseId}`
+        );
         //TODO - Push to new page to add sets and reps?????
       }
     } catch (e) {

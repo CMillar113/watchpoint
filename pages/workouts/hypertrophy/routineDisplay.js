@@ -79,7 +79,7 @@ export default function routineDisplay() {
                   key={`${exercise.routine_exercise_id}-setsDiv`}
                   className="w-1/2 text-right flex justify-center "
                 >
-                  <h3 className="w-2/3 mt-1">
+                  <h3 className="w-full mt-1">
                     Sets: {exercise.planned_sets} Reps: {exercise.planned_reps}
                   </h3>
                 </div>
