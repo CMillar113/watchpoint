@@ -60,7 +60,7 @@ export default function createRoutine() {
       <Meta title="Sets & Reps" />
       <Navbar
         title="Sets"
-        backPath={`/workouts/element/routineMenu?=${workoutTitle}&workoutId=${workoutId}`}
+        backPath={`/workouts/element/routineMenu?workout=${workoutTitle}&workoutId=${workoutId}`}
       />
       <PageLayout>
         <form

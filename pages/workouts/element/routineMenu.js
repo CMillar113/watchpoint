@@ -6,8 +6,6 @@ import { useEffect, useState } from "react";
 import Router, { useRouter } from "next/router";
 import { useUser } from "@auth0/nextjs-auth0";
 
-// const workoutElementId = 3;
-
 export default function routineMenu() {
   const { user, isLoading } = useUser();
   const { query, isReady } = useRouter();

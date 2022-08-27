@@ -61,10 +61,10 @@ export default function exercise() {
       if (response.ok) {
         if (query.routineId) {
           Router.push(
-            `/workouts/element/exercise?id=${id}&routineId=${query.routineId}`
+            `/workouts/element/exercise?id=${id}&workout=${workout}&workoutId=${workoutId}&routineId=${query.routineId}`
           );
         } else {
-          Router.push(`/workouts/hypertrophy/exercise?id=${id}`);
+          Router.push(`/workouts/element/exercise?id=${id}`);
         }
       }
     } catch (e) {

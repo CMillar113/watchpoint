@@ -8,11 +8,12 @@ import { useEffect, useState } from "react";
 import Router, { useRouter } from "next/router";
 import { useUser } from "@auth0/nextjs-auth0";
 
-const classId = 1;
+// const classId = 1;
 
 export default function exercises() {
   const [workout, setWorkoutTitle] = useState(" ");
   const [workoutId, setWorkoutId] = useState(" ");
+  const [ClassId, setClassId] = useState(" ");
   const [categories, setCategories] = useState({
     categoryNames: [],
   });
@@ -26,9 +27,12 @@ export default function exercises() {
       const { workout, workoutId } = query;
       setWorkoutTitle(workout);
       setWorkoutId(workoutId);
+      console.log(workoutId);
+
       try {
+        console.log("sent", workoutId);
         const response = await fetch(
-          `/api/element_exercises?classid=${classId}`
+          `/api/element_exercises?workoutId=${workoutId}`
         );
         const result = await response.json();
 
