@@ -103,11 +103,11 @@ export default function startWorkout() {
   ) : (
     <>
       <Meta title={workout} />
-      <Navbar title={today} />
+      <Navbar title={routine.name} />
       <PageLayout>
         <div className="w-full h-auto text-center border-black border-2 rounded-md mb-5">
-          <h3 className="w-full h-auto border-2">{routine.name}</h3>
-          <h3 className="w-full h-auto  border-2">{routine.notes}</h3>
+          <h3 className="w-full h-auto border-2">{routine.notes}</h3>
+          <h3 className="w-full h-auto  border-2">{today}</h3>
         </div>
 
         <form className="w-full text-center mb-2" onSubmit={handleSubmit}>
@@ -117,9 +117,12 @@ export default function startWorkout() {
               .sort((a, b) => a.routine_exercise_id - b.routine_exercise_id)
               .map(function (exercise) {
                 return (
-                  <div className="w-11/12" key={exercise.routine_exercise_id}>
-                    <div className=" w-full h-10 border-black border-2 flex justify-center px-3  ">
-                      <h3 className="w-1/2 mt-1">{exercise.exercise_name}</h3>
+                  <div
+                    className="w-full mb-2"
+                    key={exercise.routine_exercise_id}
+                  >
+                    <div className=" w-full h-8 border-black border-2 flex justify-center px-3  ">
+                      <h3 className="w-1/3 mt-1">{exercise.exercise_name}</h3>
                       <div className="w-1/2 text-right flex justify-center ">
                         <h3 className="w-full mt-1">
                           Sets: {exercise.planned_sets} Reps:{" "}

@@ -31,7 +31,6 @@ export default function athlete() {
   }, []);
 
   let body = null;
-
   if (metrics !== undefined && user !== undefined) {
     body = metrics
       .filter(function (metric) {
@@ -73,29 +72,25 @@ export default function athlete() {
           labelRight={"Workouts"}
         ></NavMenu>
 
-        <div className="h-screen">
+        <div className=" border-2 border-black h-1/3 content-center items-center  justify-evenly mb-2 ">
           <div
-            className={`bg-primary-bg text-primary-text h-11 place-content-center w-full border-2 border-black flex mb-1  `}
+            className={`bg-primary-bg text-primary-text h-7 place-content-center w-full border-b-2 border-black flex mb-1  `}
           >
             Daily Goals
           </div>
-          <div className=" border-2 flex border-black h-1/2 content-center items-center overflow-hidden justify-center ">
-            <div className="flex flex-col gap-2 w-8/12  h-10">
-              {body}
-              {/* {body !== null ? body : <p>No Goals</p>} */}
-              {/* Brefily shows no goals then disapears */}
-              {/* {body} */}
-            </div>
-          </div>
 
+          <div className="flex flex-col gap-2 w-8/12  h-10 justify-evenly">
+            {body}
+          </div>
+        </div>
+
+        <div className="border-2 border-black h-1/3 content-center items-center justify-center">
           <div
-            className={`bg-primary-bg text-primary-text h-11 place-content-center  w-full border-2 border-black flex mb-1 mt-1 overflow-hidden  `}
+            className={`bg-primary-bg text-primary-text h-7 place-content-center  w-full border-2 border-black  mb-1 mt-1 overflow-hidden  `}
           >
             Weekly Goals
           </div>
-          <div className="border-2 flex border-black h-1/2 content-center items-center overflow-hidden justify-center">
-            No Weekly Goals Set
-          </div>
+          No Weekly Goals Set
         </div>
 
         {/* {metrics !== undefined && <pre>{JSON.stringify(metrics, null, 2)}</pre>} */}

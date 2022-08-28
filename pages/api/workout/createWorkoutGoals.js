@@ -39,8 +39,8 @@ export default async function handler(req, res) {
 }
 
 async function updateWorkout(athlete_id, elementID, goalValue) {
-  const sql = `
-    UPDATE athlete_workout_goals SET workouts_per_week = ? WHERE athlete_id = ? AND element_id = ?,
+  const sql = ` UPDATE athlete_workout_goals SET workouts_per_week = ? 
+  WHERE athlete_id = ? AND element_id = ?
     `;
   const result = await executeQuery({
     query: sql,
@@ -64,8 +64,7 @@ async function insertWorkout(athlete_id, elementID, goalValue) {
 }
 
 async function checkIfLogAlreadyExist(athleteId, elementId) {
-  const sql = `
-       SELECT COUNT(*) FROM athlete_workout_goals
+  const sql = `SELECT COUNT(*) FROM athlete_workout_goals
        WHERE athlete_workout_goals.athlete_ID = ?
        AND athlete_workout_goals.element_id = ?
     `;

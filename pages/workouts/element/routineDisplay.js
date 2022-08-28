@@ -69,7 +69,7 @@ export default function routineDisplay() {
             return (
               <div
                 key={exercise.routine_exercise_id}
-                className=" w-full h-10 border-black border-2 flex justify-center px-3  "
+                className=" w-full h-8 mb-2 border-black border-2 flex justify-evenly px-6  "
               >
                 <h3 className="w-1/2 mt-1">{exercise.exercise_name}</h3>
 
