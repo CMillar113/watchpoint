@@ -22,7 +22,7 @@ export default function settings() {
         const result = await response.json();
         console.log("resul", result);
         if (response.ok) {
-          if (Array.isArray(result).length > 1) {
+          if (Array.isArray(result) && result.length > 1) {
             setCoachId(undefined);
           } else {
             setCoachId(result[0].coach_id);
