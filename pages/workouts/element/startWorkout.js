@@ -22,10 +22,9 @@ export default function startWorkout() {
   const [routine, setRoutine] = useState({
     name: "",
     notes: "",
-    exercises: [], //TODO - Remove
+    exercises: [],
   });
   const [isLoading, setLoading] = useState(true);
-  const [exerciseWeight, setExerciseWeight] = useState(0);
   const [exercises, setExercises] = useState([]);
 
   useEffect(() => {
@@ -65,12 +64,12 @@ export default function startWorkout() {
     effect();
   }, [query, isReady]);
 
-  useEffect(() => {
-    // Check exercises updates corrrectly through entery
-    console.log("updated exercises state", { exercises });
-  }, [exercises]);
+  // useEffect(() => {
+  //   // Check exercises updates corrrectly through entery
+  //   console.log("updated exercises state", { exercises });
+  // }, [exercises]);
 
-  //TODO- on submit updates workout_logged table with weight values for specific rouitne_exercise_id's
+  /////TODO- on submit updates workout_logged table with weight values for specific rouitne_exercise_id's
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -132,15 +131,15 @@ export default function startWorkout() {
                     <input
                       className="border-2 border-black w-full h-10 text-center"
                       type="text"
-                      placeholder={exercise.weight}
-                      name="Weight (Kg)"
-                      data-type="Weight (Kg)"
+                      placeholder="Weight (Kg) / Time (s) / Distance (m)"
+                      name="log"
+                      data-type="log"
                       value={
                         exercises.find(
                           (ex) =>
                             ex.routine_exercise_id ===
                             exercise.routine_exercise_id
-                        ).weight || 0
+                        ).weight || ""
                       }
                       onChange={(e) => {
                         const newWeight = e.target.value;
