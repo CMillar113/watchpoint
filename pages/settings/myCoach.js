@@ -27,7 +27,7 @@ export default function myCoach() {
     effect();
 
     (async function () {
-      const { coachId } = query;
+      const { coachId } = query; // seems to be faster loading if use this rather than state (check more)
       try {
         const response = await fetch(`/api/coaches?coachId=${coachId}`);
         const result = await response.json();
@@ -42,7 +42,23 @@ export default function myCoach() {
     })();
   }, [user, query, isReady]); // continues once these are set or changed
 
-  //elements = checkAthletesElements(passedAthlete_id); //TODO - SQL req hardcoded with athlete_id = 1
+  const handleDisconnect = async () => {
+    // const coachId = query.coachId;
+    const athlete0Id = user.sub;
+    try {
+      const response = await fetch(
+        `/api/disconnectCoach?coachId=${coachId}athlete0Id=${athlete0Id}`
+      );
+      const result = await response.json();
+      console.log("result", result);
+
+      if (response.ok) {
+        setCoachMetrics(result);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   if (metrics !== undefined && user !== undefined) {
     return (
@@ -82,13 +98,21 @@ export default function myCoach() {
               </p>
             </button>
           </div>
+          <div className="w-full text-center flex justify-center mb-2">
+            <h3 className="border-2 border-primary-bg text-center w-11/12">
+              You are currently connected
+            </h3>
+          </div>
+          <p className="flex text-center mb-2 px-2">
+            Your coach will have access to your workout routines and week in
+            review page
+          </p>
 
-          <h3 className="flex justify-center mb-2">Allow Coach Access to:</h3>
-          <form
+          {/* <form
             className="text-left text-xl flex-col px-10  "
             action="/settings"
           >
-            {/* {elements} */}
+            {elements}
 
             <button
               id="submit"
@@ -97,10 +121,13 @@ export default function myCoach() {
             >
               Update
             </button>
-          </form>
+          </form> */}
 
           <Button
-            path="/settings/coachDisconnected"
+            path=""
+            onClick={() => {
+              handleDisconnect();
+            }}
             label="Disconnect from coach"
           ></Button>
         </PageLayout>
@@ -154,51 +181,3 @@ export default function myCoach() {
 //     return body;
 //   }
 // }
-
-function checkCoach() {
-  if (coachMetrics !== undefined) {
-    let coach = metrics
-      .filter(function (metric) {
-        return metric.coach_id === passedCoach_id;
-      }) //This is how to apply a filter
-      .map(function (metric) {
-        //Not semantically correct to put divs inside buttons - build divs and input button
-        return (
-          <div
-            key={`${metric.coach_id}-div`}
-            className="h-auto w-full rounded-md border-black border-2 bg-white mb-2 place-content-center text-center"
-          >
-            <button
-              key={`${metric.coach_id}-btn`}
-              className="mr-0"
-              onClick={function () {
-                Router.push(`/settings/coachProfile`);
-              }}
-            >
-              {" "}
-              <p key={`${metric.coach_id}-p1`} className="text-3xl ">
-                {metric.brand_name}
-              </p>
-              <div className="w-full flex justify-center">
-                <img
-                  src={metric.coach_img_url}
-                  alt=""
-                  height={300}
-                  width={300}
-                  alt="Logo"
-                ></img>
-              </div>
-              <p key={`${metric.coach_id}-p2`} className="text-3xl">
-                {metric.first_name} {metric.surname}
-              </p>
-              <p key={`${metric.coach_id}-p3`} className="text-3xl">
-                {metric.email_address}
-              </p>
-            </button>
-          </div>
-        );
-      });
-
-    return coach;
-  }
-}

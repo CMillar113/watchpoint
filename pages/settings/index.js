@@ -21,6 +21,7 @@ export default function settings() {
         );
         const result = await response.json();
         console.log("resul", result);
+
         if (response.ok) {
           if (Array.isArray(result) && result.length > 1) {
             setCoachId(undefined);

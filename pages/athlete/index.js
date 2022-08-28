@@ -79,7 +79,7 @@ export default function athlete() {
             Daily Goals
           </div>
 
-          <div className="flex flex-col gap-2 w-8/12  h-10 justify-evenly">
+          <div className="flex flex-col gap-2 w-8/12 h-10 justify-evenly mt-3 mb-3">
             {body}
           </div>
         </div>
