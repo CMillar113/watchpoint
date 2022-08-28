@@ -47,7 +47,7 @@ export default function createRoutine() {
 
       if (response.ok) {
         Router.push(
-          `/workouts/element/routineDisplay?workout=${workoutTitle}&workoutId=${workoutId}&routineId=${routineId}$wo`
+          `/workouts/element/routineDisplay?workout=${workoutTitle}&workoutId=${workoutId}&routineId=${routineId}`
         );
       }
     } catch (e) {

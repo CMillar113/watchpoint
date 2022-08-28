@@ -11,7 +11,7 @@ const today = new Date().toISOString().substring(0, 10);
 
 export default function bodyweight() {
   const [loggedBodyweight, setLoggedBodyweight] = useState([]);
-  const { user } = useUser(); //Get current users 7 day average of steps
+  const { user } = useUser();
   const [bodyweight, setBodyweight] = useState(0);
   const [date, setDate] = useState(today);
   const router = useRouter();

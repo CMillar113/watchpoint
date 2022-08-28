@@ -2,18 +2,15 @@ import Meta from "../../../src/components/Meta";
 import Navbar from "../../../src/components/NavBar";
 
 import PageLayout from "../../../src/components/PageLayout";
-import Button from "../../../src/components/Button";
 import FullScreenSpinner from "../../../src/components/FullScreenSpinner";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import React from "react";
-import { lowerCaseFirstLetter } from "../../_app";
-import { useUser } from "@auth0/nextjs-auth0";
 
-// //Constants
-// const workoutTitle = "Hypertrophy";
-// const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
-// //constants
+import Router from "next/router";
+import buttonStyles from "../../../styles/Button.module.css";
+
+const today = new Date().toISOString().substring(0, 10);
 
 export default function startWorkout() {
   const { query, isReady } = useRouter();
@@ -39,7 +36,7 @@ export default function startWorkout() {
       const { routineId, workout, workoutId } = query;
       setWorkoutTitle(workout);
       setWorkoutId(workoutId);
-      // setRoutineExerciseId(routineExerciseId);
+
       setRoutineId(routineId);
 
       const response = await fetch(
@@ -67,35 +64,47 @@ export default function startWorkout() {
 
     effect();
   }, [query, isReady]);
+
   useEffect(() => {
+    // Check exercises updates corrrectly through entery
     console.log("updated exercises state", { exercises });
   }, [exercises]);
 
-  //TODO- on submit updates routine_exercise table with weight values for specific rouitne_exercise_id's
+  //TODO- on submit updates workout_logged table with weight values for specific rouitne_exercise_id's
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(exercises);
+    exercises.forEach((exercise) => {
+      const routineExerciseId = exercise.routine_exercise_id;
+      const log = exercise.weight;
+      try {
+        const response = fetch(
+          `/api/routines/logWorkout?routineExerciseId=${routineExerciseId}&date=${today}&log=${log}`,
+          {
+            method: "POST",
+            body: JSON.stringify(exercises),
+          }
+        );
+        const result = response.json();
 
-    try {
-      const response = await fetch("some end[pont", {
-        method: "POST",
-        body: JSON.stringify(exercises),
-      });
-      const result = await response.json();
-
-      if (response.ok) {
-        router.push("some screen");
+        if (response.ok) {
+          console.log(response);
+        }
+      } catch (e) {
+        console.error(e);
+      } finally {
+        Router.push("/athlete");
       }
-    } catch (e) {
-      console.error(e);
-    }
+    });
   };
+
   return isLoading ? (
     <FullScreenSpinner />
   ) : (
     <>
       <Meta title={workout} />
-      <Navbar title="Routine" />
+      <Navbar title={today} />
       <PageLayout>
         <div className="w-full h-auto text-center border-black border-2 rounded-md mb-5">
           <h3 className="w-full h-auto border-2">{routine.name}</h3>
@@ -109,10 +118,9 @@ export default function startWorkout() {
               .sort((a, b) => a.routine_exercise_id - b.routine_exercise_id)
               .map(function (exercise) {
                 return (
-                  <React.Fragment key={exercise.routine_exercise_id}>
+                  <div className="w-11/12" key={exercise.routine_exercise_id}>
                     <div className=" w-full h-10 border-black border-2 flex justify-center px-3  ">
                       <h3 className="w-1/2 mt-1">{exercise.exercise_name}</h3>
-
                       <div className="w-1/2 text-right flex justify-center ">
                         <h3 className="w-full mt-1">
                           Sets: {exercise.planned_sets} Reps:{" "}
@@ -156,12 +164,16 @@ export default function startWorkout() {
                         setExercises(updatedExercises);
                       }}
                     />
-                  </React.Fragment>
+                  </div>
                 );
               })}
-          {/* //TODO - Pressing button logs workout weights and directs back to  athlete homepage*/}
-          <div className=" w-full h-auto mb-3 mt-2">
-            <Button type="submit" label="Complete Workout"></Button>
+
+          <div className=" w-full flex justify-center">
+            <input
+              className={`mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg border-2 border-black text-center ${buttonStyles.primary}`}
+              type="submit"
+              value="Complete Workout"
+            />
           </div>
         </form>
       </PageLayout>

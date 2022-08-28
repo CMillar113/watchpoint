@@ -53,7 +53,7 @@ export default function routineDisplay() {
     <>
       <Meta title={workoutTitle} />
       <Navbar
-        title="Routine"
+        title={routine.name}
         backPath={`/workouts/element/routineMenu?workout=${workoutTitle}&workoutId=${workoutId}`}
       />
       <PageLayout>
