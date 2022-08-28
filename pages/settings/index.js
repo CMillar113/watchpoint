@@ -3,20 +3,58 @@ import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import Button from "../../src/components/Button";
 import { useEffect, useState } from "react";
-
+import { useUser } from "@auth0/nextjs-auth0";
+import FullScreenSpinner from "../../src/components/FullScreenSpinner";
 export default function settings() {
-  //TODO - Not hardcoded - check with database athlete_coach table
-  let passedAthlete_id = 2;
-  let coachConnected = checkCoachConnected(passedAthlete_id);
+  const { user } = useUser();
+  const [coachId, setCoachId] = useState(undefined);
+  const [isLoading, setLoading] = useState(true);
 
-  //Check for an empty array of zero values - which is "no coach connected"
-  if (Array.isArray(coachConnected) && coachConnected.length !== 0) {
+  useEffect(() => {
+    if (!user) return;
+    const athlete0Id = user.sub;
+    (async function () {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `/api/athlete_coach?athlete0Id=${athlete0Id}`
+        );
+        const result = await response.json();
+        console.log("resul", result);
+        if (response.ok) {
+          if (Array.isArray(result).length > 1) {
+            setCoachId(undefined);
+          } else {
+            setCoachId(result[0].coach_id);
+          }
+        }
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [user, isLoading]);
+
+  if (isLoading) {
+    return <FullScreenSpinner />;
+  }
+
+  if (coachId !== undefined) {
     return (
       <>
         <Meta title="Settings" />
         <Navbar title="Settings" backPath={"/athlete"} />
         <PageLayout>
-          <Button path="/settings/myCoach" label="My Coach"></Button>
+          <Button
+            path={`/settings/myCoach?coachId=${coachId}`}
+            label="My Coach"
+          ></Button>
+          <div className="w-full flex justify-center">
+            <p className="w-2/3 text-center border-2 black-2 rounded-md">
+              Connect using a private code created by your coach
+            </p>
+          </div>
         </PageLayout>
       </>
     );
@@ -30,39 +68,13 @@ export default function settings() {
             path="/settings/connectToCoach"
             label="Connect With Coach"
           ></Button>
+          <div className="w-full flex justify-center">
+            <p className="w-2/3 text-center border-2 black-2 rounded-md">
+              Connect using a private code created by your coach{" "}
+            </p>
+          </div>
         </PageLayout>
       </>
     );
-  }
-}
-//TODO -Filter in function or in API?- should be moved to in function
-function checkCoachConnected(passedAthlete_id) {
-  const [metrics, setMetrics] = useState(undefined);
-
-  useEffect(() => {
-    (async function () {
-      try {
-        const response = await fetch("/api/athlete_coach");
-        const result = await response.json();
-        console.log(result);
-        if (response.ok) {
-          setMetrics(result);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-  }, []);
-
-  if (metrics !== undefined) {
-    let coachRelationship = metrics.filter(function (metric) {
-      if (metric.athlete_id === passedAthlete_id) {
-        return metric.coach_id;
-      }
-    });
-    // .map(function (metric) {
-    //   return metric.coach_id;
-    // });
-    return coachRelationship;
   }
 }

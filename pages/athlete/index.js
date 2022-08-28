@@ -35,7 +35,6 @@ export default function athlete() {
   if (metrics !== undefined && user !== undefined) {
     body = metrics
       .filter(function (metric) {
-        // TODO - put filter in backend?
         return (
           metric.element_class_id === 2 && metric.unique_identifier === user.sub
         );

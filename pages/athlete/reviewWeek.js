@@ -11,6 +11,9 @@ export default function reviewWeek() {
       <Meta title="Athlete Week Review" />
       <Navbar backPath={"/athlete"} title="Week Review" />
       <PageLayout>
+        {/* Show calorie goal at top if there is calorie goals set */}
+        {/* Show previous 7 days of healthcare logs (steps/ bodyweight weigh ins etc N/a if missed one) */}
+        {/* Show workouts loggged in past 7 days ' athlete_routine_exercise' table */}
         <div
           id="All"
           className="w-full h-screen flex-col  border-2 border-black "

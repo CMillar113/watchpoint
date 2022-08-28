@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 export default function selectElements() {
   const [elements, setNutrition] = useState();
 
-  f;
   //POPULATE CHECK BOXES INDEPENDANDT OF UER DATA
   const nutritionElements = checkNutrtionElements();
   const healthcareElements = checkHealthcareElements();
@@ -66,7 +65,7 @@ export default function selectElements() {
   );
 }
 
-//BUILDS FORM - Will update if new elements are added (SCALABLE)
+//BUILDS and POPULATES FORM - Will auto update if new elements are added by app admin (SCALABLE)
 function checkNutrtionElements() {
   const [metrics, setMetrics] = useState(undefined);
 
@@ -97,7 +96,10 @@ function checkNutrtionElements() {
               <input
                 type="checkbox"
                 className="checked:bg-blue-500 w-10 h-10 mr-5 "
-                value={metric.element_name}
+                //     value={metric.element_name}
+                //     onChange={(e) => {
+                //   setElementStatus(1);
+                // }}
               />
               {metric.element_name}
             </label>

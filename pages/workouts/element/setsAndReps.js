@@ -12,7 +12,7 @@ export default function createRoutine() {
   const [workoutId, setWorkoutId] = useState(" ");
   const [exerciseSets, setSets] = useState("");
   const [exerciseReps, setReps] = useState("");
-  const [routineExerciseId, setRoutineExerciseId] = useState(0);
+  const [routineExerciseId, setRoutineExerciseId] = useState(0); // so that it updates correct data entery
   const [routineId, setRoutineId] = useState("");
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function createRoutine() {
 
       if (response.ok) {
         Router.push(
-          `/workouts/element/routineDisplay?workout=${workoutTitle}&workoutId=${workoutId}&routineId=${routineId}`
+          `/workouts/element/routineDisplay?workout=${workoutTitle}&workoutId=${workoutId}&routineId=${routineId}$wo`
         );
       }
     } catch (e) {

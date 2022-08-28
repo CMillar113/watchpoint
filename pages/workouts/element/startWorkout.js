@@ -10,13 +10,18 @@ import { useRouter } from "next/router";
 import { lowerCaseFirstLetter } from "../../_app";
 import { useUser } from "@auth0/nextjs-auth0";
 
-//Constants
-const workoutTitle = "Hypertrophy";
-const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
-//constants
+// //Constants
+// const workoutTitle = "Hypertrophy";
+// const workoutPathTitle = lowerCaseFirstLetter(workoutTitle);
+// //constants
 
 export default function startWorkout() {
   const { query, isReady } = useRouter();
+  const [workout, setWorkoutTitle] = useState(" ");
+  const [workoutId, setWorkoutId] = useState(" ");
+  const [routineExerciseId, setRoutineExerciseId] = useState(0); // so that it updates correct data entery
+  const [routineId, setRoutineId] = useState("");
+
   const [routine, setRoutine] = useState({
     name: "",
     notes: "",
@@ -30,7 +35,11 @@ export default function startWorkout() {
 
     async function effect() {
       setLoading(true);
-      const { routineId } = query;
+      const { routineId, workout, workoutId } = query;
+      setWorkoutTitle(workout);
+      setWorkoutId(workoutId);
+      // setRoutineExerciseId(routineExerciseId);
+      setRoutineId(routineId);
 
       const response = await fetch(
         `/api/routine_exercise?routine_id=${routineId}`
@@ -45,20 +54,21 @@ export default function startWorkout() {
           ...result,
         });
       }
+
       setLoading(false);
     }
 
     effect();
   }, [query, isReady]);
 
-  console.log(routine.exercises.length);
+  //TODO- on submit updates routine_exercise table with weight values for specific rouitne_exercise_id's
 
   return isLoading ? (
     <FullScreenSpinner />
   ) : (
     <>
-      <Meta title={workoutTitle} />
-      <Navbar title="Routine" backPath={`/workouts/element/routineMenu`} />
+      <Meta title={workout} />
+      <Navbar title="Routine" />
       <PageLayout>
         <div className="w-full h-auto text-center border-black border-2 rounded-md mb-5">
           <h3 className="w-full h-auto border-2">{routine.name}</h3>
@@ -70,6 +80,7 @@ export default function startWorkout() {
           Array.isArray(routine.exercises) &&
           routine.exercises.map(function (exercise) {
             return (
+              //need to get routine_exercise_id for each
               <form
                 key={`${exercise.routine_exercise_id}-setsDiv`}
                 className="w-full text-center mb-2"
@@ -94,7 +105,7 @@ export default function startWorkout() {
                 <input
                   className="border-2 border-black w-full h-10 text-center"
                   type="text"
-                  placeholder="  Weight (Kg)"
+                  placeholder={exercise.routine_exercise_id}
                   name="Weight (Kg)"
                   data-type="Weight (Kg)"
                   //       value={exerciseWeight}

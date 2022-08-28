@@ -1,8 +1,6 @@
 import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
-import Button from "../../src/components/Button";
-import buttonStyles from "../../styles/Button.module.css";
 import { useUser } from "@auth0/nextjs-auth0";
 import React, { useEffect, useState } from "react";
 
@@ -11,7 +9,6 @@ const today = new Date().toISOString().substring(0, 10);
 export default function stepsLog() {
   const [loggedBodyweight, setLoggedBodyweight] = useState([]);
   const { user } = useUser(); //Get current users 7 day average of steps
-  const [bodyweight, setBodyweight] = useState(0);
   const [isLoading, setLoading] = useState(true);
   const [date, setDate] = useState(today);
 
