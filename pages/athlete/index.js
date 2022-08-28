@@ -13,6 +13,10 @@ import FullScreenSpinner from "../../src/components/FullScreenSpinner";
 
 export default function athlete() {
   const [metrics, setMetrics] = useState(undefined);
+  const [dailySteps, setDailySteps] = useState("Steps");
+  const [dailyBodyweight, setDailyBodyweight] = useState("Bodyweight");
+  const [dailySleep, setDailySleep] = useState("Sleep");
+
   const { user, isLoading } = useUser();
 
   useEffect(() => {
@@ -42,7 +46,7 @@ export default function athlete() {
         return (
           <button
             key={`${metric.element_id}-btn`}
-            className="bg-black text-white items-center "
+            className="bg-primary-bg border-black border-2 text-black items-center w-2/3 "
             onClick={function () {
               const path = lowerCaseFirstLetter(metric.element_name);
               Router.push(`/athlete/${path}Dash`);
@@ -72,21 +76,21 @@ export default function athlete() {
           labelRight={"Workouts"}
         ></NavMenu>
 
-        <div className=" border-2 border-black h-1/3 content-center items-center  justify-evenly mb-2 ">
+        <div className=" border-2 border-black h-1/3 content-center items-center justify-evenly mb-2 ">
           <div
-            className={`bg-primary-bg text-primary-text h-7 place-content-center w-full border-b-2 border-black flex mb-1  `}
+            className={`bg-primary-bg text-primary-text h-7 place-content-center w-full border-b-2 border-black flex mb-4  `}
           >
             Daily Goals
           </div>
 
-          <div className="flex flex-col gap-2 w-8/12 h-10 justify-evenly mt-3 mb-3">
+          <div className="flex flex-col gap-2 w-full h-10 justify-evenly mt-3 mb-3 items-center">
             {body}
           </div>
         </div>
 
         <div className="border-2 border-black h-1/3 content-center items-center justify-center">
           <div
-            className={`bg-primary-bg text-primary-text h-7 place-content-center  w-full border-2 border-black  mb-1 mt-1 overflow-hidden  `}
+            className={`bg-primary-bg text-primary-text h-7 text-center  w-full border-black border-b-2  mb-1 overflow-hidden  `}
           >
             Weekly Goals
           </div>

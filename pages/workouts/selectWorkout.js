@@ -31,7 +31,7 @@ export default function selectWorkout() {
     let body = metrics
       .filter(function (metric) {
         return (
-          metric.element_class_id === 3 && metric.unique_identifier == user.sub
+          metric.element_class_id === 3 && metric.unique_identifier == user.sub //will bring all workout classified elements in
         );
       })
       .map(function (metric) {

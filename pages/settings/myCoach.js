@@ -2,24 +2,19 @@ import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import Router, { useRouter } from "next/router";
-import Image from "next/image";
-import buttonStyles from "../../styles/Button.module.css";
-
 import { useEffect, useState } from "react";
-import { lowerCaseFirstLetter } from "../_app";
 import Button from "../../src/components/Button";
 import { useUser } from "@auth0/nextjs-auth0";
 
 export default function myCoach() {
   const { query, isReady } = useRouter();
-  const { user, isLoading } = useUser();
+  const { user } = useUser();
   const [coachId, setCoachId] = useState("");
   const [metrics, setCoachMetrics] = useState("");
 
   useEffect(() => {
     if (!user) return;
     if (!isReady) return;
-
     async function effect() {
       const { coachId } = query;
       setCoachId(coachId);
@@ -42,18 +37,23 @@ export default function myCoach() {
     })();
   }, [user, query, isReady]); // continues once these are set or changed
 
-  const handleDisconnect = async () => {
-    // const coachId = query.coachId;
+  const handleDisconnect = async (e) => {
+    e.preventDefault();
+    const coachId = query.coachId;
     const athlete0Id = user.sub;
     try {
       const response = await fetch(
-        `/api/disconnectCoach?coachId=${coachId}athlete0Id=${athlete0Id}`
+        `/api/coach/disconnectCoach?coachId=${coachId}athlete0Id=${athlete0Id}`,
+        {
+          method: "POST",
+          data: JSON.stringify(coachId),
+        }
       );
       const result = await response.json();
-      console.log("result", result);
+      console.log({ result });
 
       if (response.ok) {
-        setCoachMetrics(result);
+        Router.push("/athlete");
       }
     } catch (e) {
       console.error(e);
@@ -108,25 +108,10 @@ export default function myCoach() {
             review page
           </p>
 
-          {/* <form
-            className="text-left text-xl flex-col px-10  "
-            action="/settings"
-          >
-            {elements}
-
-            <button
-              id="submit"
-              className={`border-2 border-black mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg  ${buttonStyles.primary}`}
-              type="submit"
-            >
-              Update
-            </button>
-          </form> */}
-
           <Button
             path=""
             onClick={() => {
-              handleDisconnect();
+              handleDisconnect(e);
             }}
             label="Disconnect from coach"
           ></Button>
@@ -135,49 +120,3 @@ export default function myCoach() {
     );
   }
 }
-
-// function checkAthletesElements(passedAthlete_id) {
-//   const [metrics, setMetrics] = useState(undefined);
-
-//   useEffect(() => {
-//     (async function () {
-//       try {
-//         const response = await fetch("/api/athlete_elements");
-//         const result = await response.json();
-
-//         if (response.ok) {
-//           setMetrics(result);
-//         }
-//       } catch (e) {
-//         console.error(e);
-//       }
-//     })();
-//   }, []);
-
-//   if (metrics !== undefined) {
-//     let body = metrics
-//       .filter(function (metric) {
-//         return metric.athlete_id === passedAthlete_id; // TODO - HArdcoded into SQL as athlete_id = 1
-//       }) //This is how to apply a filter - not needed in this case as my SQL is only bringing back the required data
-//       .map(function (metric) {
-//         return (
-//           <div key={`${metric.element_id}-div`} className="radio border-2 ">
-//             <label
-//               key={`${metric.element_id}-label`}
-//               className="flex items-center  "
-//             >
-//               <input
-//                 key={`${metric.element_id}-input`}
-//                 type="checkbox"
-//                 className="checked:bg-blue-500 w-10 h-10 mr-5 "
-//                 value={metric.element_name}
-//                 // checked={true}
-//               />
-//               {metric.element_name}
-//             </label>
-//           </div>
-//         );
-//       });
-//     return body;
-//   }
-// }

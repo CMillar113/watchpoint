@@ -129,6 +129,13 @@ export default function steps() {
               <>Last Entry: {loggedSteps[0].log_value} steps</>
             )}
           </h3>
+          <h3 className=" mt-1  text-center text-xl">
+            {loggedSteps.length === 0 ? (
+              <>-</>
+            ) : (
+              <>on {loggedSteps[0].date.substring(0, 10)} </>
+            )}
+          </h3>
         </div>
       </PageLayout>
     </>

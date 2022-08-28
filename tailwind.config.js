@@ -8,7 +8,7 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          bg: "rgba(255, 103, 0, 0.925)",
+          bg: "rgba(153,186,221, 0.9)",
           text: "#000",
           fadedtext: "rgba(104, 112, 137, 0.925)",
         },
@@ -25,3 +25,5 @@ module.exports = {
   },
   plugins: [],
 };
+
+("rgba(255, 103, 0, 0.925)");

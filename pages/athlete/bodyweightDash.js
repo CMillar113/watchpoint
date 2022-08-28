@@ -133,6 +133,13 @@ export default function bodyweight() {
               <>Last Entry: {loggedBodyweight[0].log_value} Kg</>
             )}
           </h3>
+          <h3 className=" mt-1  text-center text-xl">
+            {loggedBodyweight.length === 0 ? (
+              <>-</>
+            ) : (
+              <>on {loggedBodyweight[0].date.substring(0, 10)} </>
+            )}
+          </h3>
         </div>
       </PageLayout>
     </>
