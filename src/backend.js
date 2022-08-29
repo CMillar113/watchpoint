@@ -86,3 +86,7 @@ export function calculateWater(bodyweight, activityLevel) {
     return activeWater.toPrecision(3);
   }
 }
+
+export function calculateCaloriesFromMacros(protein, carbs, fats) {
+  return protein * 4 + carbs * 4 + fats * 9;
+}

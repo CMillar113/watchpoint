@@ -5,6 +5,7 @@ import Router from "next/router";
 import { useEffect, useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
 import React from "react";
+import { calculateCaloriesFromMacros } from "../../src/backend";
 
 const now = new Date();
 const month = now.getMonth() + 1;
@@ -18,7 +19,7 @@ const displayDate = `${month}/${now.getDate()}`;
 const displayBackDate = `${month}/${day}`;
 
 export default function reviewWeek() {
-  const [calories, setCalories] = useState();
+  const [nutrition, setNutrtion] = useState();
   const { user } = useUser();
   const [isLoading, setLoading] = useState(true);
 
@@ -28,6 +29,7 @@ export default function reviewWeek() {
   const [stepsWeekArray, setStepsWeekArray] = useState();
   const [sleepWeekArray, setSleepWeekArray] = useState();
 
+  //Geting users Healthcare information
   useEffect(() => {
     if (!user) return;
     (async function () {
@@ -35,7 +37,7 @@ export default function reviewWeek() {
       try {
         const athlete0Id = user.sub;
         const response = await fetch(
-          `/api/user/getWeekReview?athlete0Id=${athlete0Id}&today=${today}&backDate=${backDate}`
+          `/api/user/getHealthcareWeekReview?athlete0Id=${athlete0Id}&today=${today}&backDate=${backDate}`
         );
         const result = await response.json();
 
@@ -54,6 +56,7 @@ export default function reviewWeek() {
     })();
   }, [user]);
 
+  //Geting users nutrtion goal information
   useEffect(() => {
     if (!user) return;
     (async function () {
@@ -61,14 +64,14 @@ export default function reviewWeek() {
       try {
         const athlete0Id = user.sub;
         const response = await fetch(
-          `/api/user/getUserCalories?athlete0Id=${athlete0Id}`
+          `/api/nutrition/getUserNutritionGoals?athlete0Id=${athlete0Id}`
         );
         const result = await response.json();
 
         console.log({ result });
 
         if (response.ok) {
-          setCalories(result);
+          setNutrtion(result);
         }
       } catch (e) {
         console.error(e);
@@ -78,19 +81,48 @@ export default function reviewWeek() {
     })();
   }, [user]);
 
-  console.log("steps", stepsWeekArray);
   return (
     <>
       <Meta title="Athlete Week Review" />
-      <Navbar backPath={"/athlete"} title="Week Review" />
+      <Navbar backPath={"/athlete"} title="Weekly Review" />
       <PageLayout>
         {/* Show calorie goal at top if there is calorie goals set */}
         {/* Show previous 7 days of healthcare logs (steps/ bodyweight weigh ins etc N/a if missed one) */}
         {/* Show workouts loggged in past 7 days ' athlete_routine_exercise' table */}
         <div id="All" className="w-full h-screen flex-col ">
           <p className=" justify-evenly flex">
-            From the {displayBackDate} To the {displayDate} of {year}
+            From the {displayBackDate} To the {displayDate} {year}
           </p>
+
+          {Array.isArray(nutrition) && nutrition.length > 0 ? (
+            nutrition.map(function (log) {
+              return (
+                <React.Fragment key={`${log.nutrition_log_id}`}>
+                  <h3 className="text-center mt-4 bg-primary-bg">
+                    Calorie Target:{" "}
+                    {calculateCaloriesFromMacros(
+                      log.protein,
+                      log.carbs,
+                      log.fats
+                    )}
+                    Kcal
+                  </h3>
+                  <div className="flex w-full h-auto justify-between px-5 mt-1 mb-2">
+                    <div className="border-2 px-1">{log.protein}g Protein </div>
+                    <div className="border-2 px-1">{log.carbs}g Carbs</div>
+                    <div className="border-2 px-1">{log.fats}g Fats</div>
+                    <div className="border-2 px-1">{log.water_goal}L Water</div>
+                  </div>
+                  <hr />
+                </React.Fragment>
+              );
+            })
+          ) : (
+            <div className="w-full px-1">
+              {isLoading ? "Loading..." : "No Values Logged"}
+            </div>
+          )}
+
           <div className="w-full h-auto border-2">
             <div
               id="Date & Log"
