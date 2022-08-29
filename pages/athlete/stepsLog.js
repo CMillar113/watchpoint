@@ -51,7 +51,6 @@ export default function stepsLog() {
           <h3>Today: {today}</h3>
         </div>
         <div className="w-full h-screen border-2">
-          {/* Function will return date & value */}
           <div id="Date & Log" className=" bg-slate-300  border-2 border-black">
             <div className="flex w-full justify-between px-1 mb-1 bg-slate-400 text-cyan-50">
               <div>Steps</div>
