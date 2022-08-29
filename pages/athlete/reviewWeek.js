@@ -5,8 +5,12 @@ import Router from "next/router";
 import { useEffect, useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
 
+const now = new Date();
+const month = now.getMonth() + 1;
+const day = now.getDate() - 7;
+const year = now.getFullYear();
+const backDate = `${year}-${month}-${day}`;
 const today = new Date().toISOString().substring(0, 10);
-const backDate = today - 7;
 
 export default function reviewWeek() {
   const [calories, setCalories] = useState();
@@ -26,7 +30,7 @@ export default function reviewWeek() {
       try {
         const athlete0Id = user.sub;
         const response = await fetch(
-          `/api/user/weekReview?athlete0Id=${athlete0Id}&date=${today}`
+          `/api/user/weekReview?athlete0Id=${athlete0Id}&date=${today}&backDate=${backDate}`
         );
         const result = await response.json();
 
