@@ -70,8 +70,6 @@ export default function athlete() {
         <NavMenu
           pathLeft={"/plan/setNutrition"}
           labelLeft={"Edit Goals"}
-          pathCenter={""}
-          labelCenter={"Food Log"}
           pathRight={"/workouts/selectWorkout"}
           labelRight={"Workouts"}
         ></NavMenu>
