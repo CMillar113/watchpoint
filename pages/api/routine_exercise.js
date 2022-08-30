@@ -1,5 +1,5 @@
 /**
- * Get the exercises associated with a routine and their sets
+ * Get the exercises associated with a routine and their sets f
  *
  */
 

@@ -22,6 +22,7 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     const response = await getMonthOfRoutineExerciseId(
       athleteId,
+      workoutId,
       today,
       backDate
     );
@@ -32,19 +33,27 @@ export default async function handler(req, res) {
 }
 
 // get last entery routine_exercise_id for that routine and therefore custom to that user
-async function getMonthOfRoutineExerciseId(athleteId, today, backDate) {
+async function getMonthOfRoutineExerciseId(
+  athleteId,
+  workoutId,
+  today,
+  backDate
+) {
   // Gives all routines that have been logged as a workout this past month
   const sql = `
-  SELECT DISTINCT routine.routine_id FROM workout_logged 
+  SELECT DISTINCT routine.routine_id, routine.routine_name, workout_logged.date FROM workout_logged 
   INNER JOIN routine_exercise ON workout_logged.routine_exercise_id = routine_exercise.routine_exercise_id
   INNER JOIN routine ON routine_exercise.routine_id = routine.routine_id
   INNER JOIN athlete_element_routine ON routine.routine_id = athlete_element_routine.routine_id 
-  WHERE athlete_element_routine.athlete_id = ? AND workout_logged.date BETWEEN ? AND ?
+  WHERE athlete_element_routine.athlete_id = ?
+  AND athlete_element_routine.element_id = ?
+   AND workout_logged.date 
+   BETWEEN ? AND ? ORDER BY workout_logged.date DESC
     `;
 
   const routineExerciseId = await executeQuery({
     query: sql,
-    values: [athleteId, backDate, today],
+    values: [athleteId, workoutId, backDate, today],
   });
   console.log(routineExerciseId);
   return routineExerciseId;

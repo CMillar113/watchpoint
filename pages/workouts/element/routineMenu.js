@@ -46,17 +46,41 @@ export default function routineMenu() {
   if (metrics !== undefined && user !== undefined) {
     let routines = metrics.map(function (metric) {
       return (
-        <button
+        <div
           key={metric.athlete_element_routine_id}
-          className=" w-full h-8 justify-evenly border-primary-bg bg-black text-white border-2 flex px-3 mb-1"
-          onClick={function () {
-            Router.push(
-              `/workouts/element/routineDisplay?workout=${workoutTitle}&workoutId=${workoutId}&routineId=${metric.routine_id}`
-            );
-          }}
+          className="flex w-full gap-2"
         >
-          {metric.routine_name}
-        </button>
+          <button
+            className=" w-full h-8 justify-evenly border-black text-black  border-2 flex px-3 mb-1"
+            onClick={function () {
+              Router.push(
+                `/workouts/element/routineDisplay?workout=${workoutTitle}&workoutId=${workoutId}&routineId=${metric.routine_id}`
+              );
+            }}
+          >
+            {metric.routine_name}
+          </button>
+
+          <button
+            key={`${metric.athlete_element_routine_id}-delete`}
+            className="  h-8 justify-evenly border-black text-red-500  border-2 flex px-3 mb-1"
+            onClick={async function () {
+              try {
+                const response = await fetch(
+                  `/api/routines/deleteRoutine?routineId=${metric.routine_id}`, //TODO - Add delete endpoint
+                  { method: "DELETE" }
+                );
+                const result = await response.json();
+                console.log(result);
+                window.location.reload();
+              } catch (e) {
+                console.error(e);
+              }
+            }}
+          >
+            Delete
+          </button>
+        </div>
       );
     });
     return (

@@ -1,10 +1,10 @@
 import { useUser } from "@auth0/nextjs-auth0";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Meta from "../../../src/components/Meta";
 import Navbar from "../../../src/components/NavBar";
 import NavMenu from "../../../src/components/NavButtonOne";
 import PageLayout from "../../../src/components/PageLayout";
+import Router, { useRouter } from "next/router";
 
 const now = new Date();
 const month = now.getMonth(); //get month is a month behind
@@ -17,7 +17,7 @@ const today = new Date().toISOString().substring(0, 10);
 export default function hypertrophyDash() {
   const { query, isReady } = useRouter();
   const [workout, setWorkoutTitle] = useState(" ");
-  const [workoutId, setWorkoutId] = useState(" ");
+  const [workoutId, setWorkoutId] = useState(0);
   const [routinesId, setRoutinesId] = useState("");
   const [routineCards, setRoutineCards] = useState("");
   const { user } = useUser();
@@ -36,7 +36,7 @@ export default function hypertrophyDash() {
   useEffect(() => {
     if (!user) return;
     if (!isReady) return;
-
+    const { workout, workoutId } = query;
     (async function () {
       try {
         const response = await fetch(
@@ -51,23 +51,12 @@ export default function hypertrophyDash() {
         console.error(e);
       }
     })();
-
-    (async function () {
-      try {
-        console.log(routinesId);
-        const response = fetch(
-          `/api/routines/latestLoggedRoutines?routineId=${routine.routine_id}`
-        );
-        const result = response.json();
-
-        if (response.ok) {
-          setRoutineCards(result);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    })();
   }, [user, query, isReady]);
+
+  useEffect(() => {
+    // Check  updates corrrectly through entery
+    console.log("updated routinesId state", { routinesId });
+  }, [routinesId]);
 
   const workoutTitle = workout;
   const workoutElementId = workoutId;
@@ -86,9 +75,30 @@ export default function hypertrophyDash() {
           Month and up to date list of wokrouts last logged being at top
         </p>
 
-        <div className="w-full h-auto flex justify-center border-2 border-black rounded-lg">
-          <h3 className=" text-center">Routine Name</h3>
+        <div className="w-full h-auto flex justify-center border-2 border-black text-white bg-black rounded-lg mb-2">
+          <h3 className=" text-center  ">Recent Workouts</h3>
         </div>
+
+        {routinesId &&
+          Array.isArray(routinesId) &&
+          routinesId.map(function (routine) {
+            return (
+              <button
+                key={routine.routine_id}
+                className=" w-full h-8 justify-evenly border-black text-black  border-2 flex px-3 mb-1"
+                onClick={function () {
+                  Router.push(
+                    `/workouts/element/routineDisplay?workout=${workoutTitle}&workoutId=${workoutId}&routineId=${routine.routine_id}`
+                  );
+                }}
+              >
+                <div className=" w-full justify-between flex px-5">
+                  <div>{routine.routine_name}</div>
+                  <div> Date:{routine.date.substring(5, 10)}</div>
+                </div>
+              </button>
+            );
+          })}
       </PageLayout>
     </>
   );

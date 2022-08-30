@@ -45,7 +45,7 @@ export default function sleep() {
     console.log({ data });
     try {
       const response = await fetch(
-        `/api/healthcare/createSteps?id=${user.sub}&sleep=${sleep}&date=${date}`, //TODO - pass element id and make single API endpoint
+        `/api/healthcare/createSleep?id=${user.sub}&sleep=${sleep}&date=${date}`, //TODO - pass element id and make single API endpoint
         {
           method: "POST",
           data: JSON.stringify(data),
