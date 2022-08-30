@@ -73,7 +73,6 @@ export default function setWorkouts() {
       <Meta title="Workout Plan" />
       <Navbar title="Workouts" backPath={"/plan/setHealthcare"} />
       <PageLayout>
-        {/* If hypertrophy workouts selected */}
         <h3 className="px-2">Hypertrophy Workouts</h3>
 
         <form
@@ -106,7 +105,6 @@ export default function setWorkouts() {
           How many hypertrophy gym workouts per week would you like to hit?
         </p>
 
-        {/* If Cardio workout selected */}
         <h3 className="px-2 mt-4">Cardio Workouts</h3>
         <form
           className="flex justify-center"

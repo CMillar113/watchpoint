@@ -7,23 +7,22 @@ import { useUser } from "@auth0/nextjs-auth0";
 import FullScreenSpinner from "../../src/components/FullScreenSpinner";
 export default function settings() {
   const { user } = useUser();
-  const [coachId, setCoachId] = useState(undefined);
+  const [coachId, setCoachId] = useState(0);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user) return;
+    setLoading(true);
     const athlete0Id = user.sub;
     (async function () {
-      setLoading(true);
       try {
         const response = await fetch(
           `/api/athlete_coach?athlete0Id=${athlete0Id}`
         );
         const result = await response.json();
         console.log("resul", result);
-
         if (response.ok) {
-          if (Array.isArray(result) && result.length > 1) {
+          if (Array.isArray(result) && result.length < 1) {
             setCoachId(undefined);
           } else {
             setCoachId(result[0].coach_id);

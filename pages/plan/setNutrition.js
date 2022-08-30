@@ -9,6 +9,7 @@ import Router from "next/router";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { calculateCaloriesFromMacros } from "../../src/backend";
 
 export default function setGoals() {
   const { user } = useUser();
@@ -46,7 +47,7 @@ export default function setGoals() {
     })();
   }, [user]);
 
-  //CALORIE CALCS USING IMPORTED CONSTANTS
+  //TODO - backend?
   const num =
     loggedMacros.protein * Calories.protein +
     loggedMacros.fats * Calories.fat +
@@ -83,7 +84,7 @@ export default function setGoals() {
   return (
     <>
       <Meta title="Nutrition Plan" />
-      <Navbar title="Nutrition" backPath={"/plan/selectElements"} />
+      <Navbar title="Nutrition" backPath={"/athlete"} />
       <PageLayout>
         {/* If calories selected */}
 
@@ -96,14 +97,14 @@ export default function setGoals() {
           id="previous"
           className="w-full inline-block border-2 text-xs text-center mt-1"
         >
-          <h3>Current Set Calories:</h3>
+          <h3 className=" bg-primary-bg">Current Set Calories:</h3>
           <div
             id="row"
             className="h-8 w-full bg-gray-300 flex items-center justify-center mb-1"
           >
             <h3>{calories} Kcal</h3>
           </div>
-          <h3>Current Set Macros:</h3>
+          <h3 className=" bg-primary-bg mt-3">Current Set Macros:</h3>
           <div
             id="row"
             className="h-8 w-full bg-gray-300 flex items-center justify-center mb-1"
@@ -133,7 +134,7 @@ export default function setGoals() {
           method="post"
           data-validate="parsley"
         >
-          <h3 className="text-center">New Macros:</h3>
+          <h3 className="text-center mt-4 bg-primary-bg">New Macros:</h3>
 
           <input
             className="h-8 border-2 w-full mb-1 text-center"

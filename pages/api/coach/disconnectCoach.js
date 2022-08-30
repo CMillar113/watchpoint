@@ -4,7 +4,7 @@
  */
 
 import executeQuery from "../../../lib/db";
-import { getUserDetails } from "./userDetails";
+import { getUserDetails } from "../userDetails";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -22,19 +22,19 @@ export default async function handler(req, res) {
     res.status(401).json({ message: "Unauthorised" });
   }
   const athleteId = athlete[0].athlete_id; // auth0Id to sql ID
-
-  const log = await removeCoach(athleteId, coachId);
+  const _coachId = parseInt(coachId);
+  const log = await removeCoach(_coachId, athleteId);
   res.status(202).json(log);
 }
 
 async function removeCoach(coachId, athleteId) {
   const sql = `
-     DELETE FROM coach_athlete WHERE coach_athlete.coach_id IS ?
-      AND coach_athlete.athlete_id= ?
+     DELETE FROM coach_athlete WHERE coach_athlete.coach_id = ? AND coach_athlete.athlete_id = ?
        `;
   const result = await executeQuery({
     query: sql,
     values: [coachId, athleteId],
   });
+  console.log(result);
   return result;
 }

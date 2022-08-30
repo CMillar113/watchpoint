@@ -64,10 +64,10 @@ export default function startWorkout() {
     effect();
   }, [query, isReady]);
 
-  // useEffect(() => {
-  //   // Check exercises updates corrrectly through entery
-  //   console.log("updated exercises state", { exercises });
-  // }, [exercises]);
+  useEffect(() => {
+    // Check exercises updates corrrectly through entery
+    console.log("updated exercises state", { exercises });
+  }, [exercises]);
 
   /////TODO- on submit updates workout_logged table with weight values for specific rouitne_exercise_id's
 
@@ -85,7 +85,6 @@ export default function startWorkout() {
             body: JSON.stringify(exercises),
           }
         );
-        const result = response.json();
 
         if (response.ok) {
           console.log(response);
@@ -134,7 +133,7 @@ export default function startWorkout() {
                     <input
                       className="border-2 border-black w-full h-10 text-center"
                       type="text"
-                      placeholder="Weight (Kg) / Time (s) / Distance (m)"
+                      placeholder={"Weight (Kg) / Time (s) / Distance (m)"}
                       name="log"
                       data-type="log"
                       value={
@@ -157,7 +156,7 @@ export default function startWorkout() {
                             ex.routine_exercise_id !==
                             exercise.routine_exercise_id
                         );
-                        // add the updated exercise back into an array with the updated state
+                        // add  updated exercise back into an array with the updated state
                         const updatedExercises = [
                           ...exercisesWithoutUnupdated,
                           exerciseToUpdate,

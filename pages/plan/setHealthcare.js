@@ -16,6 +16,7 @@ export default function setHealthcare() {
   const [steps, setSteps] = useState("");
   const [bodyweight, setBodyweight] = useState("");
 
+  // Only 2 healthcare elements require goals
   const bodyweightElementId = 7;
   const stepsElementId = 8;
 
@@ -74,11 +75,12 @@ export default function setHealthcare() {
       <Meta title="Healthcare Plan" />
       <Navbar title="Healthcare" backPath={"/plan/setNutrition"} />
       <PageLayout>
-        {/* If bodyweight selected */}
-
         <Button path="BMICalculator" label="Use BMI Calculator"></Button>
         <hr className="mt-2 mb-7"></hr>
-        <h3 className="mt-1 px-2 text-center">Bodyweight Goals:</h3>
+        <h3 className="mt-1 px-2 text-center bg-primary-bg">
+          Bodyweight Goals:
+        </h3>
+        {/* bodyweight */}
         <form
           className="w-full content-center"
           onSubmit={handleSubmitBw}
@@ -108,10 +110,12 @@ export default function setHealthcare() {
           </div>
         </form>
         <hr className="mb-7"></hr>
+        {/* bodyweight */}
+        {/* steps */}
 
-        {/* If steps selected */}
-
-        <h3 className="px-2 mt-4 text-center">Daily Steps Goal:</h3>
+        <h3 className="px-2 mt-4 text-center bg-primary-bg ">
+          Daily Steps Goal:
+        </h3>
         <form
           className="w-full"
           onSubmit={handleSubmitSteps}
@@ -141,7 +145,8 @@ export default function setHealthcare() {
             />
           </div>
         </form>
-        <hr className="mb-14"></hr>
+        <hr className="mb-7"></hr>
+        {/* steps */}
 
         <Button path="/plan/setWorkouts" label="Next"></Button>
 

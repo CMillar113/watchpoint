@@ -48,7 +48,7 @@ export default function routineMenu() {
       return (
         <button
           key={metric.athlete_element_routine_id}
-          className=" w-full h-8 justify-evenly border-black border-2 flex px-3 mb-1"
+          className=" w-full h-8 justify-evenly border-primary-bg bg-black text-white border-2 flex px-3 mb-1"
           onClick={function () {
             Router.push(
               `/workouts/element/routineDisplay?workout=${workoutTitle}&workoutId=${workoutId}&routineId=${metric.routine_id}`

@@ -33,7 +33,7 @@ function checkCoaches() {
   useEffect(() => {
     (async function () {
       try {
-        const response = await fetch("/api/coaches");
+        const response = await fetch("/api/coach/getAllCoaches");
         const result = await response.json();
 
         if (response.ok) {
@@ -51,22 +51,19 @@ function checkCoaches() {
       return (
         <div
           key={`${metric.coach_id}-div`}
-          className="h-20 w-full rounded-md border-black border-2 bg-white mb-2 place-content-center text-center"
+          className="h-auto w-full rounded-md border-primary-bg border-2 bg-black mb-2 place-content-center text-center"
         >
           <button
-            key={`${metric.coach_id}-btn`}
             className="mr-0"
             onClick={function () {
-              Router.push(`/settings/coachProfile`);
+              Router.push(`/settings/coachProfile?coachId=${metric.coach_id}`);
             }}
           >
             {" "}
-            <p key={`${metric.coach_id}-p1`} className="text-3xl ">
+            <p className="text-white ">
               {metric.first_name} {metric.surname}
             </p>
-            <p key={`${metric.coach_id}-p2`} className="text-3xl">
-              {metric.brand_name}
-            </p>
+            <p className="text-white">{metric.brand_name}</p>
           </button>
         </div>
 

@@ -22,7 +22,9 @@ export default function athlete() {
   useEffect(() => {
     (async function () {
       try {
-        const response = await fetch("/api/athlete_elements");
+        const response = await fetch(
+          `/api/healthcare/getHealthcareElements?elementId=${2}`
+        );
         const result = await response.json();
 
         if (response.ok) {
@@ -38,9 +40,7 @@ export default function athlete() {
   if (metrics !== undefined && user !== undefined) {
     body = metrics
       .filter(function (metric) {
-        return (
-          metric.element_class_id === 2 && metric.unique_identifier === user.sub
-        );
+        return metric.element_class_id === 2;
       })
       .map(function (metric) {
         return (
@@ -76,32 +76,30 @@ export default function athlete() {
           labelRight={"Workouts"}
         ></NavMenu>
 
-        <div className=" border-2 border-black h-1/3 content-center items-center justify-evenly mb-2 ">
+        <div className=" border-2 border-black h-2/4 content-center items-center justify-evenly mb-2 ">
           <div
             className={`bg-primary-bg text-primary-text h-7 place-content-center w-full border-b-2 border-black flex mb-4  `}
           >
-            Daily Goals
+            Healthcare
           </div>
 
-          <div className="flex flex-col gap-2 w-full h-10 justify-evenly mt-3 mb-3 items-center">
+          <div className="flex flex-col gap-2 w-full h-10 justify-evenly mt-16 mb-3 items-center">
             {body}
           </div>
         </div>
 
-        <div className="border-2 border-black h-1/3 content-center items-center justify-center">
+        <div className="border-2 border-black h-2/6 content-center items-center justify-center mt-4">
           <div
-            className={`bg-primary-bg text-primary-text h-7 text-center  w-full border-black border-b-2  mb-1 overflow-hidden  `}
+            className={`bg-primary-bg text-primary-text h-7 text-center  w-full border-black border-b-2 mb-1 overflow-hidden  `}
           >
-            Weekly Goals
+            Functions
           </div>
-          No Weekly Goals Set
+          <div className="mt-2">
+            <Button path="/athlete/reviewWeek" label="Week in Review" />
+            <Button path="/settings" label="Settings" />
+          </div>
         </div>
-
-        {/* {metrics !== undefined && <pre>{JSON.stringify(metrics, null, 2)}</pre>} */}
-        <div>
-          <Button path="/plan/selectElements" label="Set Goals" />
-          <Button path="/settings" label="Settings" />
-          <Button path="/athlete/reviewWeek" label="Week in Review" />
+        <div className="mt-4">
           <Button path="/api/auth/logout" label="Sign out" />
         </div>
       </PageLayout>

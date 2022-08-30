@@ -20,7 +20,7 @@ export default async function handler(req, res) {
  *
  */
 
-const sql = `SELECT * FROM element 
+const sql = `SELECT * FROM element where element_id=?
 ; 
 `;
 /////TODO - Only brings elements that have a athlete_id therefore new elements added at the start wont show unless someone is assigned them - maybe create new call with no athlete relation (updating app will then show new choices for users)

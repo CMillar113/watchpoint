@@ -14,7 +14,9 @@ export default function selectWorkout() {
   useEffect(() => {
     (async function () {
       try {
-        const response = await fetch("/api/athlete_elements");
+        const response = await fetch(
+          `/api/healthcare/getHealthcareElements?elementId=${3}`
+        );
         const result = await response.json();
 
         if (response.ok) {
@@ -31,7 +33,7 @@ export default function selectWorkout() {
     let body = metrics
       .filter(function (metric) {
         return (
-          metric.element_class_id === 3 && metric.unique_identifier == user.sub //will bring all workout classified elements in
+          metric.element_class_id === 3 //will bring all workout classified elements
         );
       })
       .map(function (metric) {

@@ -24,7 +24,9 @@ export default function myCoach() {
     (async function () {
       const { coachId } = query; // seems to be faster loading if use this rather than state (check more)
       try {
-        const response = await fetch(`/api/coaches?coachId=${coachId}`);
+        const response = await fetch(
+          `/api/coach/getCoachInfo?coachId=${coachId}`
+        );
         const result = await response.json();
         console.log("result", result);
 
@@ -38,12 +40,12 @@ export default function myCoach() {
   }, [user, query, isReady]); // continues once these are set or changed
 
   const handleDisconnect = async (e) => {
-    e.preventDefault();
     const coachId = query.coachId;
     const athlete0Id = user.sub;
+    console.log(`input`, coachId, athlete0Id);
     try {
       const response = await fetch(
-        `/api/coach/disconnectCoach?coachId=${coachId}athlete0Id=${athlete0Id}`,
+        `/api/coach/disconnectCoach?coachId=${coachId}&athlete0Id=${athlete0Id}`,
         {
           method: "POST",
           data: JSON.stringify(coachId),
@@ -53,7 +55,7 @@ export default function myCoach() {
       console.log({ result });
 
       if (response.ok) {
-        Router.push("/athlete");
+        Router.push("/settings/coachDisconnected");
       }
     } catch (e) {
       console.error(e);
@@ -108,13 +110,14 @@ export default function myCoach() {
             review page
           </p>
 
-          <Button
-            path=""
-            onClick={() => {
-              handleDisconnect(e);
+          <button
+            className=" w-full h-8 justify-evenly border-black border-2 flex px-3 mb-1"
+            onClick={function () {
+              handleDisconnect();
             }}
-            label="Disconnect from coach"
-          ></Button>
+          >
+            Disconnect
+          </button>
         </PageLayout>
       </>
     );

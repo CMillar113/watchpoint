@@ -72,7 +72,7 @@ export default function stepsLog() {
               })
             ) : (
               <div className="w-full px-1">
-                {isLoading ? "Loading..." : "Nothing to see here folks"}
+                {isLoading ? "Loading..." : "Nothing Logged"}
               </div>
             )}
           </div>
