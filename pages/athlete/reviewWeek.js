@@ -90,8 +90,11 @@ export default function reviewWeek() {
         {/* Show previous 7 days of healthcare logs (steps/ bodyweight weigh ins etc N/a if missed one) */}
         {/* Show workouts loggged in past 7 days ' athlete_routine_exercise' table */}
         <div id="All" className="w-full h-screen flex-col ">
-          <p className=" justify-evenly flex">
-            From the {displayBackDate} To the {displayDate} {year}
+          <p className=" text-center text-slate-700 mt-2 px-2">
+            Check out your week of hitting your goals!
+          </p>
+          <p className=" justify-evenly flex text-slate-700 ">
+            from the {displayBackDate} To the {displayDate} {year}
           </p>
 
           {Array.isArray(nutrition) && nutrition.length > 0 ? (
@@ -108,11 +111,20 @@ export default function reviewWeek() {
                     Kcal
                   </h3>
                   <div className="flex w-full h-auto justify-between px-5 mt-1 mb-2">
-                    <div className="border-2 px-1">{log.protein}g Protein </div>
-                    <div className="border-2 px-1">{log.carbs}g Carbs</div>
-                    <div className="border-2 px-1">{log.fats}g Fats</div>
-                    <div className="border-2 px-1">{log.water_goal}L Water</div>
+                    <div className="border-2 text-center px-1">
+                      {log.protein}g Protein{" "}
+                    </div>
+                    <div className="border-2 text-center  px-1">
+                      {log.carbs}g Carbs
+                    </div>
+                    <div className="border-2 text-center  px-1">
+                      {log.fats}g Fats
+                    </div>
+                    <div className="border-2 text-center  px-1">
+                      {log.water_goal}L Water
+                    </div>
                   </div>
+
                   <hr />
                 </React.Fragment>
               );

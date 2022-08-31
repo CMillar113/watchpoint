@@ -64,15 +64,15 @@ export default function settings() {
         <Meta title="Settings" />
         <Navbar title="Settings" backPath={"/athlete"} />
         <PageLayout>
-          <Button
-            path="/settings/connectToCoach"
-            label="Connect With Coach"
-          ></Button>
           <div className="w-full flex justify-center">
             <p className="w-2/3 text-center border-2 black-2 rounded-md">
               Connect using a private code created by your coach{" "}
             </p>
           </div>
+          <Button
+            path="/settings/connectToCoach"
+            label="Connect With Coach"
+          ></Button>
         </PageLayout>
       </>
     );

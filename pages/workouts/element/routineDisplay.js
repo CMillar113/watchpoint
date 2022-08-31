@@ -84,12 +84,18 @@ export default function routineDisplay() {
               </div>
             );
           })}
+
         <div className=" w-full h-auto mb-3 mt-2">
+          <p className=" text-center text-slate-700 mt-4 px-2">
+            Expand your routine
+          </p>
           <Button
             path={`/workouts/element/exerciseCategories?workout=${workoutTitle}&workoutId=${workoutId}&routineId=${query.routineId}`}
             label="+ Add Exercise"
           ></Button>
         </div>
+        <p className=" text-center text-slate-700 mt-4 px-2">Ready to begin!</p>
+
         <Button
           path={`/workouts/element/startWorkout?workout=${workoutTitle}&workoutId=${workoutId}&routineId=${query.routineId}`}
           label="Start This Workout"

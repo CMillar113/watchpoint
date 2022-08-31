@@ -7,7 +7,7 @@ const Button = ({ path, label, onClick }) => {
       <div className="w-full flex flex-col items-center">
         <Link href={path} passHref>
           <button
-            className={` border-2 border-black mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg ${buttonStyles.primary}`}
+            className={` border-2 border-black mt-2 text-h2-mobile  bg-primary-bg ${buttonStyles.primary}`}
           >
             {label}
           </button>

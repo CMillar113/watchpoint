@@ -91,12 +91,16 @@ export default function routineMenu() {
           backPath={`/workouts/element?workout=${workoutTitle}&workoutId=${workoutId}`}
         />
         <PageLayout>
-          <div className="w-full flex justify-center">
-            <div className="mb-5 w-2/3 h-10 border-2 border-black rounded-md text-center">
-              Most Recent
-            </div>
+          <div className="w-full justify-center">
+            <p className=" text-center text-slate-700 mt-1 mb-4 px-2">
+              See below all your created routines
+            </p>
           </div>
           {routines}
+
+          <p className=" text-center text-slate-700 mt-4 px-2">
+            Want a new workout, why not create a new routine?
+          </p>
           <Button
             path={`/workouts/element/createRoutine?workout=${workoutTitle}&workoutId=${workoutId}`}
             label={"Create New Routine +"}

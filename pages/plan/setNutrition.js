@@ -88,7 +88,9 @@ export default function setGoals() {
       <PageLayout>
         {/* If calories selected */}
 
-        <h3 className="px-2">Calories & Macros</h3>
+        <p className=" text-center text-slate-700  px-2">
+          Use the calorie calculator to find your daily recommended intake
+        </p>
         <Button
           path="calorieCalculator"
           label="Go To - Calorie/Water Calculator "

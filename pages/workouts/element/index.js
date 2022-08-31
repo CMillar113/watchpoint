@@ -71,11 +71,11 @@ export default function hypertrophyDash() {
           label={"Routines"}
         ></NavMenu>
         <hr className="bg-black" />
-        <p className="text-center">
-          Month and up to date list of wokrouts last logged being at top
+        <p className=" text-center text-slate-700 mb-4 mt-2">
+          Quick select from a list of your most recent workouts!
         </p>
 
-        <div className="w-full h-auto flex justify-center border-2 border-black text-white bg-black rounded-lg mb-2">
+        <div className="w-full h-auto flex justify-center border-2 border-black text-white bg-black rounded-lg mb-4">
           <h3 className=" text-center  ">Recent Workouts</h3>
         </div>
 

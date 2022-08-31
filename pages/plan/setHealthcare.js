@@ -75,11 +75,17 @@ export default function setHealthcare() {
       <Meta title="Healthcare Plan" />
       <Navbar title="Healthcare" backPath={"/plan/setNutrition"} />
       <PageLayout>
+        <p className=" text-center text-slate-700  px-2">
+          Use the BMI calculator to guage your starting point
+        </p>
         <Button path="BMICalculator" label="Use BMI Calculator"></Button>
-        <hr className="mt-2 mb-7"></hr>
-        <h3 className="mt-1 px-2 text-center bg-primary-bg">
-          Bodyweight Goals:
-        </h3>
+
+        <hr className="mt-2 mb-4"></hr>
+        <p className=" text-center text-slate-700  mb-4  px-2">
+          Only set targets for the elements you wish to track, there are no
+          requirments !
+        </p>
+        <h3 className=" px-2 text-center bg-primary-bg">Bodyweight Goals:</h3>
         {/* bodyweight */}
         <form
           className="w-full content-center"

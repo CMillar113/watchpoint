@@ -24,9 +24,8 @@ export default function accountChecking() {
         await createUser(user);
       }
 
-      router.push("/athlete");
-
       setLoading(false);
+      router.push("/athlete");
     }
 
     checkDB();

@@ -40,7 +40,7 @@ export default function selectWorkout() {
         return (
           <button
             key={`${metric.element_id}-btn`}
-            className="h-20 w-full rounded-md border-black border-2 bg-slate-300 mb-2 place-content-center"
+            className="h-16 w-full rounded-md border-black border-2 bg-slate-300 mb-2 place-content-center"
             onClick={function () {
               let path = lowerCaseFirstLetter(metric.element_name);
               Router.push(
@@ -59,8 +59,8 @@ export default function selectWorkout() {
         <Meta title="Select Workout" />
         <Navbar title="Workouts:" backPath={"/athlete"} />
         <PageLayout>
-          <p className="text-center">
-            Please Select The Workout You Wish To Begin
+          <p className=" text-center text-slate-700 mb-4">
+            Please select the type of workout you would like to begin!
           </p>
           <div>{body}</div>
         </PageLayout>

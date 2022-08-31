@@ -13,9 +13,9 @@ import FullScreenSpinner from "../../src/components/FullScreenSpinner";
 
 export default function athlete() {
   const [metrics, setMetrics] = useState(undefined);
-  const [dailySteps, setDailySteps] = useState("Steps");
-  const [dailyBodyweight, setDailyBodyweight] = useState("Bodyweight");
-  const [dailySleep, setDailySleep] = useState("Sleep");
+  // const [dailySteps, setDailySteps] = useState("Steps");
+  // const [dailyBodyweight, setDailyBodyweight] = useState("Bodyweight");
+  // const [dailySleep, setDailySleep] = useState("Sleep");
 
   const { user, isLoading } = useUser();
 
@@ -80,8 +80,11 @@ export default function athlete() {
           >
             Healthcare
           </div>
+          <p className=" text-center text-slate-700 px-2">
+            Use the buttons below to log your daily healthcare values
+          </p>
 
-          <div className="flex flex-col gap-2 w-full h-10 justify-evenly mt-16 mb-3 items-center">
+          <div className="flex flex-col gap-2 w-full h-10 justify-evenly mt-11 mb-3 items-center">
             {body}
           </div>
         </div>
@@ -90,14 +93,17 @@ export default function athlete() {
           <div
             className={`bg-primary-bg text-primary-text h-7 text-center  w-full border-black border-b-2 mb-1 overflow-hidden  `}
           >
-            Functions
+            Review
           </div>
+          <p className=" text-center text-slate-700 px-3">
+            Check out your week, have you been hitting your goals?
+          </p>
           <div className="mt-2">
             <Button path="/athlete/reviewWeek" label="Week in Review" />
-            <Button path="/settings" label="Settings" />
           </div>
         </div>
         <div className="mt-4">
+          <Button path="/settings" label="Settings" />
           <Button path="/api/auth/logout" label="Sign out" />
         </div>
       </PageLayout>

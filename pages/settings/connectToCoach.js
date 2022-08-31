@@ -16,10 +16,14 @@ export default function connectToCoach() {
       <Meta title="Connect to Coach" />
       <Navbar title="Coach Search" backPath={"/settings"} />
       <PageLayout>
-        <div className="w-full flex justify-center">
-          <div className="h-10 w-5/6 border-black border-2 rounded-md mb-5 flex justify-center">
-            Searchbar placeholder
-          </div>
+        <div className="w-full  justify-center">
+          <p className=" text-center text-slate-700  mb-2 px-2">
+            Select your coach!
+          </p>
+          <p className=" text-center text-slate-700 mb-4 px-2">
+            You will only be able to connect to coaches who have given you their
+            permission and their connection code
+          </p>
         </div>
         {coachCard}
       </PageLayout>

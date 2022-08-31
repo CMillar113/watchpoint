@@ -31,7 +31,9 @@ export default function createRoutine() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (!routineName) {
+      routineName = "Undefined";
+    }
     const data = { routineName, routineNote };
 
     let id = user.sub;
@@ -72,6 +74,10 @@ export default function createRoutine() {
           method="post"
           data-validate="parsley"
         >
+          <p className=" text-center text-slate-700 mb-4 mt-2">
+            Add information about your routine
+          </p>
+
           <h3 className="text-center">Name New Routine</h3>
 
           <input
