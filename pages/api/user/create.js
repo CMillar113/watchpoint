@@ -21,8 +21,8 @@ export default async function handler(req, res) {
 }
 
 const sql = `
-INSERT INTO athlete (athlete_id, unique_identifier, user_name, email_address, is_active, sleep_goal, bodyweight_goal, steps_goal, workouts_per_week) 
-VALUES (NULL, ?, ?, ?, '1', NULL, NULL, NULL, NULL);
+INSERT INTO athlete (athlete_id, unique_identifier, user_name, email_address, is_active, sleep_goal, bodyweight_goal, steps_goal, nutrition_log_id) 
+VALUES (NULL, ?, ?, ?, '1', NULL, NULL, NULL, 1);
  `;
 //Brings athlete firstname
 

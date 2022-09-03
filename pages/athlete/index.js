@@ -13,11 +13,14 @@ import FullScreenSpinner from "../../src/components/FullScreenSpinner";
 
 export default function athlete() {
   const [metrics, setMetrics] = useState(undefined);
+  const { user, isLoading } = useUser();
   // const [dailySteps, setDailySteps] = useState("Steps");
   // const [dailyBodyweight, setDailyBodyweight] = useState("Bodyweight");
   // const [dailySleep, setDailySleep] = useState("Sleep");
 
-  const { user, isLoading } = useUser();
+  if (!user) {
+    return "PLEASE GO TO LANDING PAGE TO SIGN IN";
+  }
 
   useEffect(() => {
     (async function () {

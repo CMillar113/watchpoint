@@ -8,7 +8,7 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          bg: "rgba(153,186,221, 0.9)",
+          bg: "rgba(255, 103, 0, 0.925)",
           text: "#000",
           fadedtext: "rgba(104, 112, 137, 0.925)",
         },
@@ -27,3 +27,4 @@ module.exports = {
 };
 
 ("rgba(255, 103, 0, 0.925)");
+// 153,186,221, 0.9

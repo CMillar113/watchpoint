@@ -35,7 +35,7 @@ export default function Home() {
       <PageLayout>
         <div className="w-full flex flex-col items-center mt-32">
           <h1 className="mt-2 text-h1-mobile md:text-h1-medium lg:text-h1-large ">
-            Watchpoint
+            WatchPoint
           </h1>
           <Image src={Logo} height={100} width={100} alt="Logo"></Image>
           <h2 className="mt-2 text-h2-mobile md:text-h2-medium lg:text-h2-large">
