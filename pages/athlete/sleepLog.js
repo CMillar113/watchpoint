@@ -5,8 +5,9 @@ import Button from "../../src/components/Button";
 import buttonStyles from "../../styles/Button.module.css";
 import { useUser } from "@auth0/nextjs-auth0";
 import React, { useEffect, useState } from "react";
+import { format } from "date-fns";
 
-const today = new Date().toISOString().substring(0, 10);
+const today = new Date();
 
 export default function sleepLog() {
   const [loggedSleep, setLoggedSleep] = useState([]);
@@ -48,7 +49,7 @@ export default function sleepLog() {
       <PageLayout>
         <div className="w-full border-2 border-black bg-primary-bg text-center">
           {" "}
-          <h3>Today: {today}</h3>
+          <h3>{format(new Date(), "EEEE do MMMM yyyy")}</h3>
         </div>
         <div className="w-full h-screen border-2">
           <div id="Date & Log" className=" bg-slate-300  border-2 border-black">
@@ -64,7 +65,7 @@ export default function sleepLog() {
                   >
                     <div className="flex w-full justify-between px-1">
                       <div>{log.log_value}</div>
-                      <div>{log.date.substring(0, 10)}</div>
+                      <div>{format(new Date(log.date), "do MMM yyyy")}</div>
                     </div>
                     <hr />
                   </React.Fragment>

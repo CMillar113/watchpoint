@@ -2,17 +2,17 @@ import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import Button from "../../src/components/Button";
-import buttonStyles from "../../styles/Button.module.css";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { format } from "date-fns";
 
 const today = new Date().toISOString().substring(0, 10);
 
 export default function steps() {
   const [loggedSteps, setLoggedSteps] = useState([]);
   const { user } = useUser(); //Get current users 7 day average of steps
-  const [steps, setSteps] = useState(0);
+  const [steps, setSteps] = useState("");
   const [date, setDate] = useState(today);
   const router = useRouter();
 
@@ -68,7 +68,7 @@ export default function steps() {
       <Meta title="Steps" />
       <Navbar title="Steps" backPath={"/athlete"} />
       <PageLayout>
-        <div className="bg-white border-2 border-black rounded-2xl shadow-xl items-center text-center px-8  ">
+        <div className="bg-white border-2 py-2 border-black rounded-2xl shadow-xl items-center text-center px-8  ">
           <p className=" text-primary-fadedtext ">Daily Step Count</p>
         </div>
 
@@ -81,9 +81,9 @@ export default function steps() {
           >
             <div className=" mb-2 ">
               <input
-                className="border-2 border-black w-8/12 h-10"
+                className="border-2 border-black w-8/12 h-10 p-2"
                 type="number"
-                placeholder=" Daily Steps"
+                placeholder="Daily Steps"
                 name="steps"
                 data-required="true"
                 data-type="steps"
@@ -97,7 +97,7 @@ export default function steps() {
 
             <div className=" mb-2">
               <input
-                className="border-2 border-black w-8/12 h-10"
+                className="border-2 border-black w-8/12 h-10 p-2"
                 type="date"
                 name="date"
                 data-required="true"
@@ -110,17 +110,23 @@ export default function steps() {
               />
             </div>
 
-            <input
-              className={`mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg border-2 border-black  ${buttonStyles.primary}`}
+            <Button
+              className="disabled:opacity-50 p-2"
               type="submit"
-              value="Add Entry"
+              disabled={steps === ""}
+              label="Add Entry"
             />
-            <Button type="submit" path="/athlete/stepsLog" label="Steps Log" />
+            <Button
+              type="button"
+              path="/athlete/stepsLog"
+              label="Steps Log"
+              className="p-2"
+            />
           </form>
         </div>
 
-        <div className=" w-full mb-4 mt-4 border-2 border-black ">
-          <h3 className=" mt-1  text-center text-xl">
+        <div className=" w-full mt-4 py-2 border-2 border-black ">
+          <h3 className=" text-center text-xl">
             {loggedSteps.length === 0 ? (
               <>
                 Looking a bit bare <br /> Try logging some steps
@@ -129,11 +135,11 @@ export default function steps() {
               <>Last Entry: {loggedSteps[0].log_value} steps</>
             )}
           </h3>
-          <h3 className=" mt-1  text-center text-xl">
+          <h3 className="  text-center text-xl">
             {loggedSteps.length === 0 ? (
               <>-</>
             ) : (
-              <>on {loggedSteps[0].date.substring(0, 10)} </>
+              <>on {format(new Date(loggedSteps[0].date), "do MMM yyyy")} </>
             )}
           </h3>
         </div>

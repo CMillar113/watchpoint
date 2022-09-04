@@ -6,13 +6,14 @@ import buttonStyles from "../../styles/Button.module.css";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { format } from "date-fns";
 
 const today = new Date().toISOString().substring(0, 10);
 
 export default function sleep() {
   const [loggedSleep, setLoggedSleep] = useState([]);
   const { user } = useUser(); //Get current users 7 day average of steps
-  const [sleep, setSleep] = useState(0);
+  const [sleep, setSleep] = useState("");
   const [date, setDate] = useState(today);
   const router = useRouter();
 
@@ -68,7 +69,7 @@ export default function sleep() {
       <Meta title="Sleep" />
       <Navbar title="Sleep" backPath={"/athlete"} />
       <PageLayout>
-        <div className="bg-white border-2 border-black rounded-2xl shadow-xl items-center text-center px-8  ">
+        <div className="bg-white border-2 py-2 border-black rounded-2xl shadow-xl items-center text-center px-8  ">
           <p className=" text-primary-fadedtext ">Nightly Hours Slept</p>
         </div>
 
@@ -81,7 +82,7 @@ export default function sleep() {
           >
             <div className=" mb-2 ">
               <input
-                className="border-2 border-black w-8/12 h-10"
+                className="border-2 border-black w-8/12 h-10 p-2"
                 type="number"
                 placeholder=" Hours Slept"
                 name="sleep"
@@ -97,7 +98,7 @@ export default function sleep() {
 
             <div className=" mb-2">
               <input
-                className="border-2 border-black w-8/12 h-10"
+                className="border-2 border-black w-8/12 h-10 p-2"
                 type="date"
                 name="date"
                 data-required="true"
@@ -110,16 +111,22 @@ export default function sleep() {
               />
             </div>
 
-            <input
-              className={`mt-2 text-h2-mobile md:text-h2-medium bg-primary-bg border-2 border-black  ${buttonStyles.primary}`}
+            <Button
+              className="disabled:opacity-50 p-2"
               type="submit"
-              value="Add Entry"
+              disabled={sleep === ""}
+              label="Add Entry"
             />
-            <Button type="submit" path="/athlete/sleepLog" label="Sleep Log" />
+            <Button
+              type="button"
+              path="/athlete/sleepLog"
+              label="Sleep Log"
+              className="p-2"
+            />
           </form>
         </div>
 
-        <div className=" w-full mb-4 mt-4 border-2 border-black ">
+        <div className=" w-full mt-4 py-2 border-2 border-black ">
           <h3 className=" mt-1  text-center text-xl">
             {loggedSleep.length === 0 ? (
               <>
@@ -133,7 +140,7 @@ export default function sleep() {
             {loggedSleep.length === 0 ? (
               <>-</>
             ) : (
-              <>on {loggedSleep[0].date.substring(0, 10)} </>
+              <>on {format(new Date(loggedSleep[0].date), "do MMM yyyy")} </>
             )}
           </h3>
         </div>

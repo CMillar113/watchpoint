@@ -3,8 +3,9 @@ import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import { useUser } from "@auth0/nextjs-auth0";
 import React, { useEffect, useState } from "react";
+import { format } from "date-fns";
 
-const today = new Date().toISOString().substring(0, 10);
+const today = new Date();
 
 export default function stepsLog() {
   const [loggedBodyweight, setLoggedBodyweight] = useState([]);
@@ -47,7 +48,7 @@ export default function stepsLog() {
       <PageLayout>
         <div className="w-full border-2 border-black bg-primary-bg text-center">
           {" "}
-          <h3>Today: {today}</h3>
+          <h3>{format(new Date(), "EEEE do MMMM yyyy")}</h3>
         </div>
         <div className="w-full h-screen border-2">
           {/* Function will return date & value */}
@@ -64,7 +65,7 @@ export default function stepsLog() {
                   >
                     <div className="flex w-full justify-between px-1">
                       <div>{log.log_value} Kg</div>
-                      <div>{log.date.substring(0, 10)}</div>
+                      <div>{format(new Date(log.date), "do MMM yyyy")}</div>
                     </div>
                     <hr />
                   </React.Fragment>

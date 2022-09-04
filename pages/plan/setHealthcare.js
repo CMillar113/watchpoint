@@ -15,6 +15,8 @@ export default function setHealthcare() {
   const [isLoading, setLoading] = useState(true);
   const [steps, setSteps] = useState("");
   const [bodyweight, setBodyweight] = useState("");
+  const [loggedBodyweight, setLoggedBodyweight] = useState("");
+  const [loggedSteps, setLoggedSteps] = useState("");
 
   // Only 2 healthcare elements require goals
   const bodyweightElementId = 7;

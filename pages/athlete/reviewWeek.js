@@ -6,17 +6,10 @@ import { useEffect, useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
 import React from "react";
 import { calculateCaloriesFromMacros } from "../../src/backend";
+import { subDays, format } from "date-fns";
 
-const now = new Date();
-const month = now.getMonth() + 1;
-const day = now.getDate() - 7;
-const year = now.getFullYear();
-//Deonstruct todays date and create as a week previous
-const backDate = `${year}-${month}-${day}`;
-const today = new Date().toISOString().substring(0, 10);
-
-const displayDate = `${month}/${now.getDate()}`;
-const displayBackDate = `${month}/${day}`;
+const today = new Date();
+const sevenDaysAgo = subDays(new Date(), 7);
 
 export default function reviewWeek() {
   const [nutrition, setNutrtion] = useState();
@@ -35,9 +28,12 @@ export default function reviewWeek() {
     (async function () {
       setLoading(true);
       try {
+        const _today = format(today, "yyyy-MM-dd");
+        const backDate = format(sevenDaysAgo, "yyyy-MM-dd");
+
         const athlete0Id = user.sub;
         const response = await fetch(
-          `/api/user/getHealthcareWeekReview?athlete0Id=${athlete0Id}&today=${today}&backDate=${backDate}`
+          `/api/user/getHealthcareWeekReview?athlete0Id=${athlete0Id}&today=${_today}&backDate=${backDate}`
         );
         const result = await response.json();
 
@@ -93,8 +89,9 @@ export default function reviewWeek() {
           <p className=" text-center text-slate-700 mt-2 px-2">
             Check out your week of hitting your goals!
           </p>
-          <p className=" justify-evenly flex text-slate-700 ">
-            from the {displayBackDate} To the {displayDate} {year}
+          <p className=" justify-evenly flex text-slate-800 ">
+            {format(sevenDaysAgo, "do MMM yyyy")} -{" "}
+            {format(today, "do MMM yyyy")}
           </p>
 
           {Array.isArray(nutrition) && nutrition.length > 0 ? (
@@ -153,7 +150,7 @@ export default function reviewWeek() {
                     >
                       <div className="flex w-full justify-between px-1">
                         <div>{log.log_value}</div>
-                        <div>{log.date.substring(5, 10)}</div>
+                        <div>{format(new Date(log.date), "do MMM yy")}</div>
                       </div>
                       <hr />
                     </React.Fragment>
@@ -181,7 +178,7 @@ export default function reviewWeek() {
                     >
                       <div className="flex w-full justify-between px-1">
                         <div>{log.log_value}</div>
-                        <div>{log.date.substring(5, 10)}</div>
+                        <div>{format(new Date(log.date), "do MMM yy")}</div>
                       </div>
                       <hr />
                     </React.Fragment>
@@ -209,7 +206,7 @@ export default function reviewWeek() {
                     >
                       <div className="flex w-full justify-between px-1">
                         <div>{log.log_value}</div>
-                        <div>{log.date.substring(5, 10)}</div>
+                        <div>{format(new Date(log.date), "do MMM yy")}</div>
                       </div>
                       <hr />
                     </React.Fragment>
