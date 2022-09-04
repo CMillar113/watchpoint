@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import buttonStyles from "../../../styles/Button.module.css";
 import Router from "next/router";
+import { useUser } from "@auth0/nextjs-auth0";
 
 export default function exercise() {
   const [workout, setWorkoutTitle] = useState(" ");
@@ -12,19 +13,22 @@ export default function exercise() {
   const { query, isReady } = useRouter();
   const [isLoading, setLoading] = useState();
   const [newExercise, setNewExercise] = useState("");
+  const { user } = useUser();
   const [exercise, setExercise] = useState({
     exercises: [],
   });
 
   useEffect(() => {
     if (!isReady) return;
+    if (!user) return;
+
     async function effect() {
       setLoading(true);
       const { id, workout, workoutId } = query;
       setWorkoutTitle(workout);
       setWorkoutId(workoutId);
       const response = await fetch(
-        `/api/exercise_category?exerciseCategoryId=${id}`
+        `/api/exercise_category?exerciseCategoryId=${id}&athlete0Id=${user.sub}`
       );
       const result = await response.json();
       console.log({ result });
@@ -37,7 +41,7 @@ export default function exercise() {
     }
 
     effect();
-  }, [query, isReady]);
+  }, [query, isReady, user]);
 
   const workoutTitle = workout;
 

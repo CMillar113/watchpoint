@@ -1,16 +1,28 @@
 /**
- * Get the exercises associated with a specifc category
+ * Get the exercises associated with a specifc category for a specific user
  *
  */
 
 import executeQuery from "../../lib/db";
+import { getUserDetails } from "./userDetails";
 
 export default async function handler(req, res) {
   try {
     if (req.method === "GET") {
-      const categoryId = req.query.exerciseCategoryId;
+      const queryParams = req.query;
+      const { exerciseCategoryId, athlete0Id } = queryParams;
 
-      const exercises = await getCategoryExercises(categoryId);
+      const athlete = await getUserDetails(athlete0Id);
+
+      if (!athlete) {
+        res.status(401).json({ message: "Unauthorised" });
+      }
+      const athleteId = athlete[0].athlete_id;
+
+      const exercises = await getCategoryExercises(
+        exerciseCategoryId,
+        athleteId
+      );
 
       res.status(200).json({
         exercises,
@@ -27,10 +39,13 @@ export default async function handler(req, res) {
 }
 
 // Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
-async function getCategoryExercises(categoryId) {
-  const sql = `SELECT exercise_name, exercise_id FROM exercise WHERE exercise_category_id = ?
+async function getCategoryExercises(categoryId, athleteId) {
+  const sql = `SELECT exercise_name, exercise_id FROM exercise WHERE exercise_category_id = ? AND exercise.athlete_id = ?
  `;
-  const exercises = await executeQuery({ query: sql, values: categoryId });
+  const exercises = await executeQuery({
+    query: sql,
+    values: [categoryId, athleteId],
+  });
   console.log(exercises);
   return exercises;
 }

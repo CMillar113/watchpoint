@@ -5,15 +5,10 @@ import Navbar from "../../../src/components/NavBar";
 import NavMenu from "../../../src/components/NavButtonOne";
 import PageLayout from "../../../src/components/PageLayout";
 import Router, { useRouter } from "next/router";
-import { format } from "date-fns";
+import { subDays, format } from "date-fns";
 
-const now = new Date();
-const month = now.getMonth(); //get month is a month behind
-const day = now.getDate();
-const year = now.getFullYear();
-//Deonstruct todays date and create as a week previous
-const backDate = `${year}-${month}-${day}`; // todays date a month previous
-const today = new Date().toISOString().substring(0, 10);
+const _today = new Date();
+const thirtyDaysAgo = subDays(new Date(), 30);
 
 export default function hypertrophyDash() {
   const { query, isReady } = useRouter();
@@ -40,6 +35,8 @@ export default function hypertrophyDash() {
     const { workout, workoutId } = query;
     (async function () {
       try {
+        const backDate = format(thirtyDaysAgo, "yyyy-MM-dd"); // todays date a month previous
+        const today = format(_today, "yyyy-MM-dd");
         const response = await fetch(
           `/api/routines/getLastWorkouts?athlete0Id=${user.sub}&workoutId=${workoutId}&today=${today}&backDate=${backDate}`
         );
@@ -95,7 +92,7 @@ export default function hypertrophyDash() {
               >
                 <div className=" w-full justify-between flex px-5">
                   <div>{routine.routine_name}</div>
-                  <div> Date:{routine.date.substring(5, 10)}</div>
+                  <div>{format(new Date(routine.date), "do MMM yy")}</div>
                 </div>
               </button>
             );

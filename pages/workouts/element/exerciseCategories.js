@@ -23,6 +23,7 @@ export default function exercises() {
 
   useEffect(() => {
     if (!isReady) return;
+    if (!user) return;
     (async function () {
       const { workout, workoutId } = query;
       setWorkoutTitle(workout);
