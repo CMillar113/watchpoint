@@ -52,7 +52,7 @@ export default function exercise() {
     console.log({ "submitted data": newExercise });
     try {
       const response = await fetch(
-        `/api/routines/createExercise?exerciseCategoryid=${id}&exerciseName=${newExercise}`,
+        `/api/routines/createExercise?exerciseCategoryid=${id}&exerciseName=${newExercise}&athlete0Id=${user.sub}`,
         {
           //create exercie in exercise table  id is exercsie category id
           method: "POST",
