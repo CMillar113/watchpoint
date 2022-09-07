@@ -12,6 +12,7 @@ export default function settings() {
 
   useEffect(() => {
     if (!user) return;
+    if (!isLoading) return;
     setLoading(true);
     const athlete0Id = user.sub;
     (async function () {

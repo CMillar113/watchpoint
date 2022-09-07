@@ -1,1 +1,0 @@
-ALTER TABLE athlete ADD CONSTRAINT athlete UNIQUE (email_address) /* Create unique constraint
