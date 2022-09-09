@@ -3,7 +3,6 @@ import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import Router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Button from "../../src/components/Button";
 import { useUser } from "@auth0/nextjs-auth0";
 
 export default function myCoach() {
@@ -37,7 +36,7 @@ export default function myCoach() {
         console.error(e);
       }
     })();
-  }, [user, query, isReady]); // continues once these are set or changed
+  }, [user, query, isReady]);
 
   const handleDisconnect = async (e) => {
     const coachId = query.coachId;

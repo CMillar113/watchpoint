@@ -5,7 +5,6 @@
 
 import executeQuery from "../../lib/db";
 
-// Controller function which is separated from the database logic and just returns data to frontend
 export default async function handler(req, res) {
   const id = req.query.auth0;
 
@@ -29,7 +28,6 @@ INNER JOIN nutrition_log ON nutrition_log.nutrition_log_id = athlete.nutrition_l
 WHERE athlete.unique_identifier = ?;
   `;
 
-// Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
 async function getNutrition(id) {
   const nutrition = await executeQuery({
     query: sql,

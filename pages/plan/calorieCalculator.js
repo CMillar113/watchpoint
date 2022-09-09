@@ -2,9 +2,7 @@ import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import Button from "../../src/components/Button";
-import Link from "next/link";
 import buttonStyles from "../../styles/Button.module.css";
-import Router from "next/router";
 import { useState } from "react";
 import { calculateCalories } from "../../src/backend";
 import { calculateWater } from "../../src/backend";
@@ -30,7 +28,7 @@ export default function calorieCalculator() {
     const dailyWater = calculateWater(bodyweight, activityLevel);
     setCalories(dailyCalories);
     setWater(dailyWater);
-    return dailyCalories, dailyWater; //DO I NEED THIS RETURN??
+    return dailyCalories, dailyWater;
   };
 
   return (
@@ -41,7 +39,6 @@ export default function calorieCalculator() {
         <form
           className="justify-center flex-column "
           id="calorieCalculatorForm"
-          // action="submitForms()"
           method="post"
           data-validate="parsley"
         >

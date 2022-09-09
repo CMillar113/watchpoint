@@ -3,24 +3,16 @@ import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import Button from "../../src/components/Button";
 import NavMenu from "../../src/components/NavButtonTwo";
+import FullScreenSpinner from "../../src/components/FullScreenSpinner";
 
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
-
 import { lowerCaseFirstLetter } from "../_app";
-import FullScreenSpinner from "../../src/components/FullScreenSpinner";
 
 export default function athlete() {
   const [metrics, setMetrics] = useState(undefined);
   const { user, isLoading } = useUser();
-  // const [dailySteps, setDailySteps] = useState("Steps");
-  // const [dailyBodyweight, setDailyBodyweight] = useState("Bodyweight");
-  // const [dailySleep, setDailySleep] = useState("Sleep");
-
-  if (!user) {
-    return "PLEASE GO TO LANDING PAGE TO SIGN IN";
-  }
 
   useEffect(() => {
     (async function () {
@@ -42,9 +34,9 @@ export default function athlete() {
   let body = null;
   if (metrics !== undefined && user !== undefined) {
     body = metrics
-      .filter(function (metric) {
-        return metric.element_class_id === 2;
-      })
+      // .filter(function (metric) {
+      //   return metric.element_class_id === 2;
+      // })
       .map(function (metric) {
         return (
           <button

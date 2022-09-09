@@ -11,7 +11,7 @@ const today = new Date().toISOString().substring(0, 10);
 
 export default function steps() {
   const [loggedSteps, setLoggedSteps] = useState([]);
-  const { user } = useUser(); //Get current users 7 day average of steps
+  const { user } = useUser();
   const [steps, setSteps] = useState("");
   const [date, setDate] = useState(today);
   const router = useRouter();

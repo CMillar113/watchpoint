@@ -2,14 +2,9 @@ import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import Router, { useRouter } from "next/router";
-import Image from "next/image";
-import buttonStyles from "../../styles/Button.module.css";
-
 import { useEffect, useState } from "react";
-import { lowerCaseFirstLetter } from "../_app";
 import { useUser } from "@auth0/nextjs-auth0";
 
-//Post all coach accounts unless search function is used then only post some
 export default function coachProfile() {
   const { query, isReady } = useRouter();
   const { user } = useUser();
@@ -42,7 +37,7 @@ export default function coachProfile() {
         console.error(e);
       }
     })();
-  }, [user, query, isReady]); // continues once these are set or changed
+  }, [user, query, isReady]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -123,7 +118,6 @@ export default function coachProfile() {
                 className={` h-auto w-1/5 ml-2 mt-2 mb-2 text-h2-mobile  bg-primary-bg border-black border-2 rounded-lg `}
                 type="submit"
                 value="Connect"
-                //TODO - Does not have same reaction as <Button> dosnt feel like its clicked
               />
             </form>
           </div>

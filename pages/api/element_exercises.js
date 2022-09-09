@@ -29,7 +29,6 @@ export default async function handler(req, res) {
   }
 }
 
-// Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
 async function getClassId(elementId) {
   const sql = `SELECT workout_class.workout_class_id FROM workout_class
   WHERE workout_class.element_id = ? limit 1

@@ -5,7 +5,6 @@
 import executeQuery from "../../../lib/db";
 import { getUserDetails } from "../userDetails";
 
-// Controller function which is separated from the database logic and just returns data to frontend
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.status(400).json({ message: "Unsupported HTTP request" });
@@ -36,7 +35,6 @@ export default async function handler(req, res) {
   }
 }
 
-// Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
 async function createLog(athleteId, elementId, date, log) {
   const sql = `
    INSERT INTO healthcare_log (healtchcare_log_id, athlete_id, element_id, date, log_value) 
@@ -47,7 +45,7 @@ async function createLog(athleteId, elementId, date, log) {
     query: sql,
     values: [athleteId, elementId, date, log],
   });
-  // talk to database get metrics for a given userID
+
   return result;
 }
 
@@ -60,7 +58,7 @@ async function updateLog(athleteId, date, log, elementId) {
     query: sql,
     values: [log, athleteId, date, elementId],
   });
-  // talk to database get metrics for a given userID
+
   return result;
 }
 

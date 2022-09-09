@@ -6,7 +6,6 @@
 import executeQuery from "../../lib/db";
 import { getUserDetails } from "./userDetails";
 
-// Controller function which is separated from the database logic and just returns data to frontend
 export default async function handler(req, res) {
   if (req.method === "GET") {
     const queryParams = req.query;
@@ -26,7 +25,6 @@ export default async function handler(req, res) {
   }
 }
 
-// Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
 async function getAthleteToCoach(athleteId) {
   const sql = `
   SELECT coach_id, checked_in, coach_notes 

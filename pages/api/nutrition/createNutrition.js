@@ -30,7 +30,6 @@ export default async function handler(req, res) {
   }
 }
 
-// Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
 async function createNutrition(protein, carbs, fats, water) {
   const sql = `
    INSERT INTO nutrition_log (nutrition_log_id, protein, carbs, fats, water_goal) 
@@ -40,7 +39,7 @@ async function createNutrition(protein, carbs, fats, water) {
     query: sql,
     values: [protein, carbs, fats, water],
   });
-  // talk to database get metrics for a given userID
+
   return result;
 }
 
@@ -53,7 +52,7 @@ LIMIT 1;
   const result = await executeQuery({
     query: sql,
   });
-  // talk to database get metrics for a given userID
+
   console.log("last entery", result[0].nutrition_log_id);
   const logID = result[0].nutrition_log_id;
   return logID;
@@ -79,7 +78,7 @@ async function updateNutrition(logID, protein, carbs, fats, water) {
     query: sql,
     values: [protein, carbs, fats, water, logID],
   });
-  // talk to database get metrics for a given userID
+
   return result;
 }
 
@@ -91,8 +90,6 @@ async function checkIfLogAlreadyExist(id) {
   const result = await executeQuery({
     query: sql,
     values: [id],
-
-    ///// TODO - fill in these values depending on hte structure of the query
   });
   console.log("check", result);
   if (result[0].nutrition_log_id > 1) {

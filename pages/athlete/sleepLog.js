@@ -1,8 +1,6 @@
 import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
-import Button from "../../src/components/Button";
-import buttonStyles from "../../styles/Button.module.css";
 import { useUser } from "@auth0/nextjs-auth0";
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
@@ -37,10 +35,6 @@ export default function sleepLog() {
       }
     })();
   }, [user]);
-
-  useEffect(() => {
-    console.log("useEffect", { loggedSleep });
-  }, [loggedSleep]); //Spy on state variable if changes
 
   return (
     <>
@@ -77,7 +71,6 @@ export default function sleepLog() {
               </div>
             )}
           </div>
-          {/* End of returned function */}
         </div>
       </PageLayout>
     </>

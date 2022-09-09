@@ -1,7 +1,6 @@
 import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
-import Router from "next/router";
 import { useEffect, useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
 import React from "react";
@@ -15,9 +14,6 @@ export default function reviewWeek() {
   const [nutrition, setNutrtion] = useState();
   const { user } = useUser();
   const [isLoading, setLoading] = useState(true);
-
-  //Only possible healthcare attributes - finite amount but if there were to be more this isnt the most scalable
-
   const [bodyweightWeekArray, setBodyweightWeekArray] = useState();
   const [stepsWeekArray, setStepsWeekArray] = useState();
   const [sleepWeekArray, setSleepWeekArray] = useState();

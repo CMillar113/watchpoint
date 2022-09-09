@@ -2,17 +2,13 @@ import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import Button from "../../src/components/Button";
-import Link from "next/link";
 import buttonStyles from "../../styles/Button.module.css";
-import Router from "next/router";
 import { useUser } from "@auth0/nextjs-auth0";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useState } from "react";
 
 export default function setWorkouts() {
   const { user } = useUser();
-  const router = useRouter();
-  const [isLoading, setLoading] = useState(true);
+
   const [hypertrophy, setHypertrophytNumber] = useState(0);
   const [cardio, setCardioNumber] = useState(0);
   const hypertrophyElementId = 3;

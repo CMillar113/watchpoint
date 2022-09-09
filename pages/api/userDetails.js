@@ -4,8 +4,9 @@
 
 import executeQuery from "../../lib/db";
 
-// Controller function which is separated from the database logic and just returns data to frontend
-/** @type (req) => void */
+// Controller function which is separated from the database
+//logic and just returns data to frontend
+
 export default async function handler(req, res) {
   console.log({ req });
 
@@ -24,13 +25,12 @@ export default async function handler(req, res) {
   }
 }
 
-const sql = `
- SELECT * FROM athlete WHERE athlete.unique_identifier = ?
- `;
-//Brings athlete firstname
-
-// Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
+// Service function that grabs data from database - keeping the handler agnostic
+//of what dataabse it is connected to [separation of concerns]
 export async function getUserDetails(id) {
+  const sql = `
+  SELECT * FROM athlete WHERE athlete.unique_identifier = ?
+  `;
   const userDetails = await executeQuery({ query: sql, values: [id] });
   // talk to database get metrics for a given userID
   return userDetails;

@@ -1,8 +1,8 @@
+//TODO - Build up so user can select elements and if those elements are not selected their is no trace of them on the app until changed
+
 import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
-import Button from "../../src/components/Button";
-import Link from "next/link";
 import buttonStyles from "../../styles/Button.module.css";
 import { useEffect, useState } from "react";
 
@@ -14,11 +14,6 @@ export default function selectElements() {
   const healthcareElements = checkHealthcareElements();
   const workoutElements = checkWorkoutElements();
 
-  //On submit must create link between that user and that element
-  // Must also be able to delete that link is user un-selects the element
-  //run check to see what elements the user is linked to and check those boxes
-  //on submit create and/or delete links
-
   const handleSubmit = async (e) => {};
 
   return (
@@ -28,7 +23,7 @@ export default function selectElements() {
       <PageLayout>
         <form
           className="text-left text-xl flex-col px-10 "
-          action="/plan/setNutrition" // TODO Needs changed to link to the 'setPlan' for whatever first elemenet thats suitable is
+          action="/plan/setNutrition"
           onSubmit={handleSubmit}
         >
           <div

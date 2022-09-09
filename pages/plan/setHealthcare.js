@@ -2,21 +2,16 @@ import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import Button from "../../src/components/Button";
-import Link from "next/link";
 import buttonStyles from "../../styles/Button.module.css";
-import Router from "next/router";
 import { useUser } from "@auth0/nextjs-auth0";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 
 export default function setHealthcare() {
   const { user } = useUser();
   const router = useRouter();
-  const [isLoading, setLoading] = useState(true);
   const [steps, setSteps] = useState("");
   const [bodyweight, setBodyweight] = useState("");
-  const [loggedBodyweight, setLoggedBodyweight] = useState("");
-  const [loggedSteps, setLoggedSteps] = useState("");
 
   // Only 2 healthcare elements require goals
   const bodyweightElementId = 7;
@@ -118,8 +113,6 @@ export default function setHealthcare() {
           </div>
         </form>
         <hr className="mb-7"></hr>
-        {/* bodyweight */}
-        {/* steps */}
 
         <h3 className="px-2 mt-4 text-center bg-primary-bg ">
           Daily Steps Goal:
@@ -154,12 +147,8 @@ export default function setHealthcare() {
           </div>
         </form>
         <hr className="mb-7"></hr>
-        {/* steps */}
 
         <Button path="/plan/setWorkouts" label="Next"></Button>
-
-        {/* If sleep selected */}
-        {/* if any workouts selected */}
       </PageLayout>
     </>
   );

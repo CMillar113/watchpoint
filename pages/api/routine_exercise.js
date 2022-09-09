@@ -46,7 +46,6 @@ export default async function handler(req, res) {
   }
 }
 
-// Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
 async function getRoutinesExercises(routineId) {
   const sql = `SELECT routine_exercise.routine_exercise_id, routine_exercise.planned_sets, routine_exercise.planned_reps, routine_exercise.routine_id, routine_exercise.exercise_id, exercise.exercise_name, routine.routine_name, routine.routine_note
 FROM routine_exercise 

@@ -2,7 +2,6 @@ import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import Button from "../../src/components/Button";
-import buttonStyles from "../../styles/Button.module.css";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -38,7 +37,6 @@ export default function bodyweight() {
     })();
   }, [user]);
 
-  //FORM SUBMIT
   const handleSubmit = async (e) => {
     e.preventDefault();
 

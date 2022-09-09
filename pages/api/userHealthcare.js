@@ -5,7 +5,6 @@
 
 import executeQuery from "../../lib/db";
 
-// Controller function which is separated from the database logic and just returns data to frontend
 export default async function handler(req, res) {
   const id = req.query.auth0;
 
@@ -35,7 +34,6 @@ WHERE athlete.unique_identifier = ?
 ORDER BY healthcare_log.date DESC;
  `;
 
-// Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
 async function getHealthcare(id) {
   const healthcare = await executeQuery({
     query: sql,

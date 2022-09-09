@@ -1,11 +1,10 @@
 /**
- * check, create or update log for steps
+ * check, create or update
  */
 
 import executeQuery from "../../../lib/db";
 import { getUserDetails } from "../userDetails";
 
-// Controller function which is separated from the database logic and just returns data to frontend
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.status(400).json({ message: "Unsupported HTTP request" });

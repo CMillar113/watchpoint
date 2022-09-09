@@ -3,13 +3,10 @@ import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import { Calories } from "../../src/constants";
 import Button from "../../src/components/Button";
-import Link from "next/link";
 import buttonStyles from "../../styles/Button.module.css";
-import Router from "next/router";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { calculateCaloriesFromMacros } from "../../src/backend";
 
 export default function setGoals() {
   const { user } = useUser();

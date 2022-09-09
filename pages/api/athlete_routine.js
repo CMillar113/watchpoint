@@ -4,7 +4,6 @@
  *
  */ import executeQuery from "../../lib/db";
 
-// Controller function which is separated from the database logic and just returns data to frontend
 export default async function handler(req, res) {
   const queryParams = req.query;
   const { auth0, elementid } = queryParams;
@@ -29,7 +28,6 @@ INNER JOIN athlete ON athlete_element_routine.athlete_id = athlete.athlete_id
 WHERE athlete.unique_identifier = ? AND athlete_element_routine.element_id = ? ORDER By routine_id DESC
  `;
 
-// Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
 async function getRoutines(auth0id, workoutElementId) {
   const routines = await executeQuery({
     query: sql,

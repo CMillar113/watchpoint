@@ -5,7 +5,6 @@
 import executeQuery from "../../../lib/db";
 import { getUserDetails } from "../userDetails";
 
-// Controller function which is separated from the database logic and just returns data to frontend
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.status(400).json({ message: "Unsupported HTTP request" });
@@ -24,7 +23,6 @@ export default async function handler(req, res) {
 
   const athleteId = athlete[0].athlete_id; // athleteId is now sql based
 
-  //    Get log by date and log_group
   if (await checkIfLogAlreadyExist(athleteId, 8, date)) {
     // if log for the log group (ie steps) already exists for the given date, update
     const log = await updateLog(athleteId, date, steps, 8);
@@ -36,7 +34,6 @@ export default async function handler(req, res) {
   }
 }
 
-// Service function that grabs data from database - keeping the handler agnostic of what dataabse it is connected to [separation of concerns]
 async function createLog(athleteId, elementId, date, log) {
   const sql = `
   INSERT INTO healthcare_log (healtchcare_log_id, athlete_id, element_id, date, log_value) 

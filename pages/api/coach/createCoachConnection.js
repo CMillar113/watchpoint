@@ -23,8 +23,6 @@ export default async function handler(req, res) {
   }
   const athleteId = athlete[0].athlete_id; // auth0Id to sql ID
 
-  //    const _coachId = parseInt(coachId);
-
   if (await checkCode(coachId, connectionCode)) {
     const log = await createLink(athleteId, coachId);
     res.status(202).json(log);

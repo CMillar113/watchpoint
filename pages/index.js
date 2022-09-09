@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import router from "next/router";
-
 import { useUser } from "@auth0/nextjs-auth0";
-
 import Meta from "../src/components/Meta";
 import Button from "../src/components/Button";
 import PageLayout from "../src/components/PageLayout";
@@ -24,7 +22,6 @@ export default function Home() {
   }
 
   if (user) {
-    // Don't show login form flash to logged in users before redirecting
     return null;
   }
 

@@ -2,10 +2,7 @@ import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import Router from "next/router";
-import Image from "next/image";
-
 import { useEffect, useState } from "react";
-import { lowerCaseFirstLetter } from "../_app";
 
 //Post all coach accounts unless search function is used then only post some
 export default function connectToCoach() {
@@ -70,11 +67,8 @@ function checkCoaches() {
             <p className="text-white">{metric.brand_name}</p>
           </button>
         </div>
-
-        // console.log(userDetail.first_name);
       );
     });
-    // console.log(userName);
     return coaches;
   }
 }

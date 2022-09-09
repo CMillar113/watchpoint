@@ -2,7 +2,6 @@ import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import Button from "../../src/components/Button";
-import buttonStyles from "../../styles/Button.module.css";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -12,7 +11,7 @@ const today = new Date().toISOString().substring(0, 10);
 
 export default function sleep() {
   const [loggedSleep, setLoggedSleep] = useState([]);
-  const { user } = useUser(); //Get current users 7 day average of steps
+  const { user } = useUser();
   const [sleep, setSleep] = useState("");
   const [date, setDate] = useState(today);
   const router = useRouter();
@@ -46,7 +45,7 @@ export default function sleep() {
     console.log({ data });
     try {
       const response = await fetch(
-        `/api/healthcare/createSleep?id=${user.sub}&sleep=${sleep}&date=${date}`, //TODO - pass element id and make single API endpoint
+        `/api/healthcare/createSleep?id=${user.sub}&sleep=${sleep}&date=${date}`,
         {
           method: "POST",
           data: JSON.stringify(data),

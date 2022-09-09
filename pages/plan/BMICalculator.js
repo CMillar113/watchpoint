@@ -2,9 +2,7 @@ import Meta from "../../src/components/Meta";
 import Navbar from "../../src/components/NavBar";
 import PageLayout from "../../src/components/PageLayout";
 import Button from "../../src/components/Button";
-import Link from "next/link";
 import buttonStyles from "../../styles/Button.module.css";
-import Router from "next/router";
 import { useState } from "react";
 import { calculateBMI } from "../../src/backend";
 import { compareBMI } from "../../src/backend";
@@ -22,7 +20,7 @@ export default function BMICalculator() {
     console.log(value, status);
     setBMIStatus(status);
     setBMIValue(value);
-    return value, status; //DO I NEED THIS RETURN PT.2 ??
+    return value, status;
   };
 
   return (
