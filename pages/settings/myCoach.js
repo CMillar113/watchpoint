@@ -111,7 +111,7 @@ export default function myCoach() {
           </p>
 
           <button
-            className=" w-full h-8 justify-evenly border-black border-2 flex px-3 mb-1"
+            className=" w-full h-8 justify-evenly border-black bg-primary-bg border-2 flex px-3 mb-1"
             onClick={function () {
               handleDisconnect();
             }}

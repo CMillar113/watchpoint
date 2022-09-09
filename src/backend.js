@@ -12,7 +12,7 @@
 export function calculateBMI(height, bodyweight) {
   const result = bodyweight / ((height / 100) * (height / 100));
   console.log(result);
-  return result;
+  return result.toPrecision(3);
 }
 
 /**

@@ -52,8 +52,8 @@ export default function stepsLog() {
           <h3>{format(new Date(), "EEEE do MMMM yyyy")}</h3>
         </div>
         <div className="w-full h-screen border-2">
-          <div id="Date & Log" className=" bg-slate-300  border-2 border-black">
-            <div className="flex w-full justify-between px-1 mb-1 bg-slate-400 text-cyan-50">
+          <div id="Date & Log" className=" bg-primary-bg border-2 border-black">
+            <div className="flex w-full justify-between px-1 mb-1 bg-black text-cyan-50">
               <div>Steps</div>
               <div>Date</div>
             </div>
