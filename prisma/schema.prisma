@@ -1,0 +1,26 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+//TABELS BELOW
+
+model athlete {
+  athlete_id        String     @default(cuid()) @id
+  unique_identifier    String
+  email_address   String
+  bodyweight_goal String?
+  steps_goal    String?   
+  sleep_goal  String?
+  is_active Boolean @default(true)
+  nutrition_log_id String?
+}
+
