@@ -29,11 +29,15 @@ export default async function handler(req, res) {
 //of what dataabse it is connected to [separation of concerns]
 export async function getUserDetails(id) {
   // prisma.$queryRaw`SELECT * FROM athlete WHERE athlete.unique_identifier = ${id}`;
-  // const sql = `
-  // SELECT * FROM athlete WHERE athlete.unique_identifier = ?
-  // `;
-  const userDetails =
-    await prisma.$queryRaw`SELECT * FROM athlete WHERE athlete.unique_identifier = ${id}`;
+  const sql = `
+  SELECT * FROM athlete WHERE athlete.unique_identifier = ?
+  `;
+  // const userDetails =
+  //   await prisma.$queryRaw`SELECT * FROM athlete WHERE athlete.unique_identifier = ${id}`;
+  const userDetails = await executeQuery({
+    query: sql,
+    values: [id],
+  });
 
   // talk to database get metrics for a given userID
   return userDetails;
